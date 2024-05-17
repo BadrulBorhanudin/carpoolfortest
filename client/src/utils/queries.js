@@ -6,32 +6,41 @@ export const QUERY_USER = gql`
       _id
       username
       email
-      thoughts {
+      rides {
         _id
-        thoughtText
+        origin
+        destination
+        date
+        time
         createdAt
       }
     }
   }
 `;
 
-export const QUERY_THOUGHTS = gql`
-  query getThoughts {
-    thoughts {
+export const QUERY_RIDES = gql`
+  query getRides {
+    rides {
       _id
-      thoughtText
-      thoughtAuthor
+      origin
+      destination
+      date
+      time
+      rideAuthor
       createdAt
     }
   }
 `;
 
-export const QUERY_SINGLE_THOUGHT = gql`
-  query getSingleThought($thoughtId: ID!) {
-    thought(thoughtId: $thoughtId) {
+export const QUERY_SINGLE_RIDE = gql`
+  query getSingleRide($rideId: ID!) {
+    ride(rideId: $rideId) {
       _id
-      thoughtText
-      thoughtAuthor
+      origin
+      destination
+      date
+      time
+      rideAuthor
       createdAt
       comments {
         _id
@@ -49,10 +58,13 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      thoughts {
+      rides {
         _id
-        thoughtText
-        thoughtAuthor
+        origin
+        destination
+        date
+        time
+        rideAuthor
         createdAt
       }
     }

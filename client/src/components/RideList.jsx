@@ -1,48 +1,47 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-const ThoughtList = ({
-  thoughts,
-  title,
-  showTitle = true,
-  showUsername = true,
-}) => {
-  if (!thoughts.length) {
-    return <h3>No Thoughts Yet</h3>;
+const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
+  if (!rides.length) {
+    return <h3>No Rides Yet</h3>;
   }
 
   return (
     <div>
       {showTitle && <h3>{title}</h3>}
-      {thoughts &&
-        thoughts.map((thought) => (
-          <div key={thought._id} className='card mb-3'>
+      {rides &&
+        rides.map((ride) => (
+          <div key={ride._id} className='card mb-3'>
             <h4 className='card-header bg-primary text-light p-2 m-0'>
               {showUsername ? (
                 <Link
                   className='text-light'
-                  to={`/profiles/${thought.thoughtAuthor}`}
+                  to={`/profiles/${ride.rideAuthor}`}
                 >
-                  {thought.thoughtAuthor} <br />
+                  {ride.rideAuthor} <br />
                   <span style={{ fontSize: '1rem' }}>
-                    had this thought on {thought.createdAt}
+                    posted this ride on {ride.createdAt}
                   </span>
                 </Link>
               ) : (
                 <>
                   <span style={{ fontSize: '1rem' }}>
-                    You had this thought on {thought.createdAt}
+                    You posted this ride on {ride.createdAt}
                   </span>
                 </>
               )}
             </h4>
             <div className='card-body bg-light p-2'>
-              <p>{thought.thoughtText}</p>
+              <p>Origin: {ride.origin}</p>
+              <p>Destination: {ride.destination}</p>
+              <p>Date: {ride.date}</p>
+              <p>Time: {ride.time}</p>
             </div>
             <Link
               className='btn btn-primary btn-block btn-squared'
-              to={`/thoughts/${thought._id}`}
+              to={`/rides/${ride._id}`}
             >
-              Join the discussion on this thought.
+              Join the discussion on this ride.
             </Link>
           </div>
         ))}
@@ -50,4 +49,4 @@ const ThoughtList = ({
   );
 };
 
-export default ThoughtList;
+export default RideList;

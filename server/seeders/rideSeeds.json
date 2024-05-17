@@ -1,0 +1,72 @@
+[
+  {
+    "origin": "New York",
+    "destination": "Los Angeles",
+    "date": "2024-06-01",
+    "time": "08:00 AM",
+    "rideAuthor": "Brian Kernighan"
+  },
+  {
+    "origin": "San Francisco",
+    "destination": "Seattle",
+    "date": "2024-06-02",
+    "time": "09:00 AM",
+    "rideAuthor": "Max Kanat-Alexander"
+  },
+  {
+    "origin": "Austin",
+    "destination": "Houston",
+    "date": "2024-06-03",
+    "time": "10:00 AM",
+    "rideAuthor": "Why The Lucky Stiff"
+  },
+  {
+    "origin": "Chicago",
+    "destination": "New York",
+    "date": "2024-06-04",
+    "time": "11:00 AM",
+    "rideAuthor": "Kent Beck"
+  },
+  {
+    "origin": "Boston",
+    "destination": "Philadelphia",
+    "date": "2024-06-05",
+    "time": "12:00 PM",
+    "rideAuthor": "Edward V. Berard"
+  },
+  {
+    "origin": "Denver",
+    "destination": "Las Vegas",
+    "date": "2024-06-06",
+    "time": "01:00 PM",
+    "rideAuthor": "Alan Kay"
+  },
+  {
+    "origin": "Miami",
+    "destination": "Orlando",
+    "date": "2024-06-07",
+    "time": "02:00 PM",
+    "rideAuthor": "C.A.R. Hoare"
+  },
+  {
+    "origin": "Dallas",
+    "destination": "San Antonio",
+    "date": "2024-06-08",
+    "time": "03:00 PM",
+    "rideAuthor": "David Thomas"
+  },
+  {
+    "origin": "Portland",
+    "destination": "Salt Lake City",
+    "date": "2024-06-09",
+    "time": "04:00 PM",
+    "rideAuthor": "Donald Knuth"
+  },
+  {
+    "origin": "Phoenix",
+    "destination": "San Diego",
+    "date": "2024-06-10",
+    "time": "05:00 PM",
+    "rideAuthor": "Lernantino"
+  }
+]
