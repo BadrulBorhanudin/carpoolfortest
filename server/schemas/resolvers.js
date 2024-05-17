@@ -1,6 +1,7 @@
 const { User, Ride } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
+
 const resolvers = {
   Query: {
     users: async () => {
@@ -47,11 +48,13 @@ const resolvers = {
 
       return { token, user };
     },
-    addRide: async (parent, { origin, destination }, context) => {
+    addRide: async (parent, { origin, destination, date, time }, context) => {
       if (context.user) {
         const ride = await Ride.create({
           origin,
           destination,
+          date,
+          time,
           rideAuthor: context.user.username,
         });
 

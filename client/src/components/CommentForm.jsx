@@ -6,7 +6,7 @@ import { ADD_COMMENT } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 
-const CommentForm = ({ thoughtId }) => {
+const CommentForm = ({ rideId }) => {
   const [commentText, setCommentText] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
 
@@ -18,7 +18,7 @@ const CommentForm = ({ thoughtId }) => {
     try {
       const { data } = await addComment({
         variables: {
-          thoughtId,
+          rideId, // Ensure rideId is passed here
           commentText,
           commentAuthor: Auth.getProfile().data.username,
         },
@@ -41,7 +41,7 @@ const CommentForm = ({ thoughtId }) => {
 
   return (
     <div>
-      <h4>What are your thoughts on this thought?</h4>
+      <h4>What are your thoughts on this ride?</h4>
 
       {Auth.loggedIn() ? (
         <>
@@ -73,6 +73,11 @@ const CommentForm = ({ thoughtId }) => {
                 Add Comment
               </button>
             </div>
+            {error && (
+              <div className='col-12 my-3 bg-danger text-white p-3'>
+                {error.message}
+              </div>
+            )}
           </form>
         </>
       ) : (

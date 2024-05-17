@@ -10,6 +10,8 @@ export const QUERY_USER = gql`
         _id
         origin
         destination
+        date
+        time
         createdAt
       }
     }
@@ -22,6 +24,8 @@ export const QUERY_RIDES = gql`
       _id
       origin
       destination
+      date
+      time
       rideAuthor
       createdAt
     }
@@ -34,6 +38,8 @@ export const QUERY_SINGLE_RIDE = gql`
       _id
       origin
       destination
+      date
+      time
       rideAuthor
       createdAt
       comments {
@@ -56,6 +62,8 @@ export const QUERY_ME = gql`
         _id
         origin
         destination
+        date
+        time
         rideAuthor
         createdAt
       }

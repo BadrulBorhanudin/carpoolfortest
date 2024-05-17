@@ -12,6 +12,14 @@ const rideSchema = new Schema({
     required: 'You need to provide a destination!',
     trim: true,
   },
+  date: {
+    type: String,
+    required: 'You need to provide a date!',
+  },
+  time: {
+    type: String,
+    required: 'You need to provide a time!',
+  },
   rideAuthor: {
     type: String,
     required: true,

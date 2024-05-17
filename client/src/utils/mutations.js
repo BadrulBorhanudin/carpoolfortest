@@ -25,11 +25,23 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_RIDE = gql`
-  mutation addRide($origin: String!, $destination: String!) {
-    addRide(origin: $origin, destination: $destination) {
+  mutation addRide(
+    $origin: String!
+    $destination: String!
+    $date: String!
+    $time: String!
+  ) {
+    addRide(
+      origin: $origin
+      destination: $destination
+      date: $date
+      time: $time
+    ) {
       _id
       origin
       destination
+      date
+      time
       rideAuthor
       createdAt
       comments {

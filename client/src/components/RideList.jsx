@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
@@ -33,6 +34,8 @@ const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
             <div className='card-body bg-light p-2'>
               <p>Origin: {ride.origin}</p>
               <p>Destination: {ride.destination}</p>
+              <p>Date: {ride.date}</p>
+              <p>Time: {ride.time}</p>
             </div>
             <Link
               className='btn btn-primary btn-block btn-squared'

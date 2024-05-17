@@ -10,13 +10,19 @@ import Auth from '../utils/auth';
 const RideForm = () => {
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
 
   const [characterCountOrigin, setCharacterCountOrigin] = useState(0);
   const [characterCountDestination, setCharacterCountDestination] = useState(0);
 
   const [addRide, { error }] = useMutation(ADD_RIDE, {
-    refetchQueries: [QUERY_RIDES, 'getRides', QUERY_ME, 'me'],
+    refetchQueries: [
+      { query: QUERY_RIDES }, // Adjust to the correct format
+      { query: QUERY_ME }, // Adjust to the correct format
+    ],
   });
+
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -26,12 +32,16 @@ const RideForm = () => {
         variables: {
           origin,
           destination,
+          date,
+          time,
           rideAuthor: Auth.getProfile().data.username,
         },
       });
 
       setOrigin('');
       setDestination('');
+      setDate('');
+      setTime('');
     } catch (err) {
       console.error(err);
     }
@@ -46,6 +56,10 @@ const RideForm = () => {
     } else if (name === 'destination' && value.length <= 280) {
       setDestination(value);
       setCharacterCountDestination(value.length);
+    } else if (name === 'date') {
+      setDate(value);
+    } else if (name === 'time') {
+      setTime(value);
     }
   };
 
@@ -98,6 +112,20 @@ const RideForm = () => {
                 style={{ lineHeight: '1.5', resize: 'vertical' }}
                 onChange={handleChange}
               ></textarea>
+              <input
+                type='date'
+                name='date'
+                value={date}
+                className='form-input w-100 mt-2'
+                onChange={handleChange}
+              />
+              <input
+                type='time'
+                name='time'
+                value={time}
+                className='form-input w-100 mt-2'
+                onChange={handleChange}
+              />
             </div>
 
             <div className='col-12 col-lg-3'>
