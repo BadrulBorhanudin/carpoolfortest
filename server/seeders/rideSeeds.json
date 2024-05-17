@@ -1,0 +1,52 @@
+[
+  {
+    "origin": "New York",
+    "destination": "Los Angeles",
+    "rideAuthor": "Brian Kernighan"
+  },
+  {
+    "origin": "San Francisco",
+    "destination": "Seattle",
+    "rideAuthor": "Max Kanat-Alexander"
+  },
+  {
+    "origin": "Austin",
+    "destination": "Houston",
+    "rideAuthor": "Why The Lucky Stiff"
+  },
+  {
+    "origin": "Chicago",
+    "destination": "New York",
+    "rideAuthor": "Kent Beck"
+  },
+  {
+    "origin": "Boston",
+    "destination": "Philadelphia",
+    "rideAuthor": "Edward V. Berard"
+  },
+  {
+    "origin": "Denver",
+    "destination": "Las Vegas",
+    "rideAuthor": "Alan Kay"
+  },
+  {
+    "origin": "Miami",
+    "destination": "Orlando",
+    "rideAuthor": "C.A.R. Hoare"
+  },
+  {
+    "origin": "Dallas",
+    "destination": "San Antonio",
+    "rideAuthor": "David Thomas"
+  },
+  {
+    "origin": "Portland",
+    "destination": "Salt Lake City",
+    "rideAuthor": "Donald Knuth"
+  },
+  {
+    "origin": "Phoenix",
+    "destination": "San Diego",
+    "rideAuthor": "Lernantino"
+  }
+]
