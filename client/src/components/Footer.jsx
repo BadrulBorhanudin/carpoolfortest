@@ -1,30 +1,36 @@
+import { Box, Button, Flex, Text } from '@chakra-ui/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const Footer = () => {
   const location = useLocation();
   const navigate = useNavigate();
   return (
-    <footer className='w-100 mt-auto bg-secondary p-4'>
-      <div className='container text-center mb-5'>
-        {location.pathname !== '/' && (
-          <button className='btn btn-dark mb-3' onClick={() => navigate(-1)}>
-            &larr; Go Back
-          </button>
-        )}
-        <h4>
-          Made with{' '}
-          <span
-            className='emoji'
-            role='img'
-            aria-label='heart'
-            aria-hidden='false'
-          >
-            ❤️
-          </span>{' '}
-          by the CarPoolHub team.
-        </h4>
-      </div>
-    </footer>
+    <Box
+      as='footer'
+      w='100%'
+      bg='blue.600'
+      p={4}
+      color='white'
+      textAlign='center'
+    >
+      {location.pathname !== '/' && (
+        <Button
+          onClick={() => navigate(-1)}
+          colorScheme='blue'
+          variant='solid'
+          mb={3}
+        >
+          &larr; Go Back
+        </Button>
+      )}
+      <Text>
+        Made with{' '}
+        <span role='img' aria-label='heart' aria-hidden='false'>
+          ❤️
+        </span>{' '}
+        by the CarPoolHub team.
+      </Text>
+    </Box>
   );
 };
 

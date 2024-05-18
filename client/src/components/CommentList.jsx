@@ -1,4 +1,5 @@
 import { useMutation } from '@apollo/client';
+import { Box, Button, Heading, Text, VStack } from '@chakra-ui/react';
 import { REMOVE_COMMENT } from '../utils/mutations';
 import { QUERY_RIDES } from '../utils/queries';
 import Auth from '../utils/auth';
@@ -17,43 +18,48 @@ const CommentList = ({ comments = [], rideId }) => {
   };
 
   if (!comments.length) {
-    return <h3>No Comments Yet</h3>;
+    return (
+      <Heading as='h3' size='md'>
+        No Requests Yet
+      </Heading>
+    );
   }
 
   const currentUser = Auth.loggedIn() ? Auth.getProfile().data.username : null;
 
   return (
-    <>
-      <h3
-        className='p-5 display-inline-block'
-        style={{ borderBottom: '1px dotted #1a1a1a' }}
-      >
+    <Box>
+      <Heading as='h3' size='md' mb={4} borderBottom='1px dotted #1a1a1a'>
         Comments
-      </h3>
-      <div className='flex-row my-4'>
+      </Heading>
+      <VStack spacing={4} align='stretch'>
         {comments.map((comment) => (
-          <div key={comment._id} className='col-12 mb-3 pb-3'>
-            <div className='p-3 bg-dark text-light'>
-              <h5 className='card-header'>
-                {comment.commentAuthor} commented{' '}
-                <span style={{ fontSize: '0.825rem' }}>
-                  on {comment.createdAt}
-                </span>
-              </h5>
-              <p className='card-body'>{comment.commentText}</p>
-              {Auth.loggedIn() && currentUser === comment.commentAuthor && (
-                <button
-                  className='btn btn-danger'
-                  onClick={() => handleRemoveComment(comment._id)}
-                >
-                  Remove Comment
-                </button>
-              )}
-            </div>
-          </div>
+          <Box
+            key={comment._id}
+            p={4}
+            bg='gray.700'
+            color='white'
+            borderRadius='md'
+          >
+            <Heading as='h5' size='sm' mb={2}>
+              {comment.commentAuthor} commented{' '}
+              <Text as='span' fontSize='xs'>
+                on {comment.createdAt}
+              </Text>
+            </Heading>
+            <Text mb={4}>{comment.commentText}</Text>
+            {Auth.loggedIn() && currentUser === comment.commentAuthor && (
+              <Button
+                colorScheme='red'
+                onClick={() => handleRemoveComment(comment._id)}
+              >
+                Remove Comment
+              </Button>
+            )}
+          </Box>
         ))}
-      </div>
-    </>
+      </VStack>
+    </Box>
   );
 };
 

@@ -1,16 +1,24 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Textarea,
+  Text,
+  useToast,
+} from '@chakra-ui/react';
 
 import { ADD_COMMENT } from '../utils/mutations';
-
 import Auth from '../utils/auth';
 
 const CommentForm = ({ rideId }) => {
   const [commentText, setCommentText] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
-
   const [addComment, { error }] = useMutation(ADD_COMMENT);
+  const toast = useToast();
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -18,15 +26,29 @@ const CommentForm = ({ rideId }) => {
     try {
       const { data } = await addComment({
         variables: {
-          rideId, // Ensure rideId is passed here
+          rideId,
           commentText,
           commentAuthor: Auth.getProfile().data.username,
         },
       });
 
       setCommentText('');
+      toast({
+        title: 'Comment added.',
+        description: 'Your comment has been added successfully.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
     } catch (err) {
       console.error(err);
+      toast({
+        title: 'Error adding comment.',
+        description: err.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
@@ -40,53 +62,48 @@ const CommentForm = ({ rideId }) => {
   };
 
   return (
-    <div>
-      <h4>What are your thoughts on this ride?</h4>
+    <Box>
+      <Text fontSize='xl' mb={4}>
+        Do you need a lift?
+      </Text>
 
       {Auth.loggedIn() ? (
         <>
-          <p
-            className={`m-0 ${
-              characterCount === 280 || error ? 'text-danger' : ''
-            }`}
+          <Text
+            mb={2}
+            color={characterCount === 280 || error ? 'red.500' : 'black'}
           >
             Character Count: {characterCount}/280
-            {error && <span className='ml-2'>{error.message}</span>}
-          </p>
-          <form
-            className='flex-row justify-center justify-space-between-md align-center'
-            onSubmit={handleFormSubmit}
-          >
-            <div className='col-12 col-lg-9'>
-              <textarea
-                name='commentText'
-                placeholder='Add your comment...'
-                value={commentText}
-                className='form-input w-100'
-                style={{ lineHeight: '1.5', resize: 'vertical' }}
-                onChange={handleChange}
-              ></textarea>
-            </div>
-
-            <div className='col-12 col-lg-3'>
-              <button className='btn btn-primary btn-block py-3' type='submit'>
-                Add Comment
-              </button>
-            </div>
             {error && (
-              <div className='col-12 my-3 bg-danger text-white p-3'>
+              <Text ml={2} color='red.500'>
                 {error.message}
-              </div>
+              </Text>
             )}
+          </Text>
+          <form onSubmit={handleFormSubmit}>
+            <FormControl mb={4}>
+              <FormLabel htmlFor='commentText'>Add your request</FormLabel>
+              <Textarea
+                id='commentText'
+                name='commentText'
+                placeholder='Add your request...'
+                value={commentText}
+                onChange={handleChange}
+                resize='vertical'
+              />
+            </FormControl>
+            <Button colorScheme='blue' type='submit'>
+              Request Ride
+            </Button>
           </form>
         </>
       ) : (
-        <p>
-          You need to be logged in to share your thoughts. Please{' '}
+        <Text>
+          You need to be logged in to request the ride. Please{' '}
           <Link to='/login'>login</Link> or <Link to='/signup'>signup.</Link>
-        </p>
+        </Text>
       )}
-    </div>
+    </Box>
   );
 };
 

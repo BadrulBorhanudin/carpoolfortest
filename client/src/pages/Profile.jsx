@@ -1,5 +1,6 @@
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
+import { Box, Heading, Spinner, Text } from '@chakra-ui/react';
 
 import RideForm from '../components/RideForm';
 import RideList from '../components/RideList';
@@ -26,21 +27,23 @@ const Profile = () => {
   });
 
   const user = data?.me || data?.user || {};
-  // navigate to personal profile page if username is yours
+
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Navigate to='/me' />;
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   if (!user?.username) {
     return (
-      <h4>
-        You need to be logged in to see this. Use the navigation links above to
-        sign up or log in!
-      </h4>
+      <Box>
+        <Heading as='h4' size='md'>
+          You need to be logged in to see this. Use the navigation links above
+          to sign up or log in!
+        </Heading>
+      </Box>
     );
   }
 
@@ -53,31 +56,36 @@ const Profile = () => {
   };
 
   return (
-    <div>
-      <div className='flex-row justify-center mb-3'>
-        <h2 className='col-12 col-md-10 bg-dark text-light p-3 mb-5'>
+    <Box>
+      <Box textAlign='center' mb={5}>
+        <Heading
+          as='h2'
+          size='lg'
+          bg='blue.500'
+          color='white'
+          p={3}
+          borderRadius='md'
+        >
           Viewing {userParam ? `${user.username}'s` : 'your'} profile.
-        </h2>
+        </Heading>
+      </Box>
 
-        <div className='col-12 col-md-10 mb-5'>
-          <RideList
-            rides={user.rides}
-            title={`${user.username}'s rides...`}
-            showTitle={false}
-            showUsername={false}
-            handleRemoveRide={userParam ? null : handleRemoveRide} // Pass handleRemoveRide only if it's the user's own profile
-          />
-        </div>
-        {!userParam && (
-          <div
-            className='col-12 col-md-10 mb-3 p-3'
-            style={{ border: '1px dotted #1a1a1a' }}
-          >
-            <RideForm />
-          </div>
-        )}
-      </div>
-    </div>
+      <Box mb={5}>
+        <RideList
+          rides={user.rides}
+          title={`${user.username}'s rides...`}
+          showTitle={false}
+          showUsername={false}
+          handleRemoveRide={userParam ? null : handleRemoveRide}
+        />
+      </Box>
+
+      {!userParam && (
+        <Box p={3} mb={3}>
+          <RideForm />
+        </Box>
+      )}
+    </Box>
   );
 };
 

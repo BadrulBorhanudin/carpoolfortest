@@ -1,72 +1,72 @@
 [
   {
-    "origin": "New York",
-    "destination": "Los Angeles",
+    "origin": "Sydney",
+    "destination": "Melbourne",
     "date": "2024-06-01",
-    "time": "08:00 AM",
+    "time": "08:00",
     "rideAuthor": "Brian Kernighan"
   },
   {
-    "origin": "San Francisco",
-    "destination": "Seattle",
+    "origin": "Brisbane",
+    "destination": "Sydney",
     "date": "2024-06-02",
-    "time": "09:00 AM",
+    "time": "09:00",
     "rideAuthor": "Max Kanat-Alexander"
   },
   {
-    "origin": "Austin",
-    "destination": "Houston",
+    "origin": "Perth",
+    "destination": "Adelaide",
     "date": "2024-06-03",
-    "time": "10:00 AM",
+    "time": "10:00",
     "rideAuthor": "Why The Lucky Stiff"
   },
   {
-    "origin": "Chicago",
-    "destination": "New York",
+    "origin": "Hobart",
+    "destination": "Launceston",
     "date": "2024-06-04",
-    "time": "11:00 AM",
+    "time": "11:00",
     "rideAuthor": "Kent Beck"
   },
   {
-    "origin": "Boston",
-    "destination": "Philadelphia",
+    "origin": "Canberra",
+    "destination": "Sydney",
     "date": "2024-06-05",
-    "time": "12:00 PM",
+    "time": "12:00",
     "rideAuthor": "Edward V. Berard"
   },
   {
-    "origin": "Denver",
-    "destination": "Las Vegas",
+    "origin": "Darwin",
+    "destination": "Alice Springs",
     "date": "2024-06-06",
-    "time": "01:00 PM",
+    "time": "13:00",
     "rideAuthor": "Alan Kay"
   },
   {
-    "origin": "Miami",
-    "destination": "Orlando",
+    "origin": "Cairns",
+    "destination": "Townsville",
     "date": "2024-06-07",
-    "time": "02:00 PM",
+    "time": "14:00",
     "rideAuthor": "C.A.R. Hoare"
   },
   {
-    "origin": "Dallas",
-    "destination": "San Antonio",
+    "origin": "Gold Coast",
+    "destination": "Brisbane",
     "date": "2024-06-08",
-    "time": "03:00 PM",
+    "time": "15:00",
     "rideAuthor": "David Thomas"
   },
   {
-    "origin": "Portland",
-    "destination": "Salt Lake City",
+    "origin": "Newcastle",
+    "destination": "Sydney",
     "date": "2024-06-09",
-    "time": "04:00 PM",
+    "time": "16:00",
     "rideAuthor": "Donald Knuth"
   },
   {
-    "origin": "Phoenix",
-    "destination": "San Diego",
+    "origin": "Geelong",
+    "destination": "Melbourne",
     "date": "2024-06-10",
-    "time": "05:00 PM",
+    "time": "17:00",
     "rideAuthor": "Lernantino"
   }
 ]
