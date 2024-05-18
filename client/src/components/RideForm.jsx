@@ -18,8 +18,8 @@ const RideForm = () => {
 
   const [addRide, { error }] = useMutation(ADD_RIDE, {
     refetchQueries: [
-      { query: QUERY_RIDES }, // Adjust to the correct format
-      { query: QUERY_ME }, // Adjust to the correct format
+      { query: QUERY_RIDES },
+      { query: QUERY_ME },
     ],
   });
 

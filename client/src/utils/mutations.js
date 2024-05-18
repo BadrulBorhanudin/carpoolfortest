@@ -68,3 +68,38 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+export const REMOVE_RIDE = gql`
+  mutation removeRide($rideId: ID!) {
+    removeRide(rideId: $rideId) {
+      _id
+      origin
+      destination
+      rideAuthor
+      createdAt
+      comments {
+        _id
+        commentText
+        createdAt
+      }
+    }
+  }
+`;
+
+export const REMOVE_COMMENT = gql`
+  mutation removeComment($rideId: ID!, $commentId: ID!) {
+    removeComment(rideId: $rideId, commentId: $commentId) {
+      _id
+      origin
+      destination
+      rideAuthor
+      createdAt
+      comments {
+        _id
+        commentText
+        createdAt
+      }
+    }
+  }
+`;
+
