@@ -9,7 +9,7 @@ import { QUERY_SINGLE_RIDE } from '../utils/queries';
 
 const SingleRide = () => {
   // Use `useParams()` to retrieve value of the route parameter `:rideId`
-  const { rideId } = useParams();
+  const { id: rideId } = useParams();
 
   const { loading, data } = useQuery(QUERY_SINGLE_RIDE, {
     // pass URL parameter
@@ -40,12 +40,14 @@ const SingleRide = () => {
           }}
         >
           Origin: {ride.origin} <br />
-          Destination: {ride.destination}
+          Destination: {ride.destination} <br />
+          Date: {ride.date} <br />
+          Time: {ride.time}
         </blockquote>
       </div>
 
       <div className='my-5'>
-        <CommentList comments={ride.comments} />
+        <CommentList comments={ride.comments} rideId={ride._id} />
       </div>
       <div className='m-3 p-4' style={{ border: '1px dotted #1a1a1a' }}>
         <CommentForm rideId={ride._id} />

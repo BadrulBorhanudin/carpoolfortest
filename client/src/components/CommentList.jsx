@@ -1,7 +1,26 @@
-const CommentList = ({ comments = [] }) => {
+import { useMutation } from '@apollo/client';
+import { REMOVE_COMMENT } from '../utils/mutations';
+import { QUERY_RIDES } from '../utils/queries';
+import Auth from '../utils/auth';
+
+const CommentList = ({ comments = [], rideId }) => {
+  const [removeComment] = useMutation(REMOVE_COMMENT, {
+    refetchQueries: [{ query: QUERY_RIDES }],
+  });
+
+  const handleRemoveComment = async (commentId) => {
+    try {
+      await removeComment({ variables: { rideId, commentId } });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   if (!comments.length) {
     return <h3>No Comments Yet</h3>;
   }
+
+  const currentUser = Auth.loggedIn() ? Auth.getProfile().data.username : null;
 
   return (
     <>
@@ -12,20 +31,27 @@ const CommentList = ({ comments = [] }) => {
         Comments
       </h3>
       <div className='flex-row my-4'>
-        {comments &&
-          comments.map((comment) => (
-            <div key={comment._id} className='col-12 mb-3 pb-3'>
-              <div className='p-3 bg-dark text-light'>
-                <h5 className='card-header'>
-                  {comment.commentAuthor} commented{' '}
-                  <span style={{ fontSize: '0.825rem' }}>
-                    on {comment.createdAt}
-                  </span>
-                </h5>
-                <p className='card-body'>{comment.commentText}</p>
-              </div>
+        {comments.map((comment) => (
+          <div key={comment._id} className='col-12 mb-3 pb-3'>
+            <div className='p-3 bg-dark text-light'>
+              <h5 className='card-header'>
+                {comment.commentAuthor} commented{' '}
+                <span style={{ fontSize: '0.825rem' }}>
+                  on {comment.createdAt}
+                </span>
+              </h5>
+              <p className='card-body'>{comment.commentText}</p>
+              {Auth.loggedIn() && currentUser === comment.commentAuthor && (
+                <button
+                  className='btn btn-danger'
+                  onClick={() => handleRemoveComment(comment._id)}
+                >
+                  Remove Comment
+                </button>
+              )}
             </div>
-          ))}
+          </div>
+        ))}
       </div>
     </>
   );
