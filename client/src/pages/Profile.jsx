@@ -1,15 +1,25 @@
 import { Navigate, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 
 import RideForm from '../components/RideForm';
 import RideList from '../components/RideList';
 
-import { QUERY_USER, QUERY_ME } from '../utils/queries';
+import { QUERY_USER, QUERY_ME, QUERY_RIDES } from '../utils/queries';
+import { REMOVE_RIDE } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 
 const Profile = () => {
   const { username: userParam } = useParams();
+  const [removeRide] = useMutation(REMOVE_RIDE, {
+    refetchQueries: [
+      { query: QUERY_RIDES },
+      {
+        query: userParam ? QUERY_USER : QUERY_ME,
+        variables: { username: userParam },
+      },
+    ],
+  });
 
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
@@ -34,6 +44,14 @@ const Profile = () => {
     );
   }
 
+  const handleRemoveRide = async (rideId) => {
+    try {
+      await removeRide({ variables: { rideId } });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div>
       <div className='flex-row justify-center mb-3'>
@@ -47,6 +65,7 @@ const Profile = () => {
             title={`${user.username}'s rides...`}
             showTitle={false}
             showUsername={false}
+            handleRemoveRide={userParam ? null : handleRemoveRide} // Pass handleRemoveRide only if it's the user's own profile
           />
         </div>
         {!userParam && (
