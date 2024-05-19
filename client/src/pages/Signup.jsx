@@ -1,12 +1,23 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
-
 import Auth from '../utils/auth';
+import {
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Input,
+  useDisclosure,
+  Alert,
+  AlertIcon,
+  Box,
+} from '@chakra-ui/react';
 
-const Signup = () => {
+const Signup = ({ isOpen, onOpen, onClose }) => {
   const [formState, setFormState] = useState({
     username: '',
     email: '',
@@ -16,7 +27,6 @@ const Signup = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     setFormState({
       ...formState,
       [name]: value,
@@ -25,75 +35,79 @@ const Signup = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
-
     try {
       const { data } = await addUser({
         variables: { ...formState },
       });
-
       Auth.login(data.addUser.token);
     } catch (e) {
       console.error(e);
     }
+    setFormState({
+      username: '',
+      email: '',
+      password: '',
+    });
   };
 
   return (
-    <main className='flex-row justify-center mb-4'>
-      <div className='col-12 col-lg-10'>
-        <div className='card'>
-          <h4 className='card-header bg-dark text-light p-2'>Sign Up</h4>
-          <div className='card-body'>
+    <>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Sign Up</ModalHeader>
+          <ModalBody>
             {data ? (
-              <p>
+              <Box>
                 Success! You may now head{' '}
                 <Link to='/'>back to the homepage.</Link>
-              </p>
+              </Box>
             ) : (
               <form onSubmit={handleFormSubmit}>
-                <input
-                  className='form-input'
+                <Input
                   placeholder='Your username'
                   name='username'
                   type='text'
-                  value={formState.name}
+                  value={formState.username}
                   onChange={handleChange}
+                  mb={4}
                 />
-                <input
-                  className='form-input'
+                <Input
                   placeholder='Your email'
                   name='email'
                   type='email'
                   value={formState.email}
                   onChange={handleChange}
+                  mb={4}
                 />
-                <input
-                  className='form-input'
+                <Input
                   placeholder='******'
                   name='password'
                   type='password'
                   value={formState.password}
                   onChange={handleChange}
+                  mb={4}
                 />
-                <button
-                  className='btn btn-block btn-primary'
-                  style={{ cursor: 'pointer' }}
-                  type='submit'
-                >
+                <Button colorScheme='teal' type='submit'>
                   Submit
-                </button>
+                </Button>
               </form>
             )}
-
             {error && (
-              <div className='my-3 p-3 bg-danger text-white'>
+              <Alert status='error' mt={4}>
+                <AlertIcon />
                 {error.message}
-              </div>
+              </Alert>
             )}
-          </div>
-        </div>
-      </div>
-    </main>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={onClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 

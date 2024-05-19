@@ -1,44 +1,109 @@
+import React from 'react';
+import {
+  Flex,
+  Button,
+  ButtonGroup,
+  Image,
+  Box,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
+import carpoolLogo from '../assets/banner.svg';
+import Auth from '../utils/auth';
+import Login from '../pages/Login';
+import Signup from '../pages/Signup';
 import { Link } from 'react-router-dom';
 
-import Auth from '../utils/auth';
-
 const Header = () => {
+  const {
+    isOpen: isLoginOpen,
+    onOpen: onLoginOpen,
+    onClose: onLoginClose,
+  } = useDisclosure();
+  const {
+    isOpen: isSignupOpen,
+    onOpen: onSignupOpen,
+    onClose: onSignupClose,
+  } = useDisclosure();
+
   const logout = (event) => {
     event.preventDefault();
     Auth.logout();
   };
+
   return (
-    <header className='bg-primary text-light mb-4 py-3 flex-row align-center'>
-      <div className='container flex-row justify-space-between-lg justify-center align-center'>
-        <div>
-          <Link className='text-light' to='/'>
-            <h1 className='m-0'>CarPoolHub</h1>
-          </Link>
-          <p className='m-0'>Let's Share Our Ride.</p>
-        </div>
-        <div>
-          {Auth.loggedIn() ? (
-            <>
-              <Link className='btn btn-lg btn-info m-2' to='/me'>
-                {Auth.getProfile().data.username}'s profile
-              </Link>
-              <button className='btn btn-lg btn-light m-2' onClick={logout}>
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link className='btn btn-lg btn-info m-2' to='/login'>
-                Login
-              </Link>
-              <Link className='btn btn-lg btn-light m-2' to='/signup'>
-                Signup
-              </Link>
-            </>
-          )}
-        </div>
-      </div>
-    </header>
+    <Flex
+      as='header'
+      p='2'
+      justifyContent='center'
+      alignItems='center'
+      height='350px'
+    >
+      <Flex
+        width='100%'
+        maxW='850px'
+        mx='auto'
+        flexDirection={['column', null, 'row']}
+        justifyContent='center'
+        alignItems='center'
+      >
+        <Box textAlign={['center', null, 'left']} mb={['4', null, '0']}>
+          <Text
+            fontSize={['5xl', null, '5xl', '7xl']}
+            fontWeight='bold'
+            color='#150035'
+            mb='-7'
+          >
+            CARPOOL
+          </Text>
+          <Text
+            fontSize={['4xl', null, '5xl', '7xl']}
+            fontWeight='bold'
+            color='#150035'
+          >
+            HUB
+          </Text>
+          <ButtonGroup
+            size='md'
+            isAttached
+            variant='outline'
+            colorScheme='gray'
+            mt=''
+          >
+            {Auth.loggedIn() ? (
+              <>
+                <Link to='/me' style={{ textDecoration: 'none' }}>
+                  <Button borderRadius='full' mr='px'>
+                    {Auth.getProfile().data.username}'s profile
+                  </Button>
+                </Link>
+                <Button borderRadius='full' ml='-px' onClick={logout}>
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button borderRadius='full' mr='px' onClick={onLoginOpen}>
+                  Login
+                </Button>
+                <Login isOpen={isLoginOpen} onClose={onLoginClose} />
+                <Button borderRadius='full' ml='px' onClick={onSignupOpen}>
+                  Sign Up
+                </Button>
+                <Signup isOpen={isSignupOpen} onClose={onSignupClose} />
+              </>
+            )}
+          </ButtonGroup>
+        </Box>
+        <Image
+          src={carpoolLogo}
+          alt='Logo'
+          mt={['-10', null, '0']}
+          boxSize={['230px', null, '500px']}
+          pl={['0', null, '10']}
+        />
+      </Flex>
+    </Flex>
   );
 };
 

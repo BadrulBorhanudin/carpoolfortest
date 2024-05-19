@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
+import { Box, Button, Flex, Heading, Text, useToast } from '@chakra-ui/react';
 import { REMOVE_COMMENT } from '../utils/mutations';
 import { QUERY_RIDES } from '../utils/queries';
 import Auth from '../utils/auth';
@@ -15,84 +16,127 @@ const RideList = ({
     refetchQueries: [{ query: QUERY_RIDES }],
   });
 
+  const toast = useToast();
+
   const handleRemoveComment = async (rideId, commentId) => {
     try {
       await removeComment({ variables: { rideId, commentId } });
+      toast({
+        title: 'Comment removed.',
+        description: 'The comment has been removed successfully.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
     } catch (err) {
       console.error(err);
+      toast({
+        title: 'Error removing comment.',
+        description: err.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
   if (!rides.length) {
-    return <h3>No Rides Yet</h3>;
+    return (
+      <Heading as='h3' size='lg' mb={4}>
+        No Rides Yet
+      </Heading>
+    );
   }
 
   const currentUser = Auth.loggedIn() ? Auth.getProfile().data.username : null;
 
   return (
-    <div>
-      {showTitle && <h3>{title}</h3>}
+    <Box>
+      {showTitle && (
+        <Heading as='h3' size='lg' mb={4}>
+          {title}
+        </Heading>
+      )}
       {rides.map((ride) => (
-        <div key={ride._id} className='card mb-3'>
-          <h4 className='card-header bg-primary text-light p-2 m-0'>
-            {showUsername ? (
-              <Link className='text-light' to={`/profiles/${ride.rideAuthor}`}>
-                {ride.rideAuthor} <br />
-                <span style={{ fontSize: '1rem' }}>
-                  posted this ride on {ride.createdAt}
-                </span>
-              </Link>
-            ) : (
-              <>
-                <span style={{ fontSize: '1rem' }}>
+        <Box
+          key={ride._id}
+          borderWidth='1px'
+          borderRadius='lg'
+          overflow='hidden'
+          mb={4}
+        >
+          <Flex alignItems='center' bg='blue.500' color='white' p={4}>
+            <Box flex='1'>
+              {showUsername ? (
+                <Link to={`/profiles/${ride.rideAuthor}`}>
+                  <Text fontWeight='bold' fontSize='lg'>
+                    {ride.rideAuthor}
+                  </Text>
+                  <Text fontSize='sm'>
+                    posted this ride on {ride.createdAt}
+                  </Text>
+                </Link>
+              ) : (
+                <Text fontSize='sm'>
                   You posted this ride on {ride.createdAt}
-                </span>
-              </>
-            )}
+                </Text>
+              )}
+            </Box>
             {handleRemoveRide && (
-              <button
-                className='btn btn-danger ml-3'
+              <Button
+                colorScheme='red'
                 onClick={() => handleRemoveRide(ride._id)}
               >
                 Remove
-              </button>
+              </Button>
             )}
-          </h4>
-          <div className='card-body bg-light p-2'>
-            <p>Origin: {ride.origin}</p>
-            <p>Destination: {ride.destination}</p>
-            <p>Date: {ride.date}</p>
-            <p>Time: {ride.time}</p>
+          </Flex>
+          <Box p={4}>
+            <Text>
+              <strong>Origin:</strong> {ride.origin}
+            </Text>
+            <Text>
+              <strong>Destination:</strong> {ride.destination}
+            </Text>
+            <Text>
+              <strong>Date:</strong> {ride.date}
+            </Text>
+            <Text>
+              <strong>Time:</strong> {ride.time}
+            </Text>
             {ride.comments &&
               ride.comments.map((comment) => (
-                <div
+                <Box
                   key={comment._id}
-                  className='p-2 m-2 border border-dark rounded'
+                  p={2}
+                  mt={2}
+                  borderWidth='1px'
+                  borderRadius='lg'
                 >
-                  <p>{comment.commentText}</p>
-                  <p>
+                  <Text>{comment.commentText}</Text>
+                  <Text fontSize='sm'>
                     by {comment.commentAuthor} on {comment.createdAt}
-                  </p>
+                  </Text>
                   {Auth.loggedIn() && currentUser === comment.commentAuthor && (
-                    <button
-                      className='btn btn-danger'
+                    <Button
+                      colorScheme='red'
+                      size='sm'
                       onClick={() => handleRemoveComment(ride._id, comment._id)}
                     >
                       Remove Comment
-                    </button>
+                    </Button>
                   )}
-                </div>
+                </Box>
               ))}
-          </div>
-          <Link
-            className='btn btn-primary btn-block btn-squared'
-            to={`/rides/${ride._id}`}
-          >
-            Join the discussion on this ride.
+          </Box>
+          <Link to={`/rides/${ride._id}`}>
+            <Button colorScheme='blue' width='100%' borderRadius='0' textDecoration='underline'>
+              Join this ride.
+            </Button>
           </Link>
-        </div>
+        </Box>
       ))}
-    </div>
+    </Box>
   );
 };
 

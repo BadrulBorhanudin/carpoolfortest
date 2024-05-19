@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { Box, Flex, Spinner, Text } from '@chakra-ui/react';
 
 import RideList from '../components/RideList';
 import RideForm from '../components/RideForm';
@@ -11,21 +12,22 @@ const Home = () => {
 
   return (
     <main>
-      <div className='flex-row justify-center'>
-        <div
-          className='col-12 col-md-10 mb-3 p-3'
-          style={{ border: '1px dotted #1a1a1a' }}
+      <Flex justify='center' align='center' direction='column'>
+        <Box
+          w={{ base: '100%', md: '80%' }}
+          p={3}
+          mb={4}
         >
           <RideForm />
-        </div>
-        <div className='col-12 col-md-8 mb-3'>
+        </Box>
+        <Box w={{ base: '100%', md: '60%' }} p={3}>
           {loading ? (
-            <div>Loading...</div>
+            <Spinner size='xl' />
           ) : (
             <RideList rides={rides} title='Available Rides...' />
           )}
-        </div>
-      </div>
+        </Box>
+      </Flex>
     </main>
   );
 };

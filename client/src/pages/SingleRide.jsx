@@ -1,6 +1,6 @@
-// Import the `useParams()` hook
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
+import { Box, Heading, Text, Spinner, Divider } from '@chakra-ui/react';
 
 import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
@@ -8,51 +8,54 @@ import CommentForm from '../components/CommentForm';
 import { QUERY_SINGLE_RIDE } from '../utils/queries';
 
 const SingleRide = () => {
-  // Use `useParams()` to retrieve value of the route parameter `:rideId`
   const { id: rideId } = useParams();
 
   const { loading, data } = useQuery(QUERY_SINGLE_RIDE, {
-    // pass URL parameter
     variables: { rideId: rideId },
   });
 
   const ride = data?.ride || {};
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
+
   return (
-    <div className='my-3'>
-      <h3 className='card-header bg-dark text-light p-2 m-0'>
+    <Box my={3}>
+      <Heading
+        as='h3'
+        size='lg'
+        bg='blue.500'
+        color='white'
+        p={2}
+        mb={4}
+        borderRadius='md'
+      >
         {ride.rideAuthor} <br />
-        <span style={{ fontSize: '1rem' }}>
-          posted this ride on {ride.createdAt}
-        </span>
-      </h3>
-      <div className='bg-light py-4'>
-        <blockquote
-          className='p-4'
-          style={{
-            fontSize: '1.5rem',
-            fontStyle: 'italic',
-            border: '2px dotted #1a1a1a',
-            lineHeight: '1.5',
-          }}
+        <Text fontSize='md'>posted this ride on {ride.createdAt}</Text>
+      </Heading>
+      <Box bg='gray.100' py={4} px={2} borderRadius='md'>
+        <Text
+          fontSize='xl'
+          fontStyle='italic'
+          border='2px dotted #1a1a1a'
+          p={4}
+          mb={4}
         >
           Origin: {ride.origin} <br />
           Destination: {ride.destination} <br />
           Date: {ride.date} <br />
           Time: {ride.time}
-        </blockquote>
-      </div>
-
-      <div className='my-5'>
+        </Text>
+      </Box>
+      <Divider my={5} />
+      <Box my={5}>
         <CommentList comments={ride.comments} rideId={ride._id} />
-      </div>
-      <div className='m-3 p-4' style={{ border: '1px dotted #1a1a1a' }}>
+      </Box>
+      <Box m={3} p={4} border='1px dotted #1a1a1a' borderRadius='md'>
         <CommentForm rideId={ride._id} />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
