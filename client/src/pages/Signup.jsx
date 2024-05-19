@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Button,
   Modal,
@@ -15,6 +16,7 @@ import {
   Alert,
   AlertIcon,
   Box,
+  Link,
 } from '@chakra-ui/react';
 
 const Signup = ({ isOpen, onOpen, onClose }) => {
@@ -60,7 +62,9 @@ const Signup = ({ isOpen, onOpen, onClose }) => {
             {data ? (
               <Box>
                 Success! You may now head{' '}
-                <Link to='/'>back to the homepage.</Link>
+                <Link as={RouterLink} to='/'>
+                  back to the homepage.
+                </Link>
               </Box>
             ) : (
               <form onSubmit={handleFormSubmit}>
