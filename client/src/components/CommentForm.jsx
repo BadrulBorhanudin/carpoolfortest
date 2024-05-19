@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import {
   Box,
@@ -9,12 +8,26 @@ import {
   Textarea,
   Text,
   useToast,
+  useDisclosure,
 } from '@chakra-ui/react';
 
 import { ADD_COMMENT } from '../utils/mutations';
 import Auth from '../utils/auth';
+import Login from '../pages/Login';
+import Signup from '../pages/Signup';
 
 const CommentForm = ({ rideId }) => {
+  const {
+    isOpen: isLoginOpen,
+    onOpen: onLoginOpen,
+    onClose: onLoginClose,
+  } = useDisclosure();
+  const {
+    isOpen: isSignupOpen,
+    onOpen: onSignupOpen,
+    onClose: onSignupClose,
+  } = useDisclosure();
+
   const [commentText, setCommentText] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
   const [addComment, { error }] = useMutation(ADD_COMMENT);
@@ -24,7 +37,7 @@ const CommentForm = ({ rideId }) => {
     event.preventDefault();
 
     try {
-      const { data } = await addComment({
+      await addComment({
         variables: {
           rideId,
           commentText,
@@ -100,9 +113,18 @@ const CommentForm = ({ rideId }) => {
       ) : (
         <Text>
           You need to be logged in to request the ride. Please{' '}
-          <Link to='/login'>login</Link> or <Link to='/signup'>signup.</Link>
+          <Button variant='link' colorScheme='blue' onClick={onLoginOpen}>
+            login
+          </Button>{' '}
+          or{' '}
+          <Button variant='link' colorScheme='blue' onClick={onSignupOpen}>
+            signup
+          </Button>
+          .
         </Text>
       )}
+      <Login isOpen={isLoginOpen} onClose={onLoginClose} />
+      <Signup isOpen={isSignupOpen} onClose={onSignupClose} />
     </Box>
   );
 };
