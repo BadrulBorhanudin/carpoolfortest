@@ -164,19 +164,26 @@ const RideForm = () => {
             mb={2}
           />
         </FormControl>
-        <FormControl display='flex' alignItems='center' mb={4}>
-          <FormLabel htmlFor='isDriver' mb='0'>
-            Are you a driver?
-          </FormLabel>
-          <Switch
-            id='isDriver'
-            isChecked={isDriver}
-            onChange={() => setIsDriver(!isDriver)}
-          />
+        <FormControl
+          display='flex'
+          alignItems='center'
+          justifyContent='space-between'
+          mb={4}
+        >
+          <HStack>
+            <FormLabel htmlFor='isDriver' mb='0'>
+              Are you a driver?
+            </FormLabel>
+            <Switch
+              id='isDriver'
+              isChecked={isDriver}
+              onChange={() => setIsDriver(!isDriver)}
+            />
+          </HStack>
+          <Button colorScheme='blue' type='submit' rounded='full'>
+            Submit route
+          </Button>
         </FormControl>
-        <Button colorScheme='blue' type='submit' rounded='full' width='100%'>
-          Submit route
-        </Button>
         {error && (
           <Text color='red.500' mt={4}>
             {error.message}
