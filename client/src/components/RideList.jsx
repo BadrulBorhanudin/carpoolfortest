@@ -73,12 +73,12 @@ const RideList = ({
                     {ride.rideAuthor}
                   </Text>
                   <Text fontSize='sm'>
-                    posted this ride on {ride.createdAt}
+                    posted this ride {ride.createdAt}
                   </Text>
                 </Link>
               ) : (
                 <Text fontSize='sm'>
-                  You posted this ride on {ride.createdAt}
+                  You posted this ride {ride.createdAt}
                 </Text>
               )}
             </Box>
@@ -118,7 +118,7 @@ const RideList = ({
                 >
                   <Text>{comment.commentText}</Text>
                   <Text fontSize='sm'>
-                    by {comment.commentAuthor} on {comment.createdAt}
+                    by {comment.commentAuthor} {comment.createdAt}
                   </Text>
                   {Auth.loggedIn() && currentUser === comment.commentAuthor && (
                     <Button
