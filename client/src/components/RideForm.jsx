@@ -107,13 +107,14 @@ const RideForm = () => {
       bg='white'
       p={6}
       rounded='md'
-      boxShadow='md'
       width='100%'
       maxW='900px'
+      borderColor='gray.300'
+      borderWidth='1px'
       mx='auto'
     >
       <form onSubmit={handleFormSubmit}>
-        <Text fontSize='xl' mb={4} textAlign='center'>
+        <Text fontSize='2xl' mb={4} textAlign='center' fontWeight='bold'>
           Where are you heading to?
         </Text>
         <FormControl mb={4}>

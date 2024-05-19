@@ -13,6 +13,16 @@ import Auth from '../utils/auth';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import { Link } from 'react-router-dom';
+import { Avatar, AvatarBadge, AvatarGroup } from '@chakra-ui/react';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverBody,
+} from '@chakra-ui/react';
 
 const Header = () => {
   const {
@@ -41,7 +51,7 @@ const Header = () => {
     >
       <Flex
         width='100%'
-        maxW='850px'
+        maxW='900px'
         mx='auto'
         flexDirection={['column', null, 'row']}
         justifyContent='center'
@@ -74,14 +84,57 @@ const Header = () => {
           >
             {Auth.loggedIn() ? (
               <>
+                <Flex align='center'>
+                  <Popover placement='bottom-start'>
+                    <PopoverTrigger>
+                      <Avatar
+                        name={Auth.getProfile().data.username}
+                        cursor='pointer'
+                      />
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <PopoverHeader fontWeight='semibold'>
+                        <Flex align='center'>
+                          <Avatar
+                            name={Auth.getProfile().data.username}
+                            cursor='pointer'
+                          />
+                          <Link
+                            to='/me'
+                            style={{
+                              textDecoration: 'none',
+                              marginLeft: '8px',
+                            }}
+                          >
+                            <Text>
+                              {Auth.getProfile().data.username}'s profile
+                            </Text>
+                          </Link>
+                        </Flex>
+                      </PopoverHeader>
+                      <PopoverArrow />
+                      <PopoverCloseButton />
+                      <PopoverBody>
+                        <Button borderRadius='full' onClick={logout}>
+                          Logout
+                        </Button>
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
+                  <Text fontSize='2xl' fontWeight='bold' ml={2}>
+                    {' '}
+                    Hi, {Auth.getProfile().data.username}
+                  </Text>
+                </Flex>
                 <Link to='/me' style={{ textDecoration: 'none' }}>
-                  <Button borderRadius='full' mr='px'>
-                    {Auth.getProfile().data.username}'s profile
-                  </Button>
-                </Link>
-                <Button borderRadius='full' ml='-px' onClick={logout}>
+                  {/* <Flex align="center">
+        <Avatar name={Auth.getProfile().data.username} />
+        <Text ml={2}>{Auth.getProfile().data.username}'s profile</Text>
+        <Button borderRadius='full' ml='5px' onClick={logout}>
                   Logout
                 </Button>
+      </Flex> */}
+                </Link>
               </>
             ) : (
               <>
@@ -101,7 +154,7 @@ const Header = () => {
           src={carpoolLogo}
           alt='Logo'
           mt={['-10', null, '0']}
-          boxSize={['230px', null, '500px']}
+          boxSize={['220px', null, '470px']}
           pl={['0', null, '10']}
         />
       </Flex>

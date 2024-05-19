@@ -12,6 +12,7 @@ const Footer = () => {
           colorScheme='blue'
           variant='solid'
           mb={3}
+          rounded='full'
         >
           &larr; Go Back
         </Button>

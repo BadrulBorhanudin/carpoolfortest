@@ -10,6 +10,7 @@ import { Outlet } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme';
 import Header from './components/Header';
+import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import Layout from './components/Layout';
 
@@ -39,6 +40,7 @@ function App() {
         <div className='flex-column justify-flex-start min-100-vh'>
           <Header />
           <Layout>
+            <Navigation />
             <Outlet />
           </Layout>
           <Footer />
