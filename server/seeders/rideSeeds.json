@@ -4,69 +4,79 @@
     "destination": "Melbourne",
     "date": "2024-06-01",
     "time": "08:00",
-    "rideAuthor": "Brian Kernighan"
+    "rideAuthor": "Brian Kernighan",
+    "isDriver": true
   },
   {
     "origin": "Brisbane",
     "destination": "Sydney",
     "date": "2024-06-02",
     "time": "09:00",
-    "rideAuthor": "Max Kanat-Alexander"
+    "rideAuthor": "Max Kanat-Alexander",
+    "isDriver": false
   },
   {
     "origin": "Perth",
     "destination": "Adelaide",
     "date": "2024-06-03",
     "time": "10:00",
-    "rideAuthor": "Why The Lucky Stiff"
+    "rideAuthor": "Why The Lucky Stiff",
+    "isDriver": true
   },
   {
     "origin": "Hobart",
     "destination": "Launceston",
     "date": "2024-06-04",
     "time": "11:00",
-    "rideAuthor": "Kent Beck"
+    "rideAuthor": "Kent Beck",
+    "isDriver": false
   },
   {
     "origin": "Canberra",
     "destination": "Sydney",
     "date": "2024-06-05",
     "time": "12:00",
-    "rideAuthor": "Edward V. Berard"
+    "rideAuthor": "Edward V. Berard",
+    "isDriver": true
   },
   {
     "origin": "Darwin",
     "destination": "Alice Springs",
     "date": "2024-06-06",
     "time": "13:00",
-    "rideAuthor": "Alan Kay"
+    "rideAuthor": "Alan Kay",
+    "isDriver": false
   },
   {
     "origin": "Cairns",
     "destination": "Townsville",
     "date": "2024-06-07",
     "time": "14:00",
-    "rideAuthor": "C.A.R. Hoare"
+    "rideAuthor": "C.A.R. Hoare",
+    "isDriver": true
   },
   {
     "origin": "Gold Coast",
     "destination": "Brisbane",
     "date": "2024-06-08",
     "time": "15:00",
-    "rideAuthor": "David Thomas"
+    "rideAuthor": "David Thomas",
+    "isDriver": false
   },
   {
     "origin": "Newcastle",
     "destination": "Sydney",
     "date": "2024-06-09",
     "time": "16:00",
-    "rideAuthor": "Donald Knuth"
+    "rideAuthor": "Donald Knuth",
+    "isDriver": true
   },
   {
     "origin": "Geelong",
     "destination": "Melbourne",
     "date": "2024-06-10",
     "time": "17:00",
-    "rideAuthor": "Lernantino"
+    "rideAuthor": "Lernantino",
+    "isDriver": false
   }
 ]

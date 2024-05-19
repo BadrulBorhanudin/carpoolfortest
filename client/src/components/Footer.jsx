@@ -5,14 +5,7 @@ const Footer = () => {
   const location = useLocation();
   const navigate = useNavigate();
   return (
-    <Box
-      as='footer'
-      w='100%'
-      bg='blue.600'
-      p={4}
-      color='white'
-      textAlign='center'
-    >
+    <Box as='footer' w='100%' bg='white' p={4} color='black' textAlign='center'>
       {location.pathname !== '/' && (
         <Button
           onClick={() => navigate(-1)}
@@ -28,7 +21,10 @@ const Footer = () => {
         <span role='img' aria-label='heart' aria-hidden='false'>
           ❤️
         </span>{' '}
-        by the CarPoolHub team.
+        by Badrul Borhanudin.
+      </Text>
+      <Text mt={2}>
+        &copy; {new Date().getFullYear()} CarPoolHub. All rights reserved.
       </Text>
     </Box>
   );

@@ -20,6 +20,10 @@ const rideSchema = new Schema({
     type: String,
     required: 'You need to provide a time!',
   },
+  isDriver: {
+    type: Boolean,
+    required: true,
+  },
   rideAuthor: {
     type: String,
     required: true,

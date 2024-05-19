@@ -48,21 +48,23 @@ const Header = () => {
         alignItems='center'
       >
         <Box textAlign={['center', null, 'left']} mb={['4', null, '0']}>
-          <Text
-            fontSize={['5xl', null, '5xl', '7xl']}
-            fontWeight='bold'
-            color='#150035'
-            mb='-7'
-          >
-            CARPOOL
-          </Text>
-          <Text
-            fontSize={['4xl', null, '5xl', '7xl']}
-            fontWeight='bold'
-            color='#150035'
-          >
-            HUB
-          </Text>
+          <Link to='/' style={{ textDecoration: 'none' }}>
+            <Text
+              fontSize={['5xl', null, '5xl', '7xl']}
+              fontWeight='bold'
+              color='#150035'
+              mb='-7'
+            >
+              CARPOOL
+            </Text>
+            <Text
+              fontSize={['4xl', null, '5xl', '7xl']}
+              fontWeight='bold'
+              color='#150035'
+            >
+              HUB
+            </Text>
+          </Link>
           <ButtonGroup
             size='md'
             isAttached

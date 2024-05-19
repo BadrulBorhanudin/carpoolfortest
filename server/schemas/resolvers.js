@@ -48,13 +48,14 @@ const resolvers = {
 
       return { token, user };
     },
-    addRide: async (parent, { origin, destination, date, time }, context) => {
+    addRide: async (parent, { origin, destination, date, time, isDriver }, context) => {
       if (context.user) {
         const ride = await Ride.create({
           origin,
           destination,
           date,
           time,
+          isDriver,
           rideAuthor: context.user.username,
         });
 
