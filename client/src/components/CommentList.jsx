@@ -44,7 +44,7 @@ const CommentList = ({ comments = [], rideId }) => {
             <Heading as='h5' size='sm' mb={2}>
               {comment.commentAuthor} commented{' '}
               <Text as='span' fontSize='xs'>
-                on {comment.createdAt}
+                {comment.createdAt}
               </Text>
             </Heading>
             <Text mb={4}>{comment.commentText}</Text>

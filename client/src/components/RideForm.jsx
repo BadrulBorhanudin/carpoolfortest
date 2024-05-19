@@ -12,6 +12,7 @@ import {
   Switch,
   HStack,
 } from '@chakra-ui/react';
+import { format } from 'date-fns';
 
 import { ADD_RIDE } from '../utils/mutations';
 import { QUERY_RIDES, QUERY_ME } from '../utils/queries';
@@ -50,11 +51,13 @@ const RideForm = () => {
     event.preventDefault();
 
     try {
+      const formattedDate = format(new Date(date), 'MMM, dd yyyy');
+
       await addRide({
         variables: {
           origin,
           destination,
-          date,
+          date: formattedDate,
           time,
           isDriver,
           rideAuthor: Auth.getProfile().data.username,
