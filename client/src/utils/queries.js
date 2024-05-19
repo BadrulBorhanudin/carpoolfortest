@@ -12,6 +12,7 @@ export const QUERY_USER = gql`
         destination
         date
         time
+        isDriver
         createdAt
       }
     }
@@ -27,6 +28,7 @@ export const QUERY_RIDES = gql`
       date
       time
       rideAuthor
+      isDriver
       createdAt
     }
   }
@@ -41,6 +43,7 @@ export const QUERY_SINGLE_RIDE = gql`
       date
       time
       rideAuthor
+      isDriver
       createdAt
       comments {
         _id
@@ -65,9 +68,9 @@ export const QUERY_ME = gql`
         date
         time
         rideAuthor
+        isDriver
         createdAt
       }
     }
   }
 `;
-

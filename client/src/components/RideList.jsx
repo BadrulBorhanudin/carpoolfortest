@@ -104,6 +104,9 @@ const RideList = ({
             <Text>
               <strong>Time:</strong> {ride.time}
             </Text>
+            <Text>
+              <strong>Driver:</strong> {ride.isDriver ? 'Yes' : 'No'}
+            </Text>
             {ride.comments &&
               ride.comments.map((comment) => (
                 <Box
@@ -130,7 +133,12 @@ const RideList = ({
               ))}
           </Box>
           <Link to={`/rides/${ride._id}`}>
-            <Button colorScheme='blue' width='100%' borderRadius='0' textDecoration='underline'>
+            <Button
+              colorScheme='blue'
+              width='100%'
+              borderRadius='0'
+              textDecoration='underline'
+            >
               Join this ride.
             </Button>
           </Link>

@@ -30,12 +30,14 @@ export const ADD_RIDE = gql`
     $destination: String!
     $date: String!
     $time: String!
+    $isDriver: Boolean!
   ) {
     addRide(
       origin: $origin
       destination: $destination
       date: $date
       time: $time
+      isDriver: $isDriver
     ) {
       _id
       origin
@@ -43,6 +45,7 @@ export const ADD_RIDE = gql`
       date
       time
       rideAuthor
+      isDriver
       createdAt
       comments {
         _id
@@ -59,6 +62,7 @@ export const ADD_COMMENT = gql`
       origin
       destination
       rideAuthor
+      isDriver
       createdAt
       comments {
         _id
@@ -76,6 +80,7 @@ export const REMOVE_RIDE = gql`
       origin
       destination
       rideAuthor
+      isDriver
       createdAt
       comments {
         _id
@@ -93,6 +98,7 @@ export const REMOVE_COMMENT = gql`
       origin
       destination
       rideAuthor
+      isDriver
       createdAt
       comments {
         _id
@@ -102,4 +108,3 @@ export const REMOVE_COMMENT = gql`
     }
   }
 `;
-

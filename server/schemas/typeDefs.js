@@ -14,6 +14,7 @@ const typeDefs = `
     date: String
     time: String
     rideAuthor: String
+    isDriver: Boolean
     createdAt: String
     comments: [Comment]!
   }
@@ -41,7 +42,7 @@ const typeDefs = `
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addRide(origin: String!, destination: String!, date: String!, time: String!): Ride
+    addRide(origin: String!, destination: String!, date: String!, time: String!, isDriver: Boolean): Ride
     addComment(rideId: ID!, commentText: String!): Ride
     removeRide(rideId: ID!): Ride
     removeComment(rideId: ID!, commentId: ID!): Ride
