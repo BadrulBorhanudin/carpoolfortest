@@ -9,11 +9,9 @@ import { setContext } from '@apollo/client/link/context';
 import { Outlet } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme';
-
-import Layout from './components/Layout';
 import Header from './components/Header';
 import Footer from './components/Footer';
-
+import Layout from './components/Layout';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -38,11 +36,13 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <ChakraProvider theme={theme}>
-        <Layout>
+        <div className='flex-column justify-flex-start min-100-vh'>
           <Header />
-          <Outlet />
+          <Layout>
+            <Outlet />
+          </Layout>
           <Footer />
-        </Layout>
+        </div>
       </ChakraProvider>
     </ApolloProvider>
   );

@@ -1,3 +1,4 @@
+// src/pages/Home.jsx
 import { useQuery } from '@apollo/client';
 import { Box, Flex, Spinner, Text } from '@chakra-ui/react';
 
@@ -11,24 +12,18 @@ const Home = () => {
   const rides = data?.rides || [];
 
   return (
-    <main>
-      <Flex justify='center' align='center' direction='column'>
-        <Box
-          w={{ base: '100%', md: '80%' }}
-          p={3}
-          mb={4}
-        >
-          <RideForm />
-        </Box>
-        <Box w={{ base: '100%', md: '60%' }} p={3}>
-          {loading ? (
-            <Spinner size='xl' />
-          ) : (
-            <RideList rides={rides} title='Available Rides...' />
-          )}
-        </Box>
-      </Flex>
-    </main>
+    <Flex justify='center' align='center' direction='column'>
+      <Box w='100%' p={3} mb={4}>
+        <RideForm />
+      </Box>
+      <Box w='100%' p={3}>
+        {loading ? (
+          <Spinner size='xl' />
+        ) : (
+          <RideList rides={rides} title='Available Rides...' />
+        )}
+      </Box>
+    </Flex>
   );
 };
 
