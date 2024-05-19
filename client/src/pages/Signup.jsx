@@ -69,6 +69,7 @@ const Signup = ({ isOpen, onOpen, onClose }) => {
             ) : (
               <form onSubmit={handleFormSubmit}>
                 <Input
+                  rounded='full'
                   placeholder='Your username'
                   name='username'
                   type='text'
@@ -77,6 +78,7 @@ const Signup = ({ isOpen, onOpen, onClose }) => {
                   mb={4}
                 />
                 <Input
+                  rounded='full'
                   placeholder='Your email'
                   name='email'
                   type='email'
@@ -85,6 +87,7 @@ const Signup = ({ isOpen, onOpen, onClose }) => {
                   mb={4}
                 />
                 <Input
+                  rounded='full'
                   placeholder='******'
                   name='password'
                   type='password'
@@ -92,7 +95,7 @@ const Signup = ({ isOpen, onOpen, onClose }) => {
                   onChange={handleChange}
                   mb={4}
                 />
-                <Button colorScheme='teal' type='submit'>
+                <Button colorScheme='teal' type='submit' rounded='full'>
                   Submit
                 </Button>
               </form>
@@ -105,7 +108,7 @@ const Signup = ({ isOpen, onOpen, onClose }) => {
             )}
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
+            <Button colorScheme='blue' mr={3} onClick={onClose} rounded='full'>
               Close
             </Button>
           </ModalFooter>
