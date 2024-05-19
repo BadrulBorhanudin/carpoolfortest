@@ -12,8 +12,6 @@ import {
   Switch,
   HStack,
 } from '@chakra-ui/react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faGlobe, faMapMarker } from '@fortawesome/free-solid-svg-icons';
 
 import { ADD_RIDE } from '../utils/mutations';
 import { QUERY_RIDES, QUERY_ME } from '../utils/queries';
@@ -111,10 +109,13 @@ const RideForm = () => {
       rounded='md'
       boxShadow='md'
       width='100%'
-      maxW='500px'
+      maxW='900px'
       mx='auto'
     >
       <form onSubmit={handleFormSubmit}>
+        <Text fontSize='xl' mb={4} textAlign='center'>
+          Where are you heading to?
+        </Text>
         <FormControl mb={4}>
           <Input
             placeholder='Origin'
