@@ -1,3 +1,4 @@
+// src/utils/mutations.js
 import { gql } from '@apollo/client';
 
 export const LOGIN_USER = gql`
@@ -45,8 +46,8 @@ export const ADD_RIDE = gql`
       date
       time
       rideAuthor
-      isDriver
       createdAt
+      isDriver
       comments {
         _id
         commentText
@@ -62,7 +63,6 @@ export const ADD_COMMENT = gql`
       origin
       destination
       rideAuthor
-      isDriver
       createdAt
       comments {
         _id
@@ -80,7 +80,6 @@ export const REMOVE_RIDE = gql`
       origin
       destination
       rideAuthor
-      isDriver
       createdAt
       comments {
         _id
@@ -98,7 +97,6 @@ export const REMOVE_COMMENT = gql`
       origin
       destination
       rideAuthor
-      isDriver
       createdAt
       comments {
         _id

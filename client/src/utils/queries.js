@@ -1,3 +1,4 @@
+// src/utils/queries.js
 import { gql } from '@apollo/client';
 
 export const QUERY_USER = gql`
@@ -12,8 +13,8 @@ export const QUERY_USER = gql`
         destination
         date
         time
-        isDriver
         createdAt
+        isDriver
       }
     }
   }
@@ -28,8 +29,8 @@ export const QUERY_RIDES = gql`
       date
       time
       rideAuthor
-      isDriver
       createdAt
+      isDriver
     }
   }
 `;
@@ -43,8 +44,8 @@ export const QUERY_SINGLE_RIDE = gql`
       date
       time
       rideAuthor
-      isDriver
       createdAt
+      isDriver
       comments {
         _id
         commentText
@@ -68,8 +69,8 @@ export const QUERY_ME = gql`
         date
         time
         rideAuthor
-        isDriver
         createdAt
+        isDriver
       }
     }
   }
