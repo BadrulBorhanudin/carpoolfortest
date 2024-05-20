@@ -9,9 +9,22 @@ import {
   useToast,
   Divider,
   Avatar,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  IconButton,
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleDot, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCircleDot,
+  faMapMarkerAlt,
+  faCalendarAlt,
+  faCar,
+  faPersonWalkingLuggage,
+  faEllipsisVertical,
+} from '@fortawesome/free-solid-svg-icons';
+import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { REMOVE_COMMENT } from '../utils/mutations';
 import { QUERY_RIDES } from '../utils/queries';
 import Auth from '../utils/auth';
@@ -77,7 +90,13 @@ const RideList = ({
           overflow='hidden'
           mb={4}
         >
-          <Flex alignItems='center' bg='' color='gray.600' p={4}>
+          <Flex
+            alignItems='center'
+            justifyContent='space-between'
+            bg=''
+            color='gray.600'
+            p={4}
+          >
             <Box flex='1'>
               {showUsername && (
                 <Flex alignItems='center'>
@@ -96,14 +115,19 @@ const RideList = ({
                 </Flex>
               )}
             </Box>
-            {handleRemoveRide && (
-              <Button
-                colorScheme='red'
-                onClick={() => handleRemoveRide(ride._id)}
+            <Flex alignItems='center' ml={2}>
+              <Text
+                mr={2}
+                fontSize='md'
+                display={{ base: 'none', md: 'inline' }}
               >
-                Remove
-              </Button>
-            )}
+                {ride.isDriver ? 'Driver' : 'Passenger'}
+              </Text>
+              <FontAwesomeIcon
+                icon={ride.isDriver ? faCar : faPersonWalkingLuggage}
+                color={ride.isDriver ? '#808080' : '#808080'}
+              />
+            </Flex>
           </Flex>
           <Box p={4} mt='-4'>
             <Divider
@@ -125,7 +149,7 @@ const RideList = ({
                 >
                   <Box
                     position='absolute'
-                    top='0.5rem'
+                    top='0.4rem'
                     left='-8px'
                     w='7px'
                     h='7px'
@@ -134,7 +158,7 @@ const RideList = ({
                   ></Box>
                   <Box
                     position='absolute'
-                    top='1.4rem'
+                    top='1.3rem'
                     left='-8px'
                     w='7px'
                     h='7px'
@@ -165,15 +189,30 @@ const RideList = ({
                 </Text>
               </Box>
             </Flex>
-            <Text mt={4}>
-              <strong>Date:</strong> {ride.date}
-            </Text>
-            <Text>
-              <strong>Time:</strong> {ride.time}
-            </Text>
-            <Text>
-              <strong>Driver:</strong> {ride.isDriver ? 'Yes' : 'No'}
-            </Text>
+            <Flex alignItems='center' mt={2}>
+              <Box position='relative' mr={3} left='1px'>
+                <FontAwesomeIcon icon={faClock} color='#808080' />
+              </Box>
+              <Box pl={-1} pr={3}>
+                <Text color='gray.500' fontSize='sm'>
+                  Time
+                </Text>
+                <Text fontWeight='bold' fontSize='md'>
+                  {ride.time}
+                </Text>
+              </Box>
+              <Box position='relative' ml={6} mr={3} left='1px'>
+                <FontAwesomeIcon icon={faCalendarAlt} color='#808080' />
+              </Box>
+              <Box pl={-1}>
+                <Text color='gray.500' fontSize='sm'>
+                  Date
+                </Text>
+                <Text fontWeight='bold' fontSize='md'>
+                  {ride.date}
+                </Text>
+              </Box>
+            </Flex>
             {ride.comments &&
               ride.comments.map((comment) => (
                 <Box
@@ -183,20 +222,42 @@ const RideList = ({
                   borderWidth='1px'
                   borderRadius='lg'
                 >
-                  <Text>{comment.commentText}</Text>
-                  <Text fontSize='sm'>
-                    by {comment.commentAuthor} on {comment.createdAt}
-                  </Text>
-                  {Auth.loggedIn() && currentUser === comment.commentAuthor && (
-                    <Button
-                      colorScheme='red'
-                      size='xs'
-                      rounded='full'
-                      onClick={() => handleRemoveComment(ride._id, comment._id)}
-                    >
-                      Remove Comment
-                    </Button>
-                  )}
+                  <Flex alignItems='center' justifyContent='space-between'>
+                    <Box>
+                      <Flex alignItems='center'>
+                        <Avatar name={comment.commentAuthor} size='xs' mr={2} />
+                        <Box>
+                          <Text fontWeight='bold' fontSize='sm'>
+                            {comment.commentAuthor}
+                          </Text>
+                          <Text fontSize='sm'>
+                            commented {comment.createdAt}
+                          </Text>
+                        </Box>
+                      </Flex>
+                      <Text ml='8'>{comment.commentText}</Text>
+                    </Box>
+                    {Auth.loggedIn() &&
+                      currentUser === comment.commentAuthor && (
+                        <Menu>
+                          <MenuButton
+                            as={IconButton}
+                            icon={<FontAwesomeIcon icon={faEllipsisVertical} />}
+                            variant='outline'
+                            size='xs'
+                          />
+                          <MenuList>
+                            <MenuItem
+                              onClick={() =>
+                                handleRemoveComment(ride._id, comment._id)
+                              }
+                            >
+                              Remove Comment
+                            </MenuItem>
+                          </MenuList>
+                        </Menu>
+                      )}
+                  </Flex>
                 </Box>
               ))}
             <Flex mt={4} justifyContent='flex-end'>
