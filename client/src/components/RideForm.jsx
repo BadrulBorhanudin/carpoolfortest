@@ -50,6 +50,17 @@ const RideForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+    if (!origin || !destination || !date || !time) {
+      toast({
+        title: 'Error',
+        description: 'Please complete the form before submitting.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
     try {
       const formattedDate = format(new Date(date), 'MMM, dd yyyy');
 
@@ -111,13 +122,19 @@ const RideForm = () => {
       p={6}
       rounded='md'
       width='100%'
-      maxW='900px'
-      borderColor='gray.300'
       borderWidth='1px'
+      borderRadius='lg'
+      borderColor='gray.300'
       mx='auto'
     >
       <form onSubmit={handleFormSubmit}>
-        <Text fontSize='2xl' mb={4} textAlign='center' fontWeight='bold'>
+        <Text
+          fontSize='xl'
+          mb={4}
+          textAlign='center'
+          color='#150035'
+          fontWeight='bold'
+        >
           Where are you heading to?
         </Text>
         <FormControl mb={4}>
@@ -126,7 +143,7 @@ const RideForm = () => {
             name='origin'
             value={origin}
             onChange={handleChange}
-            bg='gray.100'
+            bg=''
             rounded='full'
             pl={10}
             mb={2}
@@ -138,7 +155,7 @@ const RideForm = () => {
             name='destination'
             value={destination}
             onChange={handleChange}
-            bg='gray.100'
+            bg=''
             rounded='full'
             pl={10}
             mb={2}
@@ -150,7 +167,7 @@ const RideForm = () => {
             name='date'
             value={date}
             onChange={handleChange}
-            bg='gray.100'
+            bg=''
             rounded='full'
             pl={10}
             mb={2}
@@ -162,7 +179,7 @@ const RideForm = () => {
             name='time'
             value={time}
             onChange={handleChange}
-            bg='gray.100'
+            bg=''
             rounded='full'
             pl={10}
             mb={2}

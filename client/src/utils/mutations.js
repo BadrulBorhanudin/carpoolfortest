@@ -1,4 +1,3 @@
-// src/utils/mutations.js
 import { gql } from '@apollo/client';
 
 export const LOGIN_USER = gql`
@@ -68,6 +67,7 @@ export const ADD_COMMENT = gql`
         _id
         commentText
         createdAt
+        commentAuthor
       }
     }
   }
@@ -85,6 +85,7 @@ export const REMOVE_RIDE = gql`
         _id
         commentText
         createdAt
+        commentAuthor
       }
     }
   }
@@ -102,6 +103,7 @@ export const REMOVE_COMMENT = gql`
         _id
         commentText
         createdAt
+        commentAuthor
       }
     }
   }

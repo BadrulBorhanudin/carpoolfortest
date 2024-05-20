@@ -1,27 +1,35 @@
 const { User, Ride } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
-
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate('rides');
+      return User.find().populate({
+        path: 'rides',
+        populate: 'comments',
+      });
     },
     user: async (parent, { username }) => {
-      return User.findOne({ username }).populate('rides');
+      return User.findOne({ username }).populate({
+        path: 'rides',
+        populate: 'comments',
+      });
     },
     rides: async (parent, { username }) => {
       const params = username ? { username } : {};
-      return Ride.find(params).sort({ createdAt: -1 });
+      return Ride.find(params).sort({ createdAt: -1 }).populate('comments');
     },
     ride: async (parent, { rideId }) => {
-      return Ride.findOne({ _id: rideId });
+      return Ride.findOne({ _id: rideId }).populate('comments');
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('rides');
+        return User.findOne({ _id: context.user._id }).populate({
+          path: 'rides',
+          populate: 'comments',
+        });
       }
-      throw AuthenticationError;
+      throw new AuthenticationError('You need to be logged in!');
     },
   },
 
@@ -35,20 +43,24 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw AuthenticationError;
+        throw new AuthenticationError('Incorrect credentials');
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw AuthenticationError;
+        throw new AuthenticationError('Incorrect credentials');
       }
 
       const token = signToken(user);
 
       return { token, user };
     },
-    addRide: async (parent, { origin, destination, date, time, isDriver }, context) => {
+    addRide: async (
+      parent,
+      { origin, destination, date, time, isDriver },
+      context
+    ) => {
       if (context.user) {
         const ride = await Ride.create({
           origin,
@@ -66,8 +78,7 @@ const resolvers = {
 
         return ride;
       }
-      throw AuthenticationError;
-      ('You need to be logged in!');
+      throw new AuthenticationError('You need to be logged in!');
     },
     addComment: async (parent, { rideId, commentText }, context) => {
       if (context.user) {
@@ -84,7 +95,7 @@ const resolvers = {
           }
         );
       }
-      throw AuthenticationError;
+      throw new AuthenticationError('You need to be logged in!');
     },
     removeRide: async (parent, { rideId }, context) => {
       if (context.user) {
@@ -100,7 +111,7 @@ const resolvers = {
 
         return ride;
       }
-      throw AuthenticationError;
+      throw new AuthenticationError('You need to be logged in!');
     },
     removeComment: async (parent, { rideId, commentId }, context) => {
       if (context.user) {
@@ -117,7 +128,7 @@ const resolvers = {
           { new: true }
         );
       }
-      throw AuthenticationError;
+      throw new AuthenticationError('You need to be logged in!');
     },
   },
 };

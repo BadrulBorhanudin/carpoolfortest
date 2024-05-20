@@ -1,4 +1,3 @@
-// src/utils/queries.js
 import { gql } from '@apollo/client';
 
 export const QUERY_USER = gql`
@@ -15,6 +14,12 @@ export const QUERY_USER = gql`
         time
         createdAt
         isDriver
+        comments {
+          _id
+          commentText
+          commentAuthor
+          createdAt
+        }
       }
     }
   }
@@ -31,6 +36,12 @@ export const QUERY_RIDES = gql`
       rideAuthor
       createdAt
       isDriver
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
     }
   }
 `;
@@ -71,6 +82,12 @@ export const QUERY_ME = gql`
         rideAuthor
         createdAt
         isDriver
+        comments {
+          _id
+          commentText
+          commentAuthor
+          createdAt
+        }
       }
     }
   }
