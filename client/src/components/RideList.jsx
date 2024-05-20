@@ -90,7 +90,7 @@ const RideList = ({
                       {ride.rideAuthor === currentUser
                         ? 'You'
                         : ride.rideAuthor}{' '}
-                      posted this ride on {ride.createdAt}
+                      posted this ride {ride.createdAt}
                     </Text>
                   </Box>
                 </Flex>
