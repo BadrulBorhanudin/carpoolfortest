@@ -22,7 +22,7 @@ import {
   faCalendarAlt,
   faCar,
   faPersonWalkingLuggage,
-  faEllipsisVertical,
+  faEllipsis,
 } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { REMOVE_COMMENT } from '../utils/mutations';
@@ -106,10 +106,8 @@ const RideList = ({
                       {ride.rideAuthor}
                     </Text>
                     <Text fontSize='sm'>
-                      {ride.rideAuthor === currentUser
-                        ? 'You'
-                        : ride.rideAuthor}{' '}
-                      posted this ride {ride.createdAt}
+                      {ride.rideAuthor === currentUser ? 'You' : ''} posted this
+                      ride {ride.createdAt}
                     </Text>
                   </Box>
                 </Flex>
@@ -118,7 +116,7 @@ const RideList = ({
             <Flex alignItems='center' ml={2}>
               <Text
                 mr={2}
-                fontSize='md'
+                fontSize='sm'
                 display={{ base: 'none', md: 'inline' }}
               >
                 {ride.isDriver ? 'Driver' : 'Passenger'}
@@ -221,30 +219,44 @@ const RideList = ({
                   mt={2}
                   borderWidth='1px'
                   borderRadius='lg'
+                  overflow='hidden'
+                  position='relative'
                 >
                   <Flex alignItems='center' justifyContent='space-between'>
                     <Box>
                       <Flex alignItems='center'>
                         <Avatar name={comment.commentAuthor} size='xs' mr={2} />
                         <Box>
-                          <Text fontWeight='bold' fontSize='sm'>
+                          <Text
+                            fontWeight='bold'
+                            fontSize='sm'
+                            mr={1}
+                            color='gray.600'
+                          >
                             {comment.commentAuthor}
                           </Text>
-                          <Text fontSize='sm'>
-                            commented {comment.createdAt}
-                          </Text>
+                          <Flex alignItems='center'>
+                            <Text fontSize='12px' color='gray.600'>
+                              {comment.createdAt}
+                            </Text>
+                          </Flex>
                         </Box>
                       </Flex>
-                      <Text ml='8'>{comment.commentText}</Text>
+                      <Text ml='8' wordBreak='break-word'>
+                        {comment.commentText}
+                      </Text>
                     </Box>
                     {Auth.loggedIn() &&
                       currentUser === comment.commentAuthor && (
                         <Menu>
                           <MenuButton
                             as={IconButton}
-                            icon={<FontAwesomeIcon icon={faEllipsisVertical} />}
-                            variant='outline'
-                            size='xs'
+                            icon={<FontAwesomeIcon icon={faEllipsis} />}
+                            variant='ghost'
+                            size='md'
+                            position='absolute'
+                            top='8px'
+                            right='8px'
                           />
                           <MenuList>
                             <MenuItem
