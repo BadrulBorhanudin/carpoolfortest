@@ -50,7 +50,7 @@ const CommentList = ({ comments = [], rideId }) => {
             <Text mb={4}>{comment.commentText}</Text>
             {Auth.loggedIn() && currentUser === comment.commentAuthor && (
               <Button
-                colorScheme='red'
+                colorScheme='red' rounded='full'
                 onClick={() => handleRemoveComment(comment._id)}
               >
                 Remove Comment
