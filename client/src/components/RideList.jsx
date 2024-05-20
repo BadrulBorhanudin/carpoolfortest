@@ -190,7 +190,8 @@ const RideList = ({
                   {Auth.loggedIn() && currentUser === comment.commentAuthor && (
                     <Button
                       colorScheme='red'
-                      size='sm'
+                      size='xs'
+                      rounded='full'
                       onClick={() => handleRemoveComment(ride._id, comment._id)}
                     >
                       Remove Comment

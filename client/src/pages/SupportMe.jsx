@@ -27,7 +27,7 @@ const SupportMe = () => {
           contributions will help us maintain and improve the platform, ensuring
           a seamless experience for all users.
         </Text>
-        <Button colorScheme='blue' size='lg' mb={4} rounded='full'>
+        <Button colorScheme='blue' size='md' mb={4} rounded='full'>
           <Link href='https://www.stripe.com' isExternal>
             Donate via Stripe
           </Link>
@@ -48,7 +48,7 @@ const SupportMe = () => {
           feedback, please don't hesitate to let us know. Your input is
           invaluable to us.
         </Text>
-        <Button colorScheme='blue' size='lg' rounded='full'>
+        <Button colorScheme='blue' size='md' rounded='full'>
           <Link href='mailto:badrulborhanudin@gmail.com' isExternal>
             Send Feedback
           </Link>

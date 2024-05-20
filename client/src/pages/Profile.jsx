@@ -105,6 +105,7 @@ const Profile = () => {
                 <Flex justifyContent='flex-end'>
                   <Button
                     colorScheme='red'
+                    rounded='full'
                     onClick={() => handleRemoveRide(ride._id)}
                   >
                     Remove Ride
@@ -114,6 +115,8 @@ const Profile = () => {
             ))
           )}
         </Box>
+
+
 
         {!userParam && (
           <Box mb={3}>
