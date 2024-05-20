@@ -116,7 +116,7 @@ const RideList = ({
             <Flex alignItems='center' ml={2}>
               <Text
                 mr={2}
-                fontSize='sm'
+                fontSize='md'
                 display={{ base: 'none', md: 'inline' }}
               >
                 {ride.isDriver ? 'Driver' : 'Passenger'}
@@ -222,6 +222,26 @@ const RideList = ({
                   overflow='hidden'
                   position='relative'
                 >
+                  <Menu>
+                    <MenuButton
+                      as={IconButton}
+                      icon={<FontAwesomeIcon icon={faEllipsis} />}
+                      variant='ghost'
+                      size='s'
+                      position='absolute'
+                      top='8px'
+                      right='8px'
+                    />
+                    <MenuList>
+                      <MenuItem
+                        onClick={() =>
+                          handleRemoveComment(ride._id, comment._id)
+                        }
+                      >
+                        Remove Comment
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
                   <Flex alignItems='center' justifyContent='space-between'>
                     <Box>
                       <Flex alignItems='center'>
@@ -246,29 +266,6 @@ const RideList = ({
                         {comment.commentText}
                       </Text>
                     </Box>
-                    {Auth.loggedIn() &&
-                      currentUser === comment.commentAuthor && (
-                        <Menu>
-                          <MenuButton
-                            as={IconButton}
-                            icon={<FontAwesomeIcon icon={faEllipsis} />}
-                            variant='ghost'
-                            size='md'
-                            position='absolute'
-                            top='8px'
-                            right='8px'
-                          />
-                          <MenuList>
-                            <MenuItem
-                              onClick={() =>
-                                handleRemoveComment(ride._id, comment._id)
-                              }
-                            >
-                              Remove Comment
-                            </MenuItem>
-                          </MenuList>
-                        </Menu>
-                      )}
                   </Flex>
                 </Box>
               ))}
