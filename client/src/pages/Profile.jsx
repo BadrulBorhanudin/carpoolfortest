@@ -1,9 +1,10 @@
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { Box, Heading, Spinner, Text } from '@chakra-ui/react';
+import { Box, Heading, Spinner, Text, Button, Flex } from '@chakra-ui/react';
 
 import RideForm from '../components/RideForm';
 import RideList from '../components/RideList';
+import Layout from '../components/Layout';
 
 import { QUERY_USER, QUERY_ME, QUERY_RIDES } from '../utils/queries';
 import { REMOVE_RIDE } from '../utils/mutations';
@@ -28,15 +29,14 @@ const Profile = () => {
 
   const user = data?.me || data?.user || {};
 
-  if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-    return <Navigate to='/me' />;
-  }
-
   if (loading) {
     return <Spinner />;
   }
 
-  if (!user?.username) {
+  const isLoggedInUser =
+    Auth.loggedIn() && Auth.getProfile().data.username === userParam;
+
+  if (!isLoggedInUser && !user?.username) {
     return (
       <Box>
         <Heading as='h4' size='md'>
@@ -56,36 +56,72 @@ const Profile = () => {
   };
 
   return (
-    <Box>
-      <Box textAlign='center' mb={5}>
-        <Heading
-          as='h2'
-          size='lg'
-          bg='blue.500'
-          color='white'
-          p={3}
-          borderRadius='md'
-        >
-          Viewing {userParam ? `${user.username}'s` : 'your'} profile.
-        </Heading>
-      </Box>
-
-      <Box mb={5}>
-        <RideList
-          rides={user.rides}
-          title={`${user.username}'s rides...`}
-          showTitle={false}
-          showUsername={false}
-          handleRemoveRide={userParam ? null : handleRemoveRide}
-        />
-      </Box>
-
-      {!userParam && (
-        <Box p={3} mb={3}>
-          <RideForm />
+    <Layout>
+      <Box>
+        <Box textAlign='center' mb={5}>
+          <Heading
+            as='h2'
+            size='lg'
+            bg='blue.500'
+            color='white'
+            p={3}
+            borderRadius='md'
+          >
+            Viewing {userParam ? `${user.username}'s` : 'your'} profile.
+          </Heading>
         </Box>
-      )}
-    </Box>
+
+        <Box mb={5}>
+          {userParam ? (
+            <RideList
+              rides={user.rides}
+              title={`${user.username}'s rides...`}
+              showTitle={false}
+              showUsername={true}
+              handleRemoveRide={null}
+            />
+          ) : (
+            user.rides.map((ride) => (
+              <Box
+                key={ride._id}
+                bg='gray.100'
+                py={4}
+                px={2}
+                borderRadius='md'
+                mb={4}
+              >
+                <Text
+                  fontSize='xl'
+                  fontStyle='italic'
+                  border='2px #1a1a1a'
+                  p={4}
+                  mb={4}
+                >
+                  Origin: {ride.origin} <br />
+                  Destination: {ride.destination} <br />
+                  Date: {ride.date} <br />
+                  Time: {ride.time}
+                </Text>
+                <Flex justifyContent='flex-end'>
+                  <Button
+                    colorScheme='red'
+                    onClick={() => handleRemoveRide(ride._id)}
+                  >
+                    Remove Ride
+                  </Button>
+                </Flex>
+              </Box>
+            ))
+          )}
+        </Box>
+
+        {!userParam && (
+          <Box mb={3}>
+            <RideForm />
+          </Box>
+        )}
+      </Box>
+    </Layout>
   );
 };
 

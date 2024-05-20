@@ -1,19 +1,10 @@
-import React from 'react';
 import { Box, Tabs, TabList, Tab, TabIndicator } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 
 const Navigation = () => {
   return (
     <Box maxW='900px' mx='auto' p={4}>
-      <Tabs
-        isFitted
-        variant='unstyled'
-        position='sticky'
-        top='0'
-        zIndex='sticky'
-        bg='white'
-        shadow='sm'
-      >
+      <Tabs isFitted variant='unstyled' bg='white' shadow='sm'>
         <TabList borderBottom='1px solid' borderColor='#150035'>
           <Tab
             as={RouterLink}

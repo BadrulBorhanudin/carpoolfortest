@@ -38,7 +38,7 @@ const SingleRide = () => {
         <Text
           fontSize='xl'
           fontStyle='italic'
-          border='2px dotted #1a1a1a'
+          border='2px #1a1a1a'
           p={4}
           mb={4}
         >
@@ -48,11 +48,11 @@ const SingleRide = () => {
           Time: {ride.time}
         </Text>
       </Box>
-      <Divider my={5} />
+      
       <Box my={5}>
         <CommentList comments={ride.comments} rideId={ride._id} />
       </Box>
-      <Box m={3} p={4} border='1px dotted #1a1a1a' borderRadius='md'>
+      <Box m={3} p={4} borderRadius='md'>
         <CommentForm rideId={ride._id} />
       </Box>
     </Box>

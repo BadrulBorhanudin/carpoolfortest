@@ -29,7 +29,7 @@ const CommentList = ({ comments = [], rideId }) => {
 
   return (
     <Box>
-      <Heading as='h3' size='md' mb={4} borderBottom='1px dotted #1a1a1a'>
+      <Heading as='h3' size='md' mb={4}>
         Comments
       </Heading>
       <VStack spacing={4} align='stretch'>

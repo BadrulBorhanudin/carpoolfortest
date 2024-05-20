@@ -1,6 +1,17 @@
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { Box, Button, Flex, Heading, Text, useToast } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Text,
+  useToast,
+  Divider,
+  Avatar,
+} from '@chakra-ui/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleDot, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { REMOVE_COMMENT } from '../utils/mutations';
 import { QUERY_RIDES } from '../utils/queries';
 import Auth from '../utils/auth';
@@ -60,26 +71,29 @@ const RideList = ({
       {rides.map((ride) => (
         <Box
           key={ride._id}
+          borderColor='gray.300'
           borderWidth='1px'
           borderRadius='lg'
           overflow='hidden'
           mb={4}
         >
-          <Flex alignItems='center' bg='blue.500' color='white' p={4}>
+          <Flex alignItems='center' bg='' color='gray.600' p={4}>
             <Box flex='1'>
-              {showUsername ? (
-                <Link to={`/profiles/${ride.rideAuthor}`}>
-                  <Text fontWeight='bold' fontSize='lg'>
-                    {ride.rideAuthor}
-                  </Text>
-                  <Text fontSize='sm'>
-                    posted this ride {ride.createdAt}
-                  </Text>
-                </Link>
-              ) : (
-                <Text fontSize='sm'>
-                  You posted this ride {ride.createdAt}
-                </Text>
+              {showUsername && (
+                <Flex alignItems='center'>
+                  <Avatar name={ride.rideAuthor} mr={4} />
+                  <Box>
+                    <Text fontWeight='bold' fontSize='lg'>
+                      {ride.rideAuthor}
+                    </Text>
+                    <Text fontSize='sm'>
+                      {ride.rideAuthor === currentUser
+                        ? 'You'
+                        : ride.rideAuthor}{' '}
+                      posted this ride on {ride.createdAt}
+                    </Text>
+                  </Box>
+                </Flex>
               )}
             </Box>
             {handleRemoveRide && (
@@ -91,14 +105,67 @@ const RideList = ({
               </Button>
             )}
           </Flex>
-          <Box p={4}>
-            <Text>
-              <strong>Origin:</strong> {ride.origin}
-            </Text>
-            <Text>
-              <strong>Destination:</strong> {ride.destination}
-            </Text>
-            <Text>
+          <Box p={4} mt='-4'>
+            <Divider
+              mb='2'
+              pl=''
+              orientation='horizontal'
+              borderColor='gray.300'
+            />
+            <Flex alignItems='center'>
+              <Box position='relative' mr={3}>
+                <FontAwesomeIcon icon={faCircleDot} color='#2C7A7B' />
+                <Box
+                  position='absolute'
+                  top='1.25rem'
+                  left='0.75rem'
+                  w='1px'
+                  h='3rem'
+                  bg=''
+                >
+                  <Box
+                    position='absolute'
+                    top='0.5rem'
+                    left='-8px'
+                    w='7px'
+                    h='7px'
+                    borderRadius='full'
+                    bg='gray.300'
+                  ></Box>
+                  <Box
+                    position='absolute'
+                    top='1.4rem'
+                    left='-8px'
+                    w='7px'
+                    h='7px'
+                    borderRadius='full'
+                    bg='gray.300'
+                  ></Box>
+                </Box>
+              </Box>
+              <Box>
+                <Text color='gray.500' fontSize='sm'>
+                  Origin
+                </Text>
+                <Text fontWeight='bold' fontSize='md'>
+                  {ride.origin}
+                </Text>
+              </Box>
+            </Flex>
+            <Flex alignItems='center' mt={2}>
+              <Box position='relative' mr={3} left='1px'>
+                <FontAwesomeIcon icon={faMapMarkerAlt} color='#B22222' />
+              </Box>
+              <Box pl='1' mt=''>
+                <Text color='gray.500' fontSize='sm'>
+                  Destination
+                </Text>
+                <Text fontWeight='bold' fontSize='md'>
+                  {ride.destination}
+                </Text>
+              </Box>
+            </Flex>
+            <Text mt={4}>
               <strong>Date:</strong> {ride.date}
             </Text>
             <Text>
@@ -118,7 +185,7 @@ const RideList = ({
                 >
                   <Text>{comment.commentText}</Text>
                   <Text fontSize='sm'>
-                    by {comment.commentAuthor} {comment.createdAt}
+                    by {comment.commentAuthor} on {comment.createdAt}
                   </Text>
                   {Auth.loggedIn() && currentUser === comment.commentAuthor && (
                     <Button
@@ -131,17 +198,20 @@ const RideList = ({
                   )}
                 </Box>
               ))}
+            <Flex mt={4} justifyContent='flex-end'>
+              {ride.rideAuthor !== currentUser && (
+                <Link to={`/rides/${ride._id}`}>
+                  <Button
+                    variant='solid'
+                    colorScheme='blue'
+                    borderRadius='full'
+                  >
+                    Join this ride
+                  </Button>
+                </Link>
+              )}
+            </Flex>
           </Box>
-          <Link to={`/rides/${ride._id}`}>
-            <Button
-              colorScheme='blue'
-              width='100%'
-              borderRadius='0'
-              textDecoration='underline'
-            >
-              Join this ride.
-            </Button>
-          </Link>
         </Box>
       ))}
     </Box>

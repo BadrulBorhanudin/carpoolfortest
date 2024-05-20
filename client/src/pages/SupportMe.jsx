@@ -7,7 +7,7 @@ const SupportMe = () => {
       <Box
         p={6}
         borderWidth='1px'
-        borderRadius='md'
+        borderRadius='lg'
         borderColor='gray.300'
         bg='white'
       >

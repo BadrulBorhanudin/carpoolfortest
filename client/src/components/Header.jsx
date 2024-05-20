@@ -126,15 +126,7 @@ const Header = () => {
                     Hi, {Auth.getProfile().data.username}
                   </Text>
                 </Flex>
-                <Link to='/me' style={{ textDecoration: 'none' }}>
-                  {/* <Flex align="center">
-        <Avatar name={Auth.getProfile().data.username} />
-        <Text ml={2}>{Auth.getProfile().data.username}'s profile</Text>
-        <Button borderRadius='full' ml='5px' onClick={logout}>
-                  Logout
-                </Button>
-      </Flex> */}
-                </Link>
+                <Link to='/me' style={{ textDecoration: 'none' }}></Link>
               </>
             ) : (
               <>
