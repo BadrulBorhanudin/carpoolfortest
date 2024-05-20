@@ -222,26 +222,28 @@ const RideList = ({
                   overflow='hidden'
                   position='relative'
                 >
-                  <Menu>
-                    <MenuButton
-                      as={IconButton}
-                      icon={<FontAwesomeIcon icon={faEllipsis} />}
-                      variant='ghost'
-                      size='s'
-                      position='absolute'
-                      top='8px'
-                      right='8px'
-                    />
-                    <MenuList>
-                      <MenuItem
-                        onClick={() =>
-                          handleRemoveComment(ride._id, comment._id)
-                        }
-                      >
-                        Remove Comment
-                      </MenuItem>
-                    </MenuList>
-                  </Menu>
+                  {Auth.loggedIn() && currentUser === comment.commentAuthor && (
+                    <Menu>
+                      <MenuButton
+                        as={IconButton}
+                        icon={<FontAwesomeIcon icon={faEllipsis} />}
+                        variant='ghost'
+                        size='s'
+                        position='absolute'
+                        top='8px'
+                        right='8px'
+                      />
+                      <MenuList>
+                        <MenuItem
+                          onClick={() =>
+                            handleRemoveComment(ride._id, comment._id)
+                          }
+                        >
+                          Remove Comment
+                        </MenuItem>
+                      </MenuList>
+                    </Menu>
+                  )}
                   <Flex alignItems='center' justifyContent='space-between'>
                     <Box>
                       <Flex alignItems='center'>
@@ -262,7 +264,13 @@ const RideList = ({
                           </Flex>
                         </Box>
                       </Flex>
-                      <Text ml='8' wordBreak='break-word'>
+                      <Text
+                        mt='1'
+                        ml='8'
+                        wordBreak='break-word'
+                        lineHeight='1.3'
+                        fontSize='sm'
+                      >
                         {comment.commentText}
                       </Text>
                     </Box>
@@ -270,17 +278,11 @@ const RideList = ({
                 </Box>
               ))}
             <Flex mt={4} justifyContent='flex-end'>
-              {ride.rideAuthor !== currentUser && (
-                <Link to={`/rides/${ride._id}`}>
-                  <Button
-                    variant='solid'
-                    colorScheme='blue'
-                    borderRadius='full'
-                  >
-                    Join this ride
-                  </Button>
-                </Link>
-              )}
+              <Link to={`/rides/${ride._id}`}>
+                <Button variant='solid' colorScheme='blue' borderRadius='full'>
+                  Join this ride
+                </Button>
+              </Link>
             </Flex>
           </Box>
         </Box>
