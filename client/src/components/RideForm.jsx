@@ -192,19 +192,21 @@ const RideForm = () => {
           mb={4}
           flexWrap='wrap'
         >
-          <HStack mb={[2, 0]}>
-            <FormLabel htmlFor='isDriver' mb='0'>
-              Are you a driver?
-            </FormLabel>
-            <Switch
-              id='isDriver'
-              isChecked={isDriver}
-              onChange={() => setIsDriver(!isDriver)}
-            />
+          <HStack mb={[2, 0]} justify='space-between' w='100%'>
+            <HStack spacing={2}>
+              <FormLabel htmlFor='isDriver' mb='0'>
+                Are you a driver?
+              </FormLabel>
+              <Switch
+                id='isDriver'
+                isChecked={isDriver}
+                onChange={() => setIsDriver(!isDriver)}
+              />
+            </HStack>
+            <Button colorScheme='blue' type='submit' rounded='full'>
+              Submit
+            </Button>
           </HStack>
-          <Button colorScheme='blue' type='submit' rounded='full'>
-            Submit route
-          </Button>
         </Flex>
         {error && (
           <Text color='red.500' mt={4}>
