@@ -11,6 +11,7 @@ import {
   useDisclosure,
   Switch,
   HStack,
+  Flex,
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
 
@@ -185,13 +186,13 @@ const RideForm = () => {
             mb={2}
           />
         </FormControl>
-        <FormControl
-          display='flex'
+        <Flex
           alignItems='center'
           justifyContent='space-between'
           mb={4}
+          flexWrap='wrap'
         >
-          <HStack>
+          <HStack mb={[2, 0]}>
             <FormLabel htmlFor='isDriver' mb='0'>
               Are you a driver?
             </FormLabel>
@@ -204,7 +205,7 @@ const RideForm = () => {
           <Button colorScheme='blue' type='submit' rounded='full'>
             Submit route
           </Button>
-        </FormControl>
+        </Flex>
         {error && (
           <Text color='red.500' mt={4}>
             {error.message}
