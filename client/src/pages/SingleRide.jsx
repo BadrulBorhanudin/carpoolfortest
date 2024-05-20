@@ -34,7 +34,7 @@ const SingleRide = () => {
           borderRadius='md'
         >
           {ride.rideAuthor} <br />
-          <Text fontSize='md'>posted this ride on {ride.createdAt}</Text>
+          <Text fontSize='md'>posted this ride {ride.createdAt}</Text>
         </Heading>
         <Box bg='gray.100' py={4} px={2} borderRadius='md'>
           <Text

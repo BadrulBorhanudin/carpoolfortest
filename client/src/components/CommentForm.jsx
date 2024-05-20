@@ -105,7 +105,7 @@ const CommentForm = ({ rideId }) => {
                 resize='vertical'
               />
             </FormControl>
-            <Button colorScheme='blue' type='submit'>
+            <Button colorScheme='blue' rounded='full' type='submit'>
               Request Ride
             </Button>
           </form>
