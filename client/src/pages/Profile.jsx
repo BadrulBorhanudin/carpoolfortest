@@ -27,9 +27,12 @@ const Profile = () => {
     variables: { username: userParam },
   });
 
-  const user = data?.me || data?.user || {};
+  const { data: rideData, loading: rideLoading } = useQuery(QUERY_RIDES);
 
-  if (loading) {
+  const user = data?.me || data?.user || {};
+  const currentUser = Auth.loggedIn() ? Auth.getProfile().data.username : null;
+
+  if (loading || rideLoading) {
     return <Spinner />;
   }
 
@@ -55,6 +58,16 @@ const Profile = () => {
     }
   };
 
+  // Filter rides to only include those posted by the logged-in user
+  const userRides = user.rides.filter(
+    (ride) => ride.rideAuthor === currentUser
+  );
+
+  // Collect rides where the current user has commented
+  const commentedRides = rideData?.rides.filter((ride) =>
+    ride.comments.some((comment) => comment.commentAuthor === currentUser)
+  );
+
   return (
     <Layout>
       <Box>
@@ -74,49 +87,31 @@ const Profile = () => {
         <Box mb={5}>
           {userParam ? (
             <RideList
-              rides={user.rides}
+              rides={userRides}
               title={`${user.username}'s rides...`}
               showTitle={false}
               showUsername={true}
-              handleRemoveRide={null}
+              handleRemoveRide={handleRemoveRide}
             />
           ) : (
-            user.rides.map((ride) => (
-              <Box
-                key={ride._id}
-                bg='gray.100'
-                py={4}
-                px={2}
-                borderRadius='md'
-                mb={4}
-              >
-                <Text
-                  fontSize='xl'
-                  fontStyle='italic'
-                  border='2px #1a1a1a'
-                  p={4}
-                  mb={4}
-                >
-                  Origin: {ride.origin} <br />
-                  Destination: {ride.destination} <br />
-                  Date: {ride.date} <br />
-                  Time: {ride.time}
-                </Text>
-                <Flex justifyContent='flex-end'>
-                  <Button
-                    colorScheme='red'
-                    rounded='full'
-                    onClick={() => handleRemoveRide(ride._id)}
-                  >
-                    Remove Ride
-                  </Button>
-                </Flex>
-              </Box>
-            ))
+            <RideList
+              rides={userRides}
+              title='Your rides...'
+              showTitle={true}
+              showUsername={false}
+              handleRemoveRide={handleRemoveRide}
+            />
           )}
         </Box>
 
-
+        <Box mb={5}>
+          <RideList
+            rides={commentedRides}
+            title="Rides you've commented on..."
+            showTitle={true}
+            showUsername={true}
+          />
+        </Box>
 
         {!userParam && (
           <Box mb={3}>

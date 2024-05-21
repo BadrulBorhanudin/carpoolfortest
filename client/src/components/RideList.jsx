@@ -14,6 +14,13 @@ import {
   MenuList,
   MenuItem,
   IconButton,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverHeader,
+  PopoverBody,
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -25,22 +32,42 @@ import {
   faEllipsis,
 } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
-import { REMOVE_COMMENT } from '../utils/mutations';
+import { REMOVE_COMMENT, REMOVE_RIDE } from '../utils/mutations';
 import { QUERY_RIDES } from '../utils/queries';
 import Auth from '../utils/auth';
 
-const RideList = ({
-  rides,
-  title,
-  showTitle = true,
-  showUsername = true,
-  handleRemoveRide,
-}) => {
+const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
+  const [removeRide] = useMutation(REMOVE_RIDE, {
+    refetchQueries: [{ query: QUERY_RIDES }],
+  });
+
   const [removeComment] = useMutation(REMOVE_COMMENT, {
     refetchQueries: [{ query: QUERY_RIDES }],
   });
 
   const toast = useToast();
+
+  const handleRemoveRide = async (rideId) => {
+    try {
+      await removeRide({ variables: { rideId } });
+      toast({
+        title: 'Ride removed.',
+        description: 'The ride has been removed successfully.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: 'Error removing ride.',
+        description: err.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
 
   const handleRemoveComment = async (rideId, commentId) => {
     try {
@@ -64,6 +91,8 @@ const RideList = ({
     }
   };
 
+  const currentUser = Auth.loggedIn() ? Auth.getProfile().data.username : null;
+
   if (!rides.length) {
     return (
       <Heading as='h3' size='lg' mb={4}>
@@ -71,8 +100,6 @@ const RideList = ({
       </Heading>
     );
   }
-
-  const currentUser = Auth.loggedIn() ? Auth.getProfile().data.username : null;
 
   return (
     <Box>
@@ -125,6 +152,33 @@ const RideList = ({
                 icon={ride.isDriver ? faCar : faPersonWalkingLuggage}
                 color={ride.isDriver ? '#808080' : '#808080'}
               />
+              {ride.rideAuthor === currentUser && (
+                <Popover placement='bottom-end'>
+                  <PopoverTrigger>
+                    <IconButton
+                      icon={<FontAwesomeIcon icon={faEllipsis} />}
+                      variant='ghost'
+                      size='md'
+                      left='8px'
+                    />
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverArrow />
+                    <PopoverCloseButton />
+                    <PopoverHeader>Manage Ride</PopoverHeader>
+                    <PopoverBody>
+                      <Button
+                        colorScheme='red'
+                        size='sm'
+                        rounded='full'
+                        onClick={() => handleRemoveRide(ride._id)}
+                      >
+                        Remove Ride
+                      </Button>
+                    </PopoverBody>
+                  </PopoverContent>
+                </Popover>
+              )}
             </Flex>
           </Flex>
           <Box p={4} mt='-4'>
@@ -228,7 +282,7 @@ const RideList = ({
                         as={IconButton}
                         icon={<FontAwesomeIcon icon={faEllipsis} />}
                         variant='ghost'
-                        size='s'
+                        size='sm'
                         position='absolute'
                         top='8px'
                         right='8px'
@@ -258,7 +312,7 @@ const RideList = ({
                             {comment.commentAuthor}
                           </Text>
                           <Flex alignItems='center'>
-                            <Text fontSize='12px' color='gray.600'>
+                            <Text fontSize='xs' color='gray.400'>
                               {comment.createdAt}
                             </Text>
                           </Flex>
@@ -280,7 +334,7 @@ const RideList = ({
             <Flex mt={4} justifyContent='flex-end'>
               <Link to={`/rides/${ride._id}`}>
                 <Button variant='solid' colorScheme='blue' borderRadius='full'>
-                  Join this ride
+                  Let's Plan
                 </Button>
               </Link>
             </Flex>
