@@ -20,6 +20,7 @@ import { QUERY_RIDES, QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
+import AutocompleteInput from './AutocompleteInput';
 
 const RideForm = () => {
   const {
@@ -38,9 +39,6 @@ const RideForm = () => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [isDriver, setIsDriver] = useState(false);
-
-  const [characterCountOrigin, setCharacterCountOrigin] = useState(0);
-  const [characterCountDestination, setCharacterCountDestination] = useState(0);
 
   const [addRide, { error }] = useMutation(ADD_RIDE, {
     refetchQueries: [{ query: QUERY_RIDES }, { query: QUERY_ME }],
@@ -101,22 +99,6 @@ const RideForm = () => {
     }
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    if (name === 'origin' && value.length <= 280) {
-      setOrigin(value);
-      setCharacterCountOrigin(value.length);
-    } else if (name === 'destination' && value.length <= 280) {
-      setDestination(value);
-      setCharacterCountDestination(value.length);
-    } else if (name === 'date') {
-      setDate(value);
-    } else if (name === 'time') {
-      setTime(value);
-    }
-  };
-
   return (
     <Box
       bg='white'
@@ -139,27 +121,17 @@ const RideForm = () => {
           Where are you heading to?
         </Text>
         <FormControl mb={4}>
-          <Input
+          <AutocompleteInput
             placeholder='Origin'
-            name='origin'
             value={origin}
-            onChange={handleChange}
-            bg=''
-            rounded='full'
-            pl={10}
-            mb={2}
+            onChange={setOrigin}
           />
         </FormControl>
         <FormControl mb={4}>
-          <Input
+          <AutocompleteInput
             placeholder='Destination'
-            name='destination'
             value={destination}
-            onChange={handleChange}
-            bg=''
-            rounded='full'
-            pl={10}
-            mb={2}
+            onChange={setDestination}
           />
         </FormControl>
         <FormControl mb={4}>
@@ -167,7 +139,7 @@ const RideForm = () => {
             type='date'
             name='date'
             value={date}
-            onChange={handleChange}
+            onChange={(e) => setDate(e.target.value)}
             bg=''
             rounded='full'
             pl={10}
@@ -179,7 +151,7 @@ const RideForm = () => {
             type='time'
             name='time'
             value={time}
-            onChange={handleChange}
+            onChange={(e) => setTime(e.target.value)}
             bg=''
             rounded='full'
             pl={10}
