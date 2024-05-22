@@ -130,6 +130,26 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+    editComment: async (
+      parent,
+      { rideId, commentId, commentText },
+      context
+    ) => {
+      if (context.user) {
+        const ride = await Ride.findOneAndUpdate(
+          { _id: rideId, 'comments._id': commentId },
+          { $set: { 'comments.$.commentText': commentText } },
+          { new: true }
+        );
+
+        if (!ride) {
+          throw new AuthenticationError('No ride found with this ID!');
+        }
+
+        return ride;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
   },
 };
 

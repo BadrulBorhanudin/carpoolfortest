@@ -73,6 +73,28 @@ export const ADD_COMMENT = gql`
   }
 `;
 
+export const EDIT_COMMENT = gql`
+  mutation editComment($rideId: ID!, $commentId: ID!, $commentText: String!) {
+    editComment(
+      rideId: $rideId
+      commentId: $commentId
+      commentText: $commentText
+    ) {
+      _id
+      origin
+      destination
+      rideAuthor
+      createdAt
+      comments {
+        _id
+        commentText
+        createdAt
+        commentAuthor
+      }
+    }
+  }
+`;
+
 export const REMOVE_RIDE = gql`
   mutation removeRide($rideId: ID!) {
     removeRide(rideId: $rideId) {

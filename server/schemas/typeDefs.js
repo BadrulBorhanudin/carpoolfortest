@@ -46,6 +46,7 @@ const typeDefs = `
     addComment(rideId: ID!, commentText: String!): Ride
     removeRide(rideId: ID!): Ride
     removeComment(rideId: ID!, commentId: ID!): Ride
+    editComment(rideId: ID!, commentId: ID!, commentText: String!): Ride
   }
 `;
 
