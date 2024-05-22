@@ -1,3 +1,4 @@
+import React, { useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import {
@@ -9,19 +10,15 @@ import {
   Spinner,
   Divider,
   Avatar,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   IconButton,
   Popover,
   PopoverTrigger,
   PopoverContent,
   PopoverArrow,
-  PopoverCloseButton,
   PopoverHeader,
   PopoverBody,
   useToast,
+  useOutsideClick,
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -39,6 +36,7 @@ import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
 import Layout from '../components/Layout';
 import Auth from '../utils/auth';
+import GoogleMapsIcon from '../assets/google-maps-svgrepo-com.svg'; // Import the SVG icon
 
 const SingleRide = () => {
   const { id: rideId } = useParams();
@@ -57,7 +55,16 @@ const SingleRide = () => {
     refetchQueries: [{ query: QUERY_RIDES }],
   });
 
+  const [rideDeleted, setRideDeleted] = useState(false);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const popoverRef = useRef();
+
   const ride = data?.ride || {};
+
+  useOutsideClick({
+    ref: popoverRef,
+    handler: () => setIsPopoverOpen(false),
+  });
 
   if (loading) {
     return <Spinner />;
@@ -66,6 +73,7 @@ const SingleRide = () => {
   const handleRemoveRide = async (rideId) => {
     try {
       await removeRide({ variables: { rideId } });
+      setRideDeleted(true);
       toast({
         title: 'Ride removed.',
         description: 'The ride has been removed successfully.',
@@ -107,13 +115,35 @@ const SingleRide = () => {
     }
   };
 
+  if (rideDeleted) {
+    return (
+      <Layout>
+        <Box my={3}>
+          <Box
+            borderColor='gray.300'
+            borderWidth='1px'
+            borderRadius='lg'
+            overflow='hidden'
+            mb={4}
+            p={4}
+          >
+            <Heading size='md' color='red.500'>
+              Ride Deleted
+            </Heading>
+            <Text>This ride has been deleted.</Text>
+          </Box>
+        </Box>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <Box my={3}>
         <Box
           borderColor='gray.300'
           borderWidth='1px'
-          borderRadius='lg'
+          borderRadius='3xl'
           overflow='hidden'
           mb={4}
         >
@@ -151,18 +181,22 @@ const SingleRide = () => {
                 color='#808080'
               />
               {ride.rideAuthor === currentUser && (
-                <Popover placement='bottom-end'>
+                <Popover
+                  isOpen={isPopoverOpen}
+                  onClose={() => setIsPopoverOpen(false)}
+                  initialFocusRef={popoverRef}
+                >
                   <PopoverTrigger>
                     <IconButton
                       icon={<FontAwesomeIcon icon={faEllipsis} />}
                       variant='ghost'
                       size='md'
                       left='8px'
+                      onClick={() => setIsPopoverOpen(!isPopoverOpen)}
                     />
                   </PopoverTrigger>
-                  <PopoverContent width='fit-content'>
+                  <PopoverContent ref={popoverRef} width='fit-content'>
                     <PopoverArrow />
-                    {/* <PopoverCloseButton /> */}
                     <PopoverHeader fontSize='sm'>Manage Ride</PopoverHeader>
                     <PopoverBody>
                       <Button
@@ -262,21 +296,27 @@ const SingleRide = () => {
                   {ride.date}
                 </Text>
               </Box>
+              {/* Google Maps icon */}
+              <Box ml='auto' display='flex' alignItems='center'>
+                <a
+                  href={`https://www.google.com/maps`}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  <img
+                    src={GoogleMapsIcon}
+                    alt='Google Maps'
+                    style={{ height: '36px', marginRight: '0.3rem' }}
+                  />
+                </a>
+              </Box>
             </Flex>
 
             <CommentForm rideId={ride._id} />
             <CommentList comments={ride.comments} rideId={ride._id} />
-
-            {/* <Flex mt={4} justifyContent='flex-end'>
-              <Link to={`/rides/${ride._id}`}>
-                <Button size='sm' colorScheme='teal' variant='outline'>View Full Ride</Button>
-              </Link>
-            </Flex> */}
           </Box>
         </Box>
-        {/* <CommentForm rideId={ride._id} /> */}
       </Box>
-      {/* <CommentList /> */}
     </Layout>
   );
 };
