@@ -33,7 +33,7 @@ import { REMOVE_COMMENT, REMOVE_RIDE } from '../utils/mutations';
 import { QUERY_RIDES } from '../utils/queries';
 import Auth from '../utils/auth';
 import CommentAvatar from '../components/CommentAvatar';
-import GoogleMapsIcon from '../assets/google-maps-svgrepo-com.svg'; // Import the SVG icon
+import GoogleMapsIcon from '../assets/google-maps-svgrepo-com.svg';
 
 const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
   const [removeRide] = useMutation(REMOVE_RIDE, {
@@ -273,7 +273,6 @@ const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
                   {ride.date}
                 </Text>
               </Box>
-              {/* Google Maps icon */}
               <Box ml='auto' display='flex' alignItems='center'>
                 <a
                   href={`https://www.google.com/maps`}
