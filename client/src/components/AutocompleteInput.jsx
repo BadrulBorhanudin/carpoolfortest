@@ -1,6 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Input, Box, List, ListItem, Spinner } from '@chakra-ui/react';
+import {
+  Input,
+  Box,
+  List,
+  ListItem,
+  Spinner,
+  InputGroup,
+  InputLeftElement,
+} from '@chakra-ui/react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const AutocompleteInput = ({ placeholder, value, onChange }) => {
   const [suggestions, setSuggestions] = useState([]);
@@ -29,35 +39,40 @@ const AutocompleteInput = ({ placeholder, value, onChange }) => {
 
   const handleSuggestionClick = (suggestion) => {
     onChange(suggestion);
-    setSuggestions([]); // Clear suggestions immediately
+    setSuggestions([]);
   };
 
   return (
-    <Box position='relative'>
-      <Input
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => {
-          onChange(e.target.value);
-          if (e.target.value.length <= 2) {
-            setSuggestions([]);
-          }
-        }}
-        bg=''
-        rounded='full'
-        pl={10}
-        mb={2}
-      />
+    <Box position='relative' width='100%'>
+      <InputGroup>
+        <InputLeftElement pointerEvents='none'>
+          <FontAwesomeIcon icon={faSearch} color='#CBD5E0' />
+        </InputLeftElement>
+        <Input
+          placeholder={placeholder}
+          value={value}
+          onChange={(e) => {
+            onChange(e.target.value);
+            if (e.target.value.length <= 2) {
+              setSuggestions([]);
+            }
+          }}
+          rounded='full'
+          bg=''
+          pl={10}
+        />
+      </InputGroup>
       {loading && <Spinner size='sm' />}
       {suggestions.length > 0 && (
         <List
-          position='absolute'
-          zIndex='10'
+          // position='absolute'
+          zIndex='20'
           bg='white'
           border='1px solid #ccc'
           borderRadius='md'
           mt='2'
           width='100%'
+          boxShadow='md'
         >
           {suggestions.map((suggestion, index) => (
             <ListItem
