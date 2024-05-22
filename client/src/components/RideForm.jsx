@@ -25,7 +25,7 @@ import { QUERY_RIDES, QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
-import AutocompleteInput from '../components/AutocompleteInput'; // Assuming you have an AutocompleteInput component
+import AutocompleteInput from '../components/AutocompleteInput';
 
 const RideForm = () => {
   const {
@@ -113,7 +113,7 @@ const RideForm = () => {
       rounded='md'
       width='100%'
       borderWidth='1px'
-      borderRadius='lg'
+      borderRadius='3xl'
       borderColor='gray.300'
       mx='auto'
     >
@@ -144,7 +144,7 @@ const RideForm = () => {
               value={origin}
               onChange={(value) => setOrigin(value)}
               rounded='full'
-              width='100%' // Ensure full width
+              width='100%'
             />
           </InputGroup>
         </FormControl>
@@ -158,7 +158,7 @@ const RideForm = () => {
               value={destination}
               onChange={(value) => setDestination(value)}
               rounded='full'
-              width='100%' // Ensure full width
+              width='100%'
             />
           </InputGroup>
         </FormControl>
@@ -176,7 +176,7 @@ const RideForm = () => {
               bg=''
               rounded='full'
               mb={2}
-              width='100%' // Ensure full width
+              width='100%'
               onClick={(e) => e.target.showPicker()}
             />
           </InputGroup>
@@ -194,7 +194,7 @@ const RideForm = () => {
               bg=''
               rounded='full'
               mb={2}
-              width='100%' // Ensure full width
+              width='100%'
               onClick={(e) => e.target.showPicker()}
             />
           </InputGroup>
