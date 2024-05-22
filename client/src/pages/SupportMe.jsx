@@ -1,4 +1,3 @@
-// src/pages/SupportMe.jsx
 import { Box, Heading, Text, Container, Button, Link } from '@chakra-ui/react';
 
 const SupportMe = () => {

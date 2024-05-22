@@ -101,9 +101,9 @@ const Login = ({ isOpen, onOpen, onClose }) => {
                       size='sm'
                       onClick={handlePasswordToggle}
                       variant='ghost'
-                      _focus={{ boxShadow: 'none' }} // Remove the focus outline
-                      _hover={{ backgroundColor: 'transparent' }} // Optional: remove background on hover
-                      _active={{ backgroundColor: 'transparent' }} // Optional: remove background on active
+                      _focus={{ boxShadow: 'none' }}
+                      _hover={{ backgroundColor: 'transparent' }}
+                      _active={{ backgroundColor: 'transparent' }}
                     >
                       {showPassword ? (
                         <FontAwesomeIcon icon={faEyeSlash} />

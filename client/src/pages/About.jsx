@@ -1,4 +1,3 @@
-// src/pages/About.jsx
 import { Box, Heading, Text, Container } from '@chakra-ui/react';
 
 const About = () => {

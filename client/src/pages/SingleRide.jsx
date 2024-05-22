@@ -36,7 +36,7 @@ import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
 import Layout from '../components/Layout';
 import Auth from '../utils/auth';
-import GoogleMapsIcon from '../assets/google-maps-svgrepo-com.svg'; // Import the SVG icon
+import GoogleMapsIcon from '../assets/google-maps-svgrepo-com.svg';
 
 const SingleRide = () => {
   const { id: rideId } = useParams();
@@ -296,7 +296,6 @@ const SingleRide = () => {
                   {ride.date}
                 </Text>
               </Box>
-              {/* Google Maps icon */}
               <Box ml='auto' display='flex' alignItems='center'>
                 <a
                   href={`https://www.google.com/maps`}
