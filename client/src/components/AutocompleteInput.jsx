@@ -9,8 +9,6 @@ import {
   InputLeftElement,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const AutocompleteInput = ({ placeholder, value, onChange }) => {
   const [suggestions, setSuggestions] = useState([]);
@@ -46,7 +44,6 @@ const AutocompleteInput = ({ placeholder, value, onChange }) => {
     <Box position='relative' width='100%'>
       <InputGroup>
         <InputLeftElement pointerEvents='none'>
-          <FontAwesomeIcon icon={faSearch} color='#CBD5E0' />
         </InputLeftElement>
         <Input
           placeholder={placeholder}
@@ -65,14 +62,12 @@ const AutocompleteInput = ({ placeholder, value, onChange }) => {
       {loading && <Spinner size='sm' />}
       {suggestions.length > 0 && (
         <List
-          // position='absolute'
           zIndex='20'
           bg='white'
-          border='1px solid #ccc'
+          border='1px solid #CBD5E0'
           borderRadius='md'
           mt='2'
           width='100%'
-          boxShadow='md'
         >
           {suggestions.map((suggestion, index) => (
             <ListItem
