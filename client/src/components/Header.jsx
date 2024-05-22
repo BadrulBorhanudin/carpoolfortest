@@ -92,7 +92,7 @@ const Header = () => {
                         cursor='pointer'
                       />
                     </PopoverTrigger>
-                    <PopoverContent>
+                    <PopoverContent width='fit-content'>
                       <PopoverHeader fontWeight='semibold'>
                         <Flex align='center'>
                           <Avatar
@@ -113,7 +113,7 @@ const Header = () => {
                         </Flex>
                       </PopoverHeader>
                       <PopoverArrow />
-                      <PopoverCloseButton />
+                      {/* <PopoverCloseButton /> */}
                       <PopoverBody>
                         <Button borderRadius='full' onClick={logout}>
                           Logout

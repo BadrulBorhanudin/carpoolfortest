@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import {
   Box,
+  Divider,
   Button,
   FormControl,
   FormLabel,
@@ -9,6 +10,7 @@ import {
   Text,
   useToast,
   useDisclosure,
+  Flex,
 } from '@chakra-ui/react';
 
 import { ADD_COMMENT } from '../utils/mutations';
@@ -76,14 +78,22 @@ const CommentForm = ({ rideId }) => {
 
   return (
     <Box>
-      <Text fontSize='xl' mb={4}>
+      {/* <Text fontSize='xl' mb={4}>
         Do you need a lift?
-      </Text>
-
+      </Text> */}
+      <Divider
+        mt='3'
+        mb='3'
+        pl=''
+        orientation='horizontal'
+        borderColor='gray.300'
+      />
       {Auth.loggedIn() ? (
         <>
           <Text
+            ml='1'
             mb={2}
+            fontSize='sm'
             color={characterCount === 280 || error ? 'red.500' : 'black'}
           >
             Character Count: {characterCount}/280
@@ -94,8 +104,8 @@ const CommentForm = ({ rideId }) => {
             )}
           </Text>
           <form onSubmit={handleFormSubmit}>
-            <FormControl mb={4}>
-              <FormLabel htmlFor='commentText'>Add your request</FormLabel>
+            <FormControl mb={2}>
+              {/* <FormLabel htmlFor='commentText'>Add your request</FormLabel> */}
               <Textarea
                 id='commentText'
                 name='commentText'
@@ -105,19 +115,31 @@ const CommentForm = ({ rideId }) => {
                 resize='vertical'
               />
             </FormControl>
-            <Button colorScheme='blue' rounded='full' type='submit'>
-              Request Ride
-            </Button>
+            <Flex justifyContent='flex-end'>
+              <Button mb={3} colorScheme='blue' rounded='full' type='submit'>
+                Let's Plan
+              </Button>
+            </Flex>
           </form>
         </>
       ) : (
-        <Text>
+        <Text fontSize='sm'>
           You need to be logged in to request the ride. Please{' '}
-          <Button variant='link' colorScheme='blue' onClick={onLoginOpen}>
+          <Button
+            fontSize='sm'
+            variant='link'
+            colorScheme='blue'
+            onClick={onLoginOpen}
+          >
             login
           </Button>{' '}
           or{' '}
-          <Button variant='link' colorScheme='blue' onClick={onSignupOpen}>
+          <Button
+            fontSize='sm'
+            variant='link'
+            colorScheme='blue'
+            onClick={onSignupOpen}
+          >
             signup
           </Button>
           .

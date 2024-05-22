@@ -39,7 +39,7 @@ const startServer = async () => {
   app.get('/api/autocomplete', async (req, res) => {
     try {
       const query = req.query.q;
-      const apiKey = '';
+      const apiKey = process.env.LOCATIONIQ_API_KEY;
 
       if (!apiKey) {
         return res.status(500).json({ error: 'Missing LocationIQ API key' });
