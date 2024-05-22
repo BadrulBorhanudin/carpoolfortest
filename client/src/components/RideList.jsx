@@ -35,6 +35,9 @@ import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { REMOVE_COMMENT, REMOVE_RIDE } from '../utils/mutations';
 import { QUERY_RIDES } from '../utils/queries';
 import Auth from '../utils/auth';
+import CommentForm from '../components/CommentForm';
+import CommentList from '../components/CommentList';
+import CommentAvatar from '../components/CommentAvatar';
 
 const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
   const [removeRide] = useMutation(REMOVE_RIDE, {
@@ -162,9 +165,9 @@ const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
                       left='8px'
                     />
                   </PopoverTrigger>
-                  <PopoverContent>
+                  <PopoverContent width='fit-content'>
                     <PopoverArrow />
-                    <PopoverCloseButton />
+                    {/* <PopoverCloseButton /> */}
                     <PopoverHeader>Manage Ride</PopoverHeader>
                     <PopoverBody>
                       <Button
@@ -265,79 +268,18 @@ const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
                 </Text>
               </Box>
             </Flex>
-            {ride.comments &&
-              ride.comments.map((comment) => (
-                <Box
-                  key={comment._id}
-                  p={2}
-                  mt={2}
-                  borderWidth='1px'
-                  borderRadius='lg'
-                  overflow='hidden'
-                  position='relative'
-                >
-                  {Auth.loggedIn() && currentUser === comment.commentAuthor && (
-                    <Menu>
-                      <MenuButton
-                        as={IconButton}
-                        icon={<FontAwesomeIcon icon={faEllipsis} />}
-                        variant='ghost'
-                        size='sm'
-                        position='absolute'
-                        top='8px'
-                        right='8px'
-                      />
-                      <MenuList>
-                        <MenuItem
-                          onClick={() =>
-                            handleRemoveComment(ride._id, comment._id)
-                          }
-                        >
-                          Remove Comment
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                  )}
-                  <Flex alignItems='center' justifyContent='space-between'>
-                    <Box>
-                      <Flex alignItems='center'>
-                        <Avatar name={comment.commentAuthor} size='xs' mr={2} />
-                        <Box>
-                          <Text
-                            fontWeight='bold'
-                            fontSize='sm'
-                            mr={1}
-                            color='gray.600'
-                          >
-                            {comment.commentAuthor}
-                          </Text>
-                          <Flex alignItems='center'>
-                            <Text fontSize='xs' color='gray.400'>
-                              {comment.createdAt}
-                            </Text>
-                          </Flex>
-                        </Box>
-                      </Flex>
-                      <Text
-                        mt='1'
-                        ml='8'
-                        wordBreak='break-word'
-                        lineHeight='1.3'
-                        fontSize='sm'
-                      >
-                        {comment.commentText}
-                      </Text>
-                    </Box>
-                  </Flex>
-                </Box>
-              ))}
+
+            {/* <CommentForm rideId={ride._id} />
+            <CommentList comments={ride.comments} rideId={ride._id} /> */}
+            <CommentAvatar comments={ride.comments} rideId={ride._id} />
+            {/* 
             <Flex mt={4} justifyContent='flex-end'>
               <Link to={`/rides/${ride._id}`}>
                 <Button variant='solid' colorScheme='blue' borderRadius='full'>
-                  Let's Plan
+                  go to post
                 </Button>
               </Link>
-            </Flex>
+            </Flex> */}
           </Box>
         </Box>
       ))}
