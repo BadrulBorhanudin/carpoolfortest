@@ -7,9 +7,8 @@ import {
   Flex,
   Button,
   Text,
-  Link,
 } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ChatIcon } from '@chakra-ui/icons';
 
 const CommentAvatar = ({ comments = [], rideId }) => {
@@ -33,7 +32,7 @@ const CommentAvatar = ({ comments = [], rideId }) => {
         )}
 
         {rideId && (
-          <Link as={RouterLink} to={`/rides/${rideId}`}>
+          <Link to={`/rides/${rideId}`}>
             <Button variant='solid' colorScheme='blue' borderRadius='full'>
               Go to Post <ChatIcon ml={2} style={{ marginLeft: '0.5rem' }} />
               <Text as='span' ml='1' fontSize='sm'>
