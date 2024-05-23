@@ -200,14 +200,23 @@ const CommentList = ({ comments = [], rideId }) => {
               </Popover>
             )}
             <Flex alignItems='center'>
-              <Avatar name={comment.commentAuthor} size='xs' mr={2} />
               <Box flex='1'>
-                <Text fontWeight='bold' fontSize='sm' mr={1} color='gray.600'>
-                  {comment.commentAuthor}
-                </Text>
-                <Text fontSize='xs' color='gray.400'>
-                  {comment.createdAt}
-                </Text>
+                <Flex alignItems='center'>
+                  <Avatar name={comment.commentAuthor} size='xs' mr={2} />
+                  <Box>
+                    <Text
+                      fontWeight='bold'
+                      fontSize='sm'
+                      mr={1}
+                      color='gray.600'
+                    >
+                      {comment.commentAuthor}
+                    </Text>
+                    <Text fontSize='xs' color='gray.400'>
+                      {comment.createdAt}
+                    </Text>
+                  </Box>
+                </Flex>
                 {editMode === comment._id ? (
                   <Input
                     value={editText}
