@@ -152,13 +152,15 @@ const Header = () => {
             )}
           </ButtonGroup>
         </Box>
-        <Image
-          src={carpoolLogo}
-          alt='Logo'
-          mt={['-10', null, '0']}
-          boxSize={['220px', null, '470px']}
-          pl={['0', null, '10']}
-        />
+        <Link to='/' style={{ textDecoration: 'none' }}>
+          <Image
+            src={carpoolLogo}
+            alt='Logo'
+            mt={['-10', null, '0']}
+            boxSize={['220px', null, '470px']}
+            pl={['0', null, '10']}
+          />
+        </Link>
       </Flex>
     </Flex>
   );

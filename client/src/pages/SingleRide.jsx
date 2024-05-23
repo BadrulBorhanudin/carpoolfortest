@@ -137,6 +137,10 @@ const SingleRide = () => {
     );
   }
 
+  const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(
+    ride.origin
+  )}&destination=${encodeURIComponent(ride.destination)}`;
+
   return (
     <Layout>
       <Box my={3}>
@@ -185,6 +189,7 @@ const SingleRide = () => {
                   isOpen={isPopoverOpen}
                   onClose={() => setIsPopoverOpen(false)}
                   initialFocusRef={popoverRef}
+                  placement='bottom-start'
                 >
                   <PopoverTrigger>
                     <IconButton
@@ -298,7 +303,7 @@ const SingleRide = () => {
               </Box>
               <Box ml='auto' display='flex' alignItems='center'>
                 <a
-                  href={`https://www.google.com/maps`}
+                  href={googleMapsUrl}
                   target='_blank'
                   rel='noopener noreferrer'
                 >

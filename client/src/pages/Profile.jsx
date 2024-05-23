@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { Box, Heading, Spinner, Button, Flex } from '@chakra-ui/react';
 
-import RideForm from '../components/RideForm';
 import RideList from '../components/RideList';
 import Layout from '../components/Layout';
 
@@ -80,7 +79,7 @@ const Profile = () => {
           colorScheme={currentFilter === 'commentedRides' ? 'blue' : 'gray'}
           ml={2}
         >
-          Rides You've Commented On
+          Your comments
         </Button>
       </Flex>
 
@@ -103,12 +102,6 @@ const Profile = () => {
           />
         )}
       </Box>
-
-      {!userParam && (
-        <Box mb={3}>
-          <RideForm />
-        </Box>
-      )}
     </Layout>
   );
 };

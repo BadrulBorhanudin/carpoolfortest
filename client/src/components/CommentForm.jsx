@@ -78,9 +78,6 @@ const CommentForm = ({ rideId }) => {
 
   return (
     <Box>
-      {/* <Text fontSize='xl' mb={4}>
-        Do you need a lift?
-      </Text> */}
       <Divider
         mt='3'
         mb='3'
@@ -90,19 +87,6 @@ const CommentForm = ({ rideId }) => {
       />
       {Auth.loggedIn() ? (
         <>
-          <Text
-            ml='1'
-            mb={2}
-            fontSize='sm'
-            color={characterCount === 280 || error ? 'red.500' : 'black'}
-          >
-            Character Count: {characterCount}/280
-            {error && (
-              <Text ml={2} color='red.500'>
-                {error.message}
-              </Text>
-            )}
-          </Text>
           <form onSubmit={handleFormSubmit}>
             <FormControl mb={2}>
               {/* <FormLabel htmlFor='commentText'>Add your request</FormLabel> */}
@@ -115,6 +99,19 @@ const CommentForm = ({ rideId }) => {
                 resize='vertical'
               />
             </FormControl>
+            <Text
+              ml='1'
+              mb={2}
+              fontSize='sm'
+              color={characterCount === 280 || error ? 'red.500' : 'black'}
+            >
+              Character Count: {characterCount}/280
+              {error && (
+                <Text ml={2} color='red.500'>
+                  {error.message}
+                </Text>
+              )}
+            </Text>
             <Flex justifyContent='flex-end'>
               <Button mb={3} colorScheme='blue' rounded='full' type='submit'>
                 Let's Plan

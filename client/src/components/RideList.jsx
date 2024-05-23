@@ -165,6 +165,7 @@ const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
                 />
                 {ride.rideAuthor === currentUser && (
                   <Popover
+                    placement='bottom-start'
                     isOpen={isPopoverOpen}
                     onClose={() => setIsPopoverOpen(false)}
                   >
