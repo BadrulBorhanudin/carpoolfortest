@@ -5,7 +5,6 @@ import {
   Divider,
   Button,
   FormControl,
-  FormLabel,
   Textarea,
   Text,
   useToast,
@@ -89,7 +88,6 @@ const CommentForm = ({ rideId }) => {
         <>
           <form onSubmit={handleFormSubmit}>
             <FormControl mb={2}>
-              {/* <FormLabel htmlFor='commentText'>Add your request</FormLabel> */}
               <Textarea
                 id='commentText'
                 name='commentText'
