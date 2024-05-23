@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   Button,
   Modal,
@@ -13,7 +13,6 @@ import {
   Alert,
   AlertIcon,
   Box,
-  Link,
   CloseButton,
   Flex,
   InputGroup,
@@ -70,7 +69,8 @@ const Login = ({ isOpen, onOpen, onClose }) => {
             {data ? (
               <Box mb='15'>
                 Success! You may now head{' '}
-                <Link as={RouterLink} to='/'>
+                <Link 
+                 to='/'>
                   back to the homepage.
                 </Link>
               </Box>
