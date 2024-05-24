@@ -31,6 +31,10 @@ const typeDefs = `
     user: User
   }
 
+  type CheckoutSession {
+    id: ID!
+  }
+
   type Query {
     users: [User]
     user(username: String!): User
@@ -47,6 +51,8 @@ const typeDefs = `
     removeRide(rideId: ID!): Ride
     removeComment(rideId: ID!, commentId: ID!): Ride
     editComment(rideId: ID!, commentId: ID!, commentText: String!): Ride
+    createCheckoutSession(donationAmount: Float!): CheckoutSession
+    
   }
 `;
 

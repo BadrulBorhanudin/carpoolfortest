@@ -9,6 +9,8 @@ import Profile from './pages/Profile';
 import Signup from './pages/Signup';
 import SingleRide from './pages/SingleRide.jsx';
 import Support from './pages/Support.jsx';
+import SuccessPage from './pages/Success.jsx';
+// import CancelPage from './pages/Cancel.jsx';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme';
 
@@ -50,6 +52,14 @@ const router = createBrowserRouter([
         path: '/rides/:id',
         element: <SingleRide />,
       },
+      {
+        path: '/success',
+        element: <SuccessPage />,
+      },
+      // {
+      //   path: '/cancel', // This is your cancel route
+      //   element: <CancelPage />,
+      // },
     ],
   },
 ]);
