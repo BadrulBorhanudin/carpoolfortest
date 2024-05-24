@@ -1,5 +1,7 @@
+require('dotenv').config();
 const { User, Ride } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const resolvers = {
   Query: {
@@ -147,6 +149,30 @@ const resolvers = {
         }
 
         return ride;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    createCheckoutSession: async (parent, { donationAmount }, context) => {
+      if (context.user) {
+        const session = await stripe.checkout.sessions.create({
+          payment_method_types: ['card'],
+          line_items: [
+            {
+              price_data: {
+                currency: 'aud',
+                product_data: {
+                  name: 'Donation to CarPoolHub',
+                },
+                unit_amount: donationAmount * 100,
+              },
+              quantity: 1,
+            },
+          ],
+          mode: 'payment',
+          success_url: `${process.env.SUCCESS_URL}?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${process.env.CANCEL_URL}`,
+        });
+        return { id: session.id };
       }
       throw new AuthenticationError('You need to be logged in!');
     },

@@ -1,7 +1,72 @@
-import { Box, Heading, Text, Button, Link } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  Text,
+  Button,
+  Link,
+  FormControl,
+  FormLabel,
+  Input,
+  useToast,
+  VStack,
+  HStack,
+  Divider,
+} from '@chakra-ui/react';
 import Layout from '../components/Layout';
+import { useMutation } from '@apollo/client';
+import { loadStripe } from '@stripe/stripe-js';
+import { useState } from 'react';
+import { CREATE_CHECKOUT_SESSION } from '../utils/mutations';
+
+const stripePromise = loadStripe(
+  'pk_test_51PJvcdBVaH1iGHeJY2P6pMwJukFJAshUZ8exvD58Yxh7IA4an6IOO8po46ekOfm3sJ66lasAiA1z6NbxGGuZZElJ00pd55a9Xr'
+);
 
 const SupportMe = () => {
+  const [donationAmount, setDonationAmount] = useState('');
+  const toast = useToast();
+  const [createCheckoutSession, { loading, error }] = useMutation(
+    CREATE_CHECKOUT_SESSION
+  );
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    const numericValue = value.replace(/^0+/, '');
+    setDonationAmount(numericValue);
+  };
+
+  const handleClick = async (event) => {
+    event.preventDefault();
+    try {
+      const { data } = await createCheckoutSession({
+        variables: { donationAmount: parseFloat(donationAmount) },
+      });
+      const stripe = await stripePromise;
+      const result = await stripe.redirectToCheckout({
+        sessionId: data.createCheckoutSession.id,
+      });
+      if (result.error) {
+        console.error(result.error.message);
+        toast({
+          title: 'Error',
+          description: 'There was an error processing your donation.',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: 'Error',
+        description: 'There was an error creating the checkout session.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
   return (
     <Layout>
       <Box
@@ -11,48 +76,86 @@ const SupportMe = () => {
         borderRadius='3xl'
         borderColor='gray.300'
         bg='white'
+        // bg='gray.50'
+        // maxW='lg'
+        // mx='auto'
+        // boxShadow='md'
       >
-        <Heading as='h1' size='xl' mb={4} textAlign='center'>
+        <Heading as='h1' size='xl' mb={6} textAlign='center'>
           Support Me
         </Heading>
-        <Text fontSize='lg' mb={4}>
+        <Text fontSize='lg' mb={6} textAlign='center'>
           Thank you for considering supporting CarPoolHub! Your support helps me
           continue to provide a reliable and convenient ride-sharing platform
-          for everyone. There are several ways you can support:
+          for everyone.
         </Text>
-        <Heading as='h2' size='lg' mb={4}>
-          Donations
-        </Heading>
-        <Text fontSize='lg' mb={4}>
-          If you find my service valuable, consider making a donation. Your
-          contributions will help me maintain and improve the platform, ensuring
-          a seamless experience for all users.
-        </Text>
-        <Button colorScheme='blue' size='md' mb={4} rounded='full'>
-          <Link href='https://www.stripe.com' isExternal>
+        <Divider mb={6} />
+        <VStack spacing={6}>
+          <Box textAlign='center'>
+            <Heading as='h2' size='lg' mb={2}>
+              Donations
+            </Heading>
+            <Text fontSize='lg'>
+              If you find my service valuable, consider making a donation. Your
+              contributions will help me maintain and improve the platform,
+              ensuring a seamless experience for all users.
+            </Text>
+          </Box>
+          <FormControl>
+            <FormLabel htmlFor='donationAmount'>Donation Amount ($):</FormLabel>
+            <Input
+              rounded={'full'}
+              id='donationAmount'
+              type='number'
+              min='0'
+              value={donationAmount}
+              onChange={handleInputChange}
+              onBlur={() => {
+                if (donationAmount === '') setDonationAmount('0');
+              }}
+              onFocus={() => {
+                if (donationAmount === '0') setDonationAmount('');
+              }}
+            />
+          </FormControl>
+          <Button
+            isLoading={loading}
+            loadingText='Processing'
+            colorScheme='blue'
+            size='lg'
+            rounded='full'
+            onClick={handleClick}
+            disabled={parseFloat(donationAmount) <= 0}
+          >
             Donate via Stripe
-          </Link>
-        </Button>
-        <Heading as='h2' size='lg' mb={4}>
-          Spread the Word
-        </Heading>
-        <Text fontSize='lg' mb={4}>
-          Share CarPoolHub with your friends and family. The more people use the
-          platform, the better it becomes for everyone.
-        </Text>
-        <Heading as='h2' size='lg' mb={4}>
-          Feedback
-        </Heading>
-        <Text fontSize='lg' mb={4}>
-          I am always looking to improve. If you have any suggestions or
-          feedback, please don't hesitate to let me know. Your input is
-          invaluable.
-        </Text>
-        <Button colorScheme='blue' size='md' rounded='full'>
-          <Link href='mailto:badrulborhanudin@gmail.com' isExternal>
-            Send Feedback
-          </Link>
-        </Button>
+          </Button>
+          <Divider />
+          <Box textAlign='center'>
+            <Heading as='h2' size='lg' mb={2}>
+              Spread the Word
+            </Heading>
+            <Text fontSize='lg'>
+              Share CarPoolHub with your friends and family. The more people use
+              the platform, the better it becomes for everyone.
+            </Text>
+          </Box>
+          <Divider />
+          <Box textAlign='center'>
+            <Heading as='h2' size='lg' mb={2}>
+              Feedback
+            </Heading>
+            <Text fontSize='lg' mb={4}>
+              I am always looking to improve. If you have any suggestions or
+              feedback, please don't hesitate to let me know. Your input is
+              invaluable.
+            </Text>
+            <Button colorScheme='blue' size='lg' rounded='full'>
+              <Link href='mailto:badrulborhanudin@gmail.com' isExternal>
+                Send Feedback
+              </Link>
+            </Button>
+          </Box>
+        </VStack>
       </Box>
     </Layout>
   );

@@ -130,3 +130,11 @@ export const REMOVE_COMMENT = gql`
     }
   }
 `;
+
+export const CREATE_CHECKOUT_SESSION = gql`
+  mutation createCheckoutSession($donationAmount: Float!) {
+    createCheckoutSession(donationAmount: $donationAmount) {
+      id
+    }
+  }
+`;

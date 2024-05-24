@@ -19,6 +19,9 @@
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.1",
+    "@stripe/react-stripe-js": "^2.7.1",
+    "@stripe/stripe-js": "^3.4.1",
+    "@vitejs/plugin-react": "^4.0.0",
     "axios": "^1.7.1",
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
@@ -29,8 +32,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.2",
-    "vite": "^4.4.5",
-    "@vitejs/plugin-react": "^4.0.0"
+    "vite": "^4.4.5"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
