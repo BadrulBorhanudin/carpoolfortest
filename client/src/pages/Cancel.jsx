@@ -16,7 +16,6 @@
 //         <Text mt={4}>
 //           We appreciate your interest in supporting CarpoolHub!
 //         </Text>
-//         {/* You can add a button here to retry the donation process */}
 //       </Box>
 //     </Layout>
 //   );
