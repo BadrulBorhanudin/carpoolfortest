@@ -10,7 +10,6 @@ import {
   useToast,
   VStack,
   HStack,
-  Divider,
 } from '@chakra-ui/react';
 import Layout from '../components/Layout';
 import { useMutation } from '@apollo/client';
@@ -76,47 +75,46 @@ const SupportMe = () => {
         borderRadius='3xl'
         borderColor='gray.300'
         bg='white'
-        // bg='gray.50'
-        // maxW='lg'
-        // mx='auto'
-        // boxShadow='md'
       >
         <Heading as='h1' size='xl' mb={6} textAlign='center'>
           Support Me
         </Heading>
-        <Text fontSize='lg' mb={6} textAlign='center'>
+        <Text fontSize='lg' mb={6} textAlign='justify'>
           Thank you for considering supporting CarPoolHub! Your support helps me
           continue to provide a reliable and convenient ride-sharing platform
           for everyone.
         </Text>
-        <Divider mb={6} />
         <VStack spacing={6}>
           <Box textAlign='center'>
             <Heading as='h2' size='lg' mb={2}>
               Donations
             </Heading>
-            <Text fontSize='lg'>
+            <Text fontSize='lg' textAlign='justify'>
               If you find my service valuable, consider making a donation. Your
               contributions will help me maintain and improve the platform,
               ensuring a seamless experience for all users.
             </Text>
           </Box>
           <FormControl>
-            <FormLabel htmlFor='donationAmount'>Donation Amount ($):</FormLabel>
-            <Input
-              rounded={'full'}
-              id='donationAmount'
-              type='number'
-              min='0'
-              value={donationAmount}
-              onChange={handleInputChange}
-              onBlur={() => {
-                if (donationAmount === '') setDonationAmount('0');
-              }}
-              onFocus={() => {
-                if (donationAmount === '0') setDonationAmount('');
-              }}
-            />
+            <HStack>
+              <FormLabel htmlFor='donationAmount' mb='0' whiteSpace='nowrap'>
+                Donation Amount ($):
+              </FormLabel>
+              <Input
+                rounded={'full'}
+                id='donationAmount'
+                type='number'
+                min='0'
+                value={donationAmount}
+                onChange={handleInputChange}
+                onBlur={() => {
+                  if (donationAmount === '') setDonationAmount('0');
+                }}
+                onFocus={() => {
+                  if (donationAmount === '0') setDonationAmount('');
+                }}
+              />
+            </HStack>
           </FormControl>
           <Button
             isLoading={loading}
@@ -129,22 +127,20 @@ const SupportMe = () => {
           >
             Donate via Stripe
           </Button>
-          <Divider />
           <Box textAlign='center'>
             <Heading as='h2' size='lg' mb={2}>
               Spread the Word
             </Heading>
-            <Text fontSize='lg'>
+            <Text fontSize='lg' textAlign='justify'>
               Share CarPoolHub with your friends and family. The more people use
               the platform, the better it becomes for everyone.
             </Text>
           </Box>
-          <Divider />
           <Box textAlign='center'>
             <Heading as='h2' size='lg' mb={2}>
               Feedback
             </Heading>
-            <Text fontSize='lg' mb={4}>
+            <Text fontSize='lg' mb={4} textAlign='justify'>
               I am always looking to improve. If you have any suggestions or
               feedback, please don't hesitate to let me know. Your input is
               invaluable.

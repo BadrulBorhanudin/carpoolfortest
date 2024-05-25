@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useState, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import {
   Box,
@@ -37,6 +37,14 @@ import CommentForm from '../components/CommentForm';
 import Layout from '../components/Layout';
 import Auth from '../utils/auth';
 import GoogleMapsIcon from '../assets/google-maps-svgrepo-com.svg';
+
+
+const truncateText = (text, maxLength) => {
+  if (text.length > maxLength) {
+    return text.slice(0, maxLength) + '...';
+  }
+  return text;
+};
 
 const SingleRide = () => {
   const { id: rideId } = useParams();
@@ -225,44 +233,39 @@ const SingleRide = () => {
               orientation='horizontal'
               borderColor='gray.300'
             />
-            <Flex alignItems='center'>
-              <Box position='relative' mr={3}>
+            <Flex alignItems='center' mt={2}>
+              <Box position='relative' mr={3} left='-0.05rem'>
                 <FontAwesomeIcon icon={faCircleDot} color='#2C7A7B' />
-                <Box
-                  position='absolute'
-                  top='1.25rem'
-                  left='0.75rem'
-                  w='1px'
-                  h='3rem'
-                  bg=''
-                >
-                  <Box
-                    position='absolute'
-                    top='0.4rem'
-                    left='-8px'
-                    w='7px'
-                    h='7px'
-                    borderRadius='full'
-                    bg='gray.300'
-                  ></Box>
-                  <Box
-                    position='absolute'
-                    top='1.3rem'
-                    left='-8px'
-                    w='7px'
-                    h='7px'
-                    borderRadius='full'
-                    bg='gray.300'
-                  ></Box>
-                </Box>
               </Box>
-              <Box>
+              <Box pl='' mt=''>
                 <Text color='gray.500' fontSize='sm'>
                   Origin
                 </Text>
                 <Text fontWeight='bold' fontSize='md'>
-                  {ride.origin}
+                  {truncateText(ride.origin, 30)}
                 </Text>
+              </Box>
+            </Flex>
+            <Flex alignItems='center' mt={2}>
+              <Box position='relative' mr={5} left='1px'>
+                <Box
+                  position='absolute'
+                  bottom='0.4rem'
+                  left='0.19rem'
+                  w='7px'
+                  h='7px'
+                  borderRadius='full'
+                  bg='gray.300'
+                ></Box>
+                <Box
+                  position='absolute'
+                  top='0.3rem'
+                  left='0.19rem'
+                  w='7px'
+                  h='7px'
+                  borderRadius='full'
+                  bg='gray.300'
+                ></Box>
               </Box>
             </Flex>
             <Flex alignItems='center' mt={2}>
@@ -274,7 +277,7 @@ const SingleRide = () => {
                   Destination
                 </Text>
                 <Text fontWeight='bold' fontSize='md'>
-                  {ride.destination}
+                  {truncateText(ride.destination, 30)}
                 </Text>
               </Box>
             </Flex>
