@@ -39,14 +39,14 @@ const Home = () => {
           <Button
             borderRadius='full'
             onClick={() => handleFilter('all')}
-            colorScheme={filter === 'all' ? 'blue' : 'gray'}
+            colorScheme={filter === 'all' ? 'blue' : 'blackAlpha'}
           >
             All
           </Button>
           <Button
             borderRadius='full'
             onClick={() => handleFilter('driver')}
-            colorScheme={filter === 'driver' ? 'blue' : 'gray'}
+            colorScheme={filter === 'driver' ? 'blue' : 'blackAlpha'}
             ml={2}
           >
             Driver
@@ -54,13 +54,13 @@ const Home = () => {
           <Button
             borderRadius='full'
             onClick={() => handleFilter('passenger')}
-            colorScheme={filter === 'passenger' ? 'blue' : 'gray'}
+            colorScheme={filter === 'passenger' ? 'blue' : 'blackAlpha'}
             ml={2}
           >
             Passenger
           </Button>
         </Box>
-        <Box width='100%' maxW='900px'>
+        <Box width='100%'>
           {loading ? (
             <Spinner size='xl' />
           ) : (

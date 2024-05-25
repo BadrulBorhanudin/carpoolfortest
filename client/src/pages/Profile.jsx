@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { Box, Heading, Spinner, Button, Flex } from '@chakra-ui/react';
@@ -69,14 +69,14 @@ const Profile = () => {
         <Button
           borderRadius='full'
           onClick={() => setCurrentFilter('yourRides')}
-          colorScheme={currentFilter === 'yourRides' ? 'blue' : 'gray'}
+          colorScheme={currentFilter === 'yourRides' ? 'blue' : 'blackAlpha'}
         >
           Your Rides
         </Button>
         <Button
           borderRadius='full'
           onClick={() => setCurrentFilter('commentedRides')}
-          colorScheme={currentFilter === 'commentedRides' ? 'blue' : 'gray'}
+          colorScheme={currentFilter === 'commentedRides' ? 'blue' : 'blackAlpha'}
           ml={2}
         >
           Your comments

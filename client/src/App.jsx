@@ -4,12 +4,13 @@ import {
   ApolloProvider,
   createHttpLink,
 } from '@apollo/client';
+import { Box } from '@chakra-ui/react';
 import { setContext } from '@apollo/client/link/context';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme';
 import Header from './components/Header';
-import Navigation from './components/Navigation';
+
 import Footer from './components/Footer';
 import Layout from './components/Layout';
 
@@ -33,22 +34,18 @@ const client = new ApolloClient({
 });
 
 function App() {
-  const location = useLocation();
-  const hideNavigation = ['/rides/', '/profiles/', '/me'].some((path) =>
-    location.pathname.startsWith(path)
-  );
-
   return (
     <ApolloProvider client={client}>
       <ChakraProvider theme={theme}>
-        <div className='flex-column justify-flex-start min-100-vh'>
-          <Header />
+        <Box display='flex' flexDirection='column' minHeight='100vh'>
           <Layout>
-            {!hideNavigation && <Navigation />}
-            <Outlet />
+            <Header />
+            <Box flex='1'>
+              <Outlet />
+            </Box>
           </Layout>
           <Footer />
-        </div>
+        </Box>
       </ChakraProvider>
     </ApolloProvider>
   );
