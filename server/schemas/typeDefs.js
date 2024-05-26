@@ -35,6 +35,12 @@ const typeDefs = `
     id: ID!
   }
 
+  type Geocode {
+    lat: Float
+    lon: Float
+  }
+
+
   type Query {
     users: [User]
     user(username: String!): User
@@ -52,7 +58,8 @@ const typeDefs = `
     removeComment(rideId: ID!, commentId: ID!): Ride
     editComment(rideId: ID!, commentId: ID!, commentText: String!): Ride
     createCheckoutSession(donationAmount: Float!): CheckoutSession
-    
+    geocodeAddress(address: String!): Geocode
+    geocodeMultipleAddresses(addresses: [String!]!): [Geocode]
   }
 `;
 
