@@ -1,0 +1,77 @@
+[
+  {
+    "address": "12 Smith St, Sydney NSW 2000, Australia",
+    "lat": -33.870849,
+    "lon": 151.207322
+  },
+  {
+    "address": "34 King St, Melbourne VIC 3000, Australia",
+    "lat": -37.817627,
+    "lon": 144.955656
+  },
+  {
+    "address": "56 Queen St, Brisbane QLD 4000, Australia",
+    "lat": -27.468324,
+    "lon": 153.024541
+  },
+  {
+    "address": "78 George St, Perth WA 6000, Australia",
+    "lat": -31.956739,
+    "lon": 115.859035
+  },
+  {
+    "address": "90 North St, Adelaide SA 5000, Australia",
+    "lat": -34.918488,
+    "lon": 138.595711
+  },
+  {
+    "address": "12 York St, Hobart TAS 7000, Australia",
+    "lat": -42.882339,
+    "lon": 147.329674
+  },
+  {
+    "address": "34 Brisbane St, Launceston TAS 7250, Australia",
+    "lat": -41.433221,
+    "lon": 147.144084
+  },
+  {
+    "address": "56 Northbourne Ave, Canberra ACT 2601, Australia",
+    "lat": -35.278963,
+    "lon": 149.128684
+  },
+  {
+    "address": "78 Mitchell St, Darwin NT 0800, Australia",
+    "lat": -12.464587,
+    "lon": 130.844911
+  },
+  {
+    "address": "90 Todd St, Alice Springs NT 0870, Australia",
+    "lat": -23.698548,
+    "lon": 133.883621
+  },
+  {
+    "address": "12 Sheridan St, Cairns QLD 4870, Australia",
+    "lat": -16.918551,
+    "lon": 145.778176
+  },
+  {
+    "address": "34 Flinders St, Townsville QLD 4810, Australia",
+    "lat": -19.257622,
+    "lon": 146.818264
+  },
+  {
+    "address": "56 Gold Coast Hwy, Gold Coast QLD 4217, Australia",
+    "lat": -28.017386,
+    "lon": 153.425735
+  },
+  {
+    "address": "78 Hunter St, Newcastle NSW 2300, Australia",
+    "lat": -32.926913,
+    "lon": 151.775324
+  },
+  {
+    "address": "90 Malop St, Geelong VIC 3220, Australia",
+    "lat": -38.148923,
+    "lon": 144.359712
+  }
+]
