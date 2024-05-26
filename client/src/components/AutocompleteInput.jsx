@@ -13,6 +13,7 @@ import axios from 'axios';
 const AutocompleteInput = ({ placeholder, value, onChange }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
     const fetchSuggestions = async () => {
@@ -21,6 +22,7 @@ const AutocompleteInput = ({ placeholder, value, onChange }) => {
         try {
           const response = await axios.get(`/api/autocomplete?q=${value}`);
           setSuggestions(response.data);
+          setShowSuggestions(true);
         } catch (error) {
           console.error('Error fetching autocomplete suggestions:', error);
         } finally {
@@ -28,6 +30,7 @@ const AutocompleteInput = ({ placeholder, value, onChange }) => {
         }
       } else {
         setSuggestions([]);
+        setShowSuggestions(false);
       }
     };
 
@@ -38,12 +41,20 @@ const AutocompleteInput = ({ placeholder, value, onChange }) => {
   const handleSuggestionClick = (suggestion) => {
     onChange(suggestion);
     setSuggestions([]);
+    setShowSuggestions(false);
+  };
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      setShowSuggestions(false);
+    }, 200);
   };
 
   return (
     <Box position='relative' width='100%'>
       <InputGroup>
         <InputLeftElement pointerEvents='none'>
+          {loading && <Spinner size='sm' />}
         </InputLeftElement>
         <Input
           placeholder={placeholder}
@@ -52,15 +63,15 @@ const AutocompleteInput = ({ placeholder, value, onChange }) => {
             onChange(e.target.value);
             if (e.target.value.length <= 2) {
               setSuggestions([]);
+              setShowSuggestions(false);
             }
           }}
+          onBlur={handleBlur}
           rounded='full'
-          bg=''
           pl={10}
         />
       </InputGroup>
-      {loading && <Spinner size='sm' />}
-      {suggestions.length > 0 && (
+      {showSuggestions && suggestions.length > 0 && (
         <List
           zIndex='20'
           bg='white'

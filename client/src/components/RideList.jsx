@@ -1,5 +1,4 @@
-import { useRef, useState } from 'react';
-
+import { useRef, useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import {
   Box,
@@ -29,12 +28,15 @@ import {
   faEllipsis,
 } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
-import { REMOVE_COMMENT, REMOVE_RIDE } from '../utils/mutations';
+import {
+  REMOVE_COMMENT,
+  REMOVE_RIDE,
+  GEOCODE_ADDRESS,
+} from '../utils/mutations';
 import { QUERY_RIDES } from '../utils/queries';
 import Auth from '../utils/auth';
 import CommentAvatar from '../components/CommentAvatar';
 import GoogleMapsIcon from '../assets/google-maps-svgrepo-com.svg';
-
 
 const truncateText = (text, maxLength) => {
   if (text.length > maxLength) {
@@ -52,6 +54,8 @@ const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
     refetchQueries: [{ query: QUERY_RIDES }],
   });
 
+  const [geocodeAddress] = useMutation(GEOCODE_ADDRESS);
+
   const toast = useToast();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const popoverRef = useRef();
@@ -60,6 +64,42 @@ const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
     ref: popoverRef,
     handler: () => setIsPopoverOpen(false),
   });
+
+  useEffect(() => {
+    const geocodeAddresses = async () => {
+      for (const ride of rides) {
+        try {
+          const originResponse = await geocodeAddress({
+            variables: { address: ride.origin },
+          });
+          const destinationResponse = await geocodeAddress({
+            variables: { address: ride.destination },
+          });
+
+          console.log(
+            `Origin of ride ${ride._id}:`,
+            originResponse.data.geocodeAddress
+          );
+          console.log(
+            `Destination of ride ${ride._id}:`,
+            destinationResponse.data.geocodeAddress
+          );
+
+          // Add a delay between geocoding requests
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+        } catch (error) {
+          console.error(
+            `Error geocoding addresses for ride ${ride._id}:`,
+            error.message
+          );
+        }
+      }
+    };
+
+    if (rides.length) {
+      geocodeAddresses();
+    }
+  }, [rides, geocodeAddress]);
 
   const handleRemoveRide = async (rideId) => {
     try {
@@ -123,7 +163,6 @@ const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
         </Heading>
       )}
       {rides.map((ride) => {
-        
         const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(
           ride.origin
         )}&destination=${encodeURIComponent(ride.destination)}`;
@@ -262,43 +301,110 @@ const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
                 </Box>
               </Flex>
               <Flex alignItems='center' mt={2}>
-                <Box position='relative' mr={3} left='1px'>
-                  <FontAwesomeIcon icon={faClock} color='#808080' />
-                </Box>
-                <Box pl={-1} pr={3}>
-                  <Text color='gray.500' fontSize='sm'>
-                    Time
-                  </Text>
-                  <Text fontWeight='bold' fontSize='md'>
-                    {ride.time}
-                  </Text>
-                </Box>
-                <Box position='relative' ml={6} mr={3} left='1px'>
+                <Box position='relative' mr={3}>
                   <FontAwesomeIcon icon={faCalendarAlt} color='#808080' />
                 </Box>
-                <Box pl={-1}>
+                <Box>
                   <Text color='gray.500' fontSize='sm'>
                     Date
                   </Text>
                   <Text fontWeight='bold' fontSize='md'>
-                    {ride.date}
+                    {ride.rideDate}
                   </Text>
                 </Box>
-                <Box ml='auto' display='flex' alignItems='center'>
-                  <a
-                    href={googleMapsUrl}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                  >
-                    <img
-                      src={GoogleMapsIcon}
-                      alt='Google Maps'
-                      style={{ height: '36px', marginRight: '0.3rem' }}
-                    />
-                  </a>
+              </Flex>
+              <Flex alignItems='center' mt={2}>
+                <Box position='relative' mr={3}>
+                  <FontAwesomeIcon icon={faClock} color='#808080' />
+                </Box>
+                <Box>
+                  <Text color='gray.500' fontSize='sm'>
+                    Time
+                  </Text>
+                  <Text fontWeight='bold' fontSize='md'>
+                    {ride.rideTime}
+                  </Text>
                 </Box>
               </Flex>
-              <CommentAvatar comments={ride.comments} rideId={ride._id} />
+              <Flex alignItems='center' mt={2}>
+                <Box position='relative' mr={3}>
+                  <FontAwesomeIcon icon={faCar} color='#808080' />
+                </Box>
+                <Box>
+                  <Text color='gray.500' fontSize='sm'>
+                    Seats Available
+                  </Text>
+                  <Text fontWeight='bold' fontSize='md'>
+                    {ride.seatsAvailable}
+                  </Text>
+                </Box>
+              </Flex>
+              <Flex alignItems='center' mt={2}>
+                <Box position='relative' mr={3}>
+                  <img src={GoogleMapsIcon} alt='Google Maps' width='24' />
+                </Box>
+                <a
+                  href={googleMapsUrl}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  style={{ textDecoration: 'none' }}
+                >
+                  <Text color='teal.500' fontWeight='bold' fontSize='md'>
+                    Open in Google Maps
+                  </Text>
+                </a>
+              </Flex>
+            </Box>
+            <Box bg='gray.100' p={4} mt=''>
+              <Heading as='h4' size='sm' mb={2}>
+                Comments
+              </Heading>
+              {ride.comments.map((comment) => (
+                <Box key={comment._id} mb={4}>
+                  <Flex alignItems='center'>
+                    <CommentAvatar username={comment.commentAuthor} />
+                    <Box ml={2}>
+                      <Text fontWeight='bold' fontSize='sm'>
+                        {comment.commentAuthor}
+                      </Text>
+                      <Text fontSize='xs' color='gray.500'>
+                        {comment.createdAt}
+                      </Text>
+                    </Box>
+                    {comment.commentAuthor === currentUser && (
+                      <Popover placement='bottom-end'>
+                        <PopoverTrigger>
+                          <IconButton
+                            icon={<FontAwesomeIcon icon={faEllipsis} />}
+                            variant='ghost'
+                            size='sm'
+                            ml='auto'
+                          />
+                        </PopoverTrigger>
+                        <PopoverContent width='fit-content'>
+                          <PopoverArrow />
+                          <PopoverHeader fontSize='sm'>
+                            Manage Comment
+                          </PopoverHeader>
+                          <PopoverBody>
+                            <Button
+                              colorScheme='red'
+                              size='sm'
+                              rounded='full'
+                              onClick={() =>
+                                handleRemoveComment(ride._id, comment._id)
+                              }
+                            >
+                              Remove Comment
+                            </Button>
+                          </PopoverBody>
+                        </PopoverContent>
+                      </Popover>
+                    )}
+                  </Flex>
+                  <Text mt={2}>{comment.commentText}</Text>
+                </Box>
+              ))}
             </Box>
           </Box>
         );
