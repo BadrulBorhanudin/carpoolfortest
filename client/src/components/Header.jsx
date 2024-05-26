@@ -166,9 +166,9 @@ const Header = () => {
                   mr='px'
                   onClick={onLoginOpen}
                   bg='white'
-                  color='#150035'
-                  _hover={{ bg: '#E8EBF1', color: '#150035' }}
-                  _active={{ bg: '#A298AA', color: '#150035' }}
+                  color='gray.700'
+                  _hover={{ bg: 'gray.100', color: 'gray.700' }}
+                  _active={{ bg: 'gray.300', color: 'gray.700' }}
                 >
                   Login
                 </Button>
@@ -177,10 +177,10 @@ const Header = () => {
                   borderRadius='full'
                   ml='px'
                   onClick={onSignupOpen}
-                  bg='#150035'
-                  color='#FFFFFF'
-                  _hover={{ bg: '#150C5F', color: '#FFFFFF' }}
-                  _active={{ bg: '#352E72', color: '#FFFFFF' }}
+                  bg='blue.500'
+                  color='white'
+                  _hover={{ bg: 'blue.600', color: 'white' }}
+                  _active={{ bg: 'blue.700', color: 'white' }}
                 >
                   Sign Up
                 </Button>
