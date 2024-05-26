@@ -10,13 +10,17 @@ const typeDefs = `
   type Ride {
     _id: ID
     origin: String
+    originLatitude: Float
+    originLongitude: Float
     destination: String
+    destinationLatitude: Float
+    destinationLongitude: Float
     date: String
     time: String
-    rideAuthor: String
     isDriver: Boolean
+    rideAuthor: String
     createdAt: String
-    comments: [Comment]!
+    comments: [Comment]
   }
 
   type Comment {
@@ -46,6 +50,7 @@ const typeDefs = `
     rides(username: String): [Ride]
     ride(rideId: ID!): Ride
     me: User
+    getRides: [Ride]
   }
 
   type Mutation {

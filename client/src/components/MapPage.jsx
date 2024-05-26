@@ -1,17 +1,27 @@
-// import React from 'react';
-// import { useLocation } from 'react-router-dom';
-// import MapComponent from './MapComponent';
+import { useQuery } from '@apollo/client';
+import { GET_RIDES } from '../utils/queries';
+import RidesMap from './MapComponent';
 
-// const MapPage = () => {
-//   const location = useLocation();
-//   const { rideAddresses } = location.state || { rideAddresses: [] };
+const RidesList = () => {
+  const { loading, error, data } = useQuery(GET_RIDES);
 
-//   return (
-//     <div>
-//       <h2>Map View</h2>
-//       <MapComponent rideAddresses={rideAddresses} />
-//     </div>
-//   );
-// };
+  if (loading) return <p>Loading...</p>;
+  if (error) {
+    console.error(error);
+    return <p>Error :(</p>;
+  }
 
-// export default MapPage;
+  console.log('Rides data:', data);
+
+  return (
+    <div>
+      {data && data.getRides && data.getRides.length > 0 ? (
+        <RidesMap rides={data.getRides} />
+      ) : (
+        <p>No rides available</p>
+      )}
+    </div>
+  );
+};
+
+export default RidesList;

@@ -9,7 +9,11 @@ export const QUERY_USER = gql`
       rides {
         _id
         origin
+        originLatitude
+        originLongitude
         destination
+        destinationLatitude
+        destinationLongitude
         date
         time
         createdAt
@@ -63,6 +67,25 @@ export const QUERY_SINGLE_RIDE = gql`
         commentAuthor
         createdAt
       }
+    }
+  }
+`;
+
+export const GET_RIDES = gql`
+  query GetRides {
+    getRides {
+      _id
+      origin
+      originLatitude
+      originLongitude
+      destination
+      destinationLatitude
+      destinationLongitude
+      date
+      time
+      isDriver
+      rideAuthor
+      createdAt
     }
   }
 `;
