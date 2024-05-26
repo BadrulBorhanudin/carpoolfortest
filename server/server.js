@@ -6,8 +6,6 @@ const path = require('path');
 const axios = require('axios');
 const cors = require('cors');
 const { authMiddleware } = require('./utils/auth');
-// const { geocodeAddress, geocodeAddressesWithDelay } = require('./utils/geocode');
-
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
@@ -70,41 +68,6 @@ const startServer = async () => {
       }
     }
   });
-  // // New API endpoint for geocoding
-  // app.post('/api/geocode', async (req, res) => {
-  //   const { address } = req.body;
-  //   try {
-  //     const apiKey = process.env.LOCATIONIQ_API_KEY;
-  //     if (!apiKey) {
-  //       return res.status(500).json({ error: 'Missing LocationIQ API key' });
-  //     }
-
-  //     const response = await axios.get(
-  //       `https://us1.locationiq.com/v1/search.php?key=${apiKey}&q=${encodeURIComponent(
-  //         address
-  //       )}&format=json`
-  //     );
-  //     if (!response.data || response.data.length === 0) {
-  //       return res
-  //         .status(404)
-  //         .json({ error: 'No results found for this address.' });
-  //     }
-
-  //     const locationData = response.data[0];
-  //     res.json({
-  //       lat: parseFloat(locationData.lat),
-  //       lon: parseFloat(locationData.lon),
-  //     });
-  //   } catch (error) {
-  //     console.error('LocationIQ API Error:', error);
-  //     if (error.response) {
-  //       console.error('LocationIQ API Response:', error.response.data);
-  //       res.status(error.response.status).json(error.response.data);
-  //     } else {
-  //       res.status(500).json({ error: 'Server error' });
-  //     }
-  //   }
-  // });
 
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));

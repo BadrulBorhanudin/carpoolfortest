@@ -40,7 +40,6 @@ const typeDefs = `
     lon: Float
   }
 
-
   type Query {
     users: [User]
     user(username: String!): User
