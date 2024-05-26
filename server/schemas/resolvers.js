@@ -3,7 +3,7 @@ const { User, Ride } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const {
-  geocodeAddress,
+  getCoordinates,
   geocodeAddressesWithDelay,
 } = require('../utils/geocode');
 
@@ -68,9 +68,16 @@ const resolvers = {
       context
     ) => {
       if (context.user) {
+        const originCoords = await getCoordinates(origin);
+        const destinationCoords = await getCoordinates(destination);
+
         const ride = await Ride.create({
           origin,
+          originLatitude: originCoords.lat,
+          originLongitude: originCoords.lon,
           destination,
+          destinationLatitude: destinationCoords.lat,
+          destinationLongitude: destinationCoords.lon,
           date,
           time,
           isDriver,
@@ -182,7 +189,7 @@ const resolvers = {
     },
     geocodeAddress: async (parent, { address }, context) => {
       if (context.user) {
-        return await geocodeAddress(address);
+        return await getCoordinates(address);
       }
       throw new AuthenticationError('You need to be logged in!');
     },

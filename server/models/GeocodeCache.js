@@ -9,6 +9,7 @@ const geocodeCacheSchema = new Schema({
   lat: {
     type: Number,
     required: true,
+
   },
   lon: {
     type: Number,

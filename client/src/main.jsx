@@ -10,7 +10,7 @@ import Signup from './pages/Signup';
 import SingleRide from './pages/SingleRide.jsx';
 import Support from './pages/Support.jsx';
 import SuccessPage from './pages/Success.jsx';
-// import MapPage from './components/MapPage.jsx';
+import MapPage from './components/MapPage.jsx';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme';
 
@@ -56,10 +56,10 @@ const router = createBrowserRouter([
         path: '/success',
         element: <SuccessPage />,
       },
-      // {
-      //   path: '/map',
-      //   element: <MapPage />,
-      // },
+      {
+        path: '/map',
+        element: <MapPage />,
+      },
     ],
   },
 ]);

@@ -1,51 +1,36 @@
-// import React, { useEffect, useState } from 'react';
-// import { useLazyQuery } from '@apollo/client';
-// import { GET_RIDES } from '../utils/queries';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 
-// const MapComponent = () => {
-//   const [coordinates, setCoordinates] = useState([]);
-//   const [getRides, { loading, data }] = useLazyQuery(GET_RIDES);
+const RidesMap = ({ rides }) => {
+ console.log('Rides received by RidesMap:', rides);
+  if (!rides || rides.length === 0) {
+    return <p>No rides available to display.</p>;
+  }
 
-//   useEffect(() => {
-//     getRides();
-//   }, [getRides]);
+  return (
+    <MapContainer
+      center={[0, 0]}
+      zoom={2}
+      style={{ height: '500px', width: '100%' }}
+    >
+      <TileLayer
+        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        attribution="&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a> contributors"
+      />
+      {rides.map((ride) => (
+        <Marker
+          key={ride._id}
+          position={[ride.originLatitude, ride.originLongitude]}
+        >
+          <Popup>
+            {ride.origin} to {ride.destination}
+            <br />
+            {ride.date} at {ride.time}
+          </Popup>
+        </Marker>
+      ))}
+    </MapContainer>
+  );
+};
 
-//   useEffect(() => {
-//     if (data && data.rides) {
-//       const coords = data.rides
-//         .map((ride) => {
-//           if (ride && ride.origin && ride.destination) {
-//             return {
-//               origin: ride.originCoordinates,
-//               destination: ride.destinationCoordinates,
-//             };
-//           }
-//           return null;
-//         })
-//         .filter((coord) => coord !== null);
-//       setCoordinates(coords);
-//     }
-//   }, [data]);
-
-//   if (loading) {
-//     return <p>Loading...</p>;
-//   }
-
-//   if (!coordinates.length) {
-//     return <p>No ride data available.</p>;
-//   }
-
-//   return (
-//     <div>
-//       <h1>Map Component</h1>
-//       {coordinates.map((coord, index) => (
-//         <div key={index}>
-//           <p>Origin: {coord.origin}</p>
-//           <p>Destination: {coord.destination}</p>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default MapComponent;
+export default RidesMap;

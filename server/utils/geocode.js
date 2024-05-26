@@ -1,6 +1,6 @@
 require('dotenv').config();
 const axios = require('axios');
-// const { ApolloError } = require('apollo-server-express');
+const GeocodeCache = require('../models/GeocodeCache');
 
 const geocodeAddress = async (address) => {
   const apiKey = process.env.LOCATIONIQ_API_KEY;
@@ -9,6 +9,7 @@ const geocodeAddress = async (address) => {
   }
 
   try {
+    console.log(`Geocoding address: ${address}`);
     const response = await axios.get(
       `https://us1.locationiq.com/v1/search.php?key=${apiKey}&q=${encodeURIComponent(
         address
@@ -19,6 +20,9 @@ const geocodeAddress = async (address) => {
     }
 
     const locationData = response.data[0];
+    console.log(
+      `Geocoded address: ${address}, lat: ${locationData.lat}, lon: ${locationData.lon}`
+    );
     return {
       lat: parseFloat(locationData.lat),
       lon: parseFloat(locationData.lon),
@@ -29,20 +33,49 @@ const geocodeAddress = async (address) => {
     } else {
       console.error('LocationIQ API Error:', error.message);
     }
-    throw new ApolloError('Error geocoding address');
+    throw new Error('Error geocoding address');
+  }
+};
+
+const getCoordinates = async (address) => {
+  try {
+    console.log(`Checking cache for address: ${address}`);
+    let cachedResult = await GeocodeCache.findOne({ address });
+    if (cachedResult) {
+      console.log(`Cache hit for address: ${address}`);
+      return { lat: cachedResult.lat, lon: cachedResult.lon };
+    }
+
+    console.log(`Cache miss for address: ${address}. Fetching from API.`);
+    const locationData = await geocodeAddress(address);
+
+    console.log(`Attempting to save address to cache: ${address}`);
+    await GeocodeCache.create({
+      address,
+      lat: locationData.lat,
+      lon: locationData.lon,
+    });
+    console.log(`Address successfully saved to cache: ${address}`);
+
+    return locationData;
+  } catch (error) {
+    console.error(`Error in getCoordinates for address: ${address}`, error);
+    throw error;
   }
 };
 
 const geocodeAddressesWithDelay = async (addresses, delay = 2000) => {
   const results = [];
   for (const address of addresses) {
-    const data = await geocodeAddress(address);
+    console.log(`Processing address: ${address}`);
+    const data = await getCoordinates(address);
     if (data) {
       results.push(data);
     }
     await new Promise((resolve) => setTimeout(resolve, delay));
   }
+  console.log('Geocode results:', results);
   return results;
 };
 
-module.exports = { geocodeAddress, geocodeAddressesWithDelay };
+module.exports = { getCoordinates, geocodeAddressesWithDelay };
