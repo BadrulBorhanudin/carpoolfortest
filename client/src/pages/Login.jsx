@@ -55,9 +55,14 @@ const Login = ({ isOpen, onOpen, onClose }) => {
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        px={{ base: 5, md: 0 }}
+        py={{ base: 3, md: 0 }}
+      >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent width={{ base: '90%'}}>
           <ModalHeader color='#150035'>Welcome Back</ModalHeader>
           <CloseButton
             position='absolute'
@@ -69,10 +74,7 @@ const Login = ({ isOpen, onOpen, onClose }) => {
             {data ? (
               <Box mb='15'>
                 Success! You may now head{' '}
-                <Link 
-                 to='/'>
-                  back to the homepage.
-                </Link>
+                <Link to='/'>back to the homepage.</Link>
               </Box>
             ) : (
               <form onSubmit={handleFormSubmit}>
