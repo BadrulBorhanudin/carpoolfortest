@@ -86,7 +86,7 @@ const Header = () => {
               as='h1'
               size='lg'
               fontWeight='700'
-              color='#150035'
+              color='#3189CA'
               ml='2'
               mr='2'
               display={{
@@ -158,7 +158,7 @@ const Header = () => {
                   display={{ base: 'none', md: 'flex' }}
                   alignItems='center'
                 >
-                  <Text fontSize='lg' fontWeight='bold'>
+                  <Text fontSize='lg' fontWeight='bold' color='gray.700'>
                     Hi, {Auth.getProfile().data.username}
                   </Text>
                 </Box>
@@ -170,9 +170,9 @@ const Header = () => {
                   borderRadius='full'
                   mr='px'
                   onClick={onLoginOpen}
-                  bg='whitesmoke'
-                  color='gray.700'
-                  _hover={{ bg: 'gray.100', color: 'gray.700' }}
+                  bg='blue.100'
+                  color='gray.600'
+                  _hover={{ bg: 'blue.300', color: 'gray.700' }}
                   _active={{ bg: 'gray.300', color: 'gray.700' }}
                 >
                   Login

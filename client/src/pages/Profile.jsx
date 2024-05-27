@@ -89,14 +89,16 @@ const Profile = () => {
         {currentFilter === 'yourRides' && (
           <>
             {userRides.length > 0 ? (
-              <RideList
-                rides={userRides}
-                title='Your rides...'
-                showTitle={true}
-                showUsername={true}
-                showNoRideMessage={false}
-                handleRemoveRide={handleRemoveRide}
-              />
+              <>
+                <Heading as='h3' size='md' color='black' mb='4'>
+                  Ride(s) you've created ...
+                </Heading>
+                <RideList
+                  rides={userRides}
+                  showUsername={true}
+                  handleRemoveRide={handleRemoveRide}
+                />
+              </>
             ) : (
               <Heading as='h3' size='md' color='black'>
                 You haven't created any rides.
@@ -107,13 +109,12 @@ const Profile = () => {
         {currentFilter === 'commentedRides' && (
           <>
             {commentedRides.length > 0 ? (
-              <RideList
-                rides={commentedRides}
-                title="Rides you've commented on..."
-                showTitle={true}
-                showUsername={true}
-                showNoRideMessage={false}
-              />
+              <>
+                <Heading as='h3' size='md' color='black' mb='4'>
+                  Ride(s) you've commented on ...
+                </Heading>
+                <RideList rides={commentedRides} showUsername={true} />
+              </>
             ) : (
               <Heading as='h3' size='md' color='black'>
                 You haven't made any comments.

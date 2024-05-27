@@ -9,7 +9,7 @@ const Footer = () => {
       color='black'
       textAlign='center'
       mt='auto'
-      bg='#F3F2F4'
+      bg='#f0f0f0'
     >
       <Text>
         Made with{' '}

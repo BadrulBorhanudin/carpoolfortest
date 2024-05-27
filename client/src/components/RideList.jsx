@@ -43,7 +43,6 @@ const truncateText = (text, maxLength) => {
 
 const RideList = ({
   rides,
-  title,
   showTitle = true,
   showUsername = true,
   showCommentAvatar = true,
@@ -86,21 +85,21 @@ const RideList = ({
 
   const currentUser = Auth.loggedIn() ? Auth.getProfile().data.username : null;
 
-  if (!rides.length && showNoRideMessage) {
-    return (
-      <Heading as='h3' size='md' mb={4}>
-        No Rides Available Yet
-      </Heading>
-    );
-  }
-
+  // if (!rides.length && !showNoRideMessage) {
+  //   return (
+  //     <Heading as='h3' size='md' mb={4}>
+  //       No Rides Available Yet
+  //     </Heading>
+  //   );
+  // }
+  
   return (
     <Box>
-      {showTitle && (
+      {/* {!showTitle && (
         <Heading as='h3' size='md' mb={4}>
-          {title}
+          Available Ride(s) ...
         </Heading>
-      )}
+      )} */}
       {rides.map((ride) => {
         const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(
           ride.origin
@@ -194,30 +193,6 @@ const RideList = ({
               <Flex alignItems='center'>
                 <Box position='relative' mr={3}>
                   <FontAwesomeIcon icon={faCircleDot} color='#2C7A7B' />
-                  <Box
-                    position='absolute'
-                    top='1.25rem'
-                    left='0.75rem'
-                    w='1px'
-                    h='3rem'
-                  >
-                    <Box
-                      position='absolute'
-                      top='0.4rem'
-                      left='-8px'
-                      w='7px'
-                      h='7px'
-                      borderRadius='full'
-                    ></Box>
-                    <Box
-                      position='absolute'
-                      top='1.3rem'
-                      left='-8px'
-                      w='7px'
-                      h='7px'
-                      borderRadius='full'
-                    ></Box>
-                  </Box>
                 </Box>
                 <Box>
                   <Text color='gray.500' fontSize='sm'>
@@ -242,7 +217,7 @@ const RideList = ({
                 </Box>
               </Flex>
               <Flex alignItems='center' mt={2}>
-                <Box position='relative' mr={3} left='1px'>
+                <Box position='relative' mr={3}>
                   <FontAwesomeIcon icon={faClock} color='#808080' />
                 </Box>
                 <Box pl={-1} pr={3}>
@@ -253,7 +228,7 @@ const RideList = ({
                     {ride.time}
                   </Text>
                 </Box>
-                <Box position='relative' ml={6} mr={3} left='1px'>
+                <Box position='relative' ml={6} mr={3}>
                   <FontAwesomeIcon icon={faCalendarAlt} color='#808080' />
                 </Box>
                 <Box pl={-1}>

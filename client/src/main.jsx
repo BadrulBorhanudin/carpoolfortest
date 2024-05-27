@@ -12,6 +12,7 @@ import Support from './pages/Support.jsx';
 import SuccessPage from './pages/Success.jsx';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const router = createBrowserRouter([
   {
