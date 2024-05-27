@@ -3,7 +3,7 @@ import { Box } from '@chakra-ui/react';
 const Layout = ({ children }) => {
   return (
     <Box>
-      <Box maxW='900px' mx='auto' p={2} bg='#F3F2F4'>
+      <Box maxW='900px' mx='auto' p={2} bg='#f0f0f0'>
         {children}
       </Box>
     </Box>

@@ -28,7 +28,7 @@ import {
   faEllipsis,
 } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
-import { REMOVE_COMMENT, REMOVE_RIDE } from '../utils/mutations';
+import { REMOVE_RIDE } from '../utils/mutations';
 import { QUERY_RIDES } from '../utils/queries';
 import Auth from '../utils/auth';
 import CommentAvatar from '../components/CommentAvatar';
@@ -50,10 +50,6 @@ const RideList = ({
   showNoRideMessage = true,
 }) => {
   const [removeRide] = useMutation(REMOVE_RIDE, {
-    refetchQueries: [{ query: QUERY_RIDES }],
-  });
-
-  const [removeComment] = useMutation(REMOVE_COMMENT, {
     refetchQueries: [{ query: QUERY_RIDES }],
   });
 
@@ -80,28 +76,6 @@ const RideList = ({
       console.error(err);
       toast({
         title: 'Error removing ride.',
-        description: err.message,
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-  };
-
-  const handleRemoveComment = async (rideId, commentId) => {
-    try {
-      await removeComment({ variables: { rideId, commentId } });
-      toast({
-        title: 'Comment removed.',
-        description: 'The comment has been removed successfully.',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
-    } catch (err) {
-      console.error(err);
-      toast({
-        title: 'Error removing comment.',
         description: err.message,
         status: 'error',
         duration: 5000,
@@ -138,13 +112,11 @@ const RideList = ({
             borderWidth='1px'
             borderRadius='3xl'
             overflow='hidden'
-            bg='white'
             mb={4}
           >
             <Flex
               alignItems='center'
               justifyContent='space-between'
-              bg=''
               color='gray.600'
               p={4}
             >
@@ -216,7 +188,6 @@ const RideList = ({
             <Box p={4} mt='-4'>
               <Divider
                 mb='2'
-                pl=''
                 orientation='horizontal'
                 borderColor='gray.300'
               />
@@ -229,7 +200,6 @@ const RideList = ({
                     left='0.75rem'
                     w='1px'
                     h='3rem'
-                    bg=''
                   >
                     <Box
                       position='absolute'
@@ -238,7 +208,6 @@ const RideList = ({
                       w='7px'
                       h='7px'
                       borderRadius='full'
-                      bg='gray.300'
                     ></Box>
                     <Box
                       position='absolute'
@@ -247,7 +216,6 @@ const RideList = ({
                       w='7px'
                       h='7px'
                       borderRadius='full'
-                      bg='gray.300'
                     ></Box>
                   </Box>
                 </Box>
@@ -264,7 +232,7 @@ const RideList = ({
                 <Box position='relative' mr={3} left='1px'>
                   <FontAwesomeIcon icon={faMapMarkerAlt} color='#B22222' />
                 </Box>
-                <Box pl='1' mt=''>
+                <Box pl='1'>
                   <Text color='gray.500' fontSize='sm'>
                     Destination
                   </Text>

@@ -10,7 +10,7 @@ const About = () => {
         borderWidth='1px'
         borderRadius='3xl'
         borderColor='gray.300'
-        bg='white'
+        bg='whitesmoke'
         flex='1'
       >
         <Heading as='h1' size='xl' mb={4} textAlign='center'>

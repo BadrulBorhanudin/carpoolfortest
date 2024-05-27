@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import {
   Box,
-  Divider,
   Button,
   FormControl,
   Textarea,
@@ -76,14 +75,12 @@ const CommentForm = ({ rideId }) => {
   };
 
   return (
-    <Box >
-      {/* <Divider
-        mt='3'
-        mb='3'
-        pl=''
-        orientation='horizontal'
-        borderColor='gray.300'
-      /> */}
+    <Box
+      p={4}
+      borderWidth='1px'
+      borderColor='gray.300'
+      borderRadius='3xl'
+    >
       {Auth.loggedIn() ? (
         <>
           <form onSubmit={handleFormSubmit}>

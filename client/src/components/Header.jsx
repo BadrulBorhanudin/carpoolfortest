@@ -145,7 +145,7 @@ const Header = () => {
                       </Flex>
                     </PopoverHeader>
                     <PopoverBody align='center'>
-                      <Button borderRadius='full' onClick={logout}>
+                      <Button backgroundColor='whitesmoke' borderRadius='full' onClick={logout}>
                         Logout
                       </Button>
                     </PopoverBody>
@@ -154,7 +154,6 @@ const Header = () => {
                 <Box
                   ml={2}
                   p={2}
-                  bg='#f5f5f5'
                   borderRadius='full'
                   display={{ base: 'none', md: 'flex' }}
                   alignItems='center'
@@ -171,7 +170,7 @@ const Header = () => {
                   borderRadius='full'
                   mr='px'
                   onClick={onLoginOpen}
-                  bg='white'
+                  bg='whitesmoke'
                   color='gray.700'
                   _hover={{ bg: 'gray.100', color: 'gray.700' }}
                   _active={{ bg: 'gray.300', color: 'gray.700' }}
@@ -184,7 +183,7 @@ const Header = () => {
                   ml='px'
                   onClick={onSignupOpen}
                   bg='blue.500'
-                  color='white'
+                  color='whitesmoke'
                   _hover={{ bg: 'blue.600', color: 'white' }}
                   _active={{ bg: 'blue.700', color: 'white' }}
                 >

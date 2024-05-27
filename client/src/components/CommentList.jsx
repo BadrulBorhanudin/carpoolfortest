@@ -114,7 +114,7 @@ const CommentList = ({ comments = [], rideId }) => {
   if (!comments.length) {
     return (
       <Box>
-        <Text fontSize='sm' ml={1}>
+        <Text fontSize='sm' mt={4} ml={1}>
           No Comments Yet
         </Text>
       </Box>
@@ -129,10 +129,11 @@ const CommentList = ({ comments = [], rideId }) => {
         .map((comment) => (
           <Box
             key={comment._id}
-            p={2}
-            mt={2}
+            p={4}
+            mt={4}
             borderWidth='1px'
-            borderRadius='lg'
+            borderRadius='3xl'
+            borderColor='gray.300'
             overflow='visible'
             position='relative'
           >

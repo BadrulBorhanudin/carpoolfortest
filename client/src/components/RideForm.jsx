@@ -108,8 +108,8 @@ const RideForm = () => {
 
   return (
     <Box
-      bg='white'
       p={6}
+      bg='whitesmoke'
       rounded='md'
       width='100%'
       borderWidth='1px'
@@ -173,7 +173,6 @@ const RideForm = () => {
               min={minDate}
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              bg=''
               rounded='full'
               mb={2}
               width='100%'
@@ -191,7 +190,6 @@ const RideForm = () => {
               name='time'
               value={time}
               onChange={(e) => setTime(e.target.value)}
-              bg=''
               rounded='full'
               mb={2}
               width='100%'
