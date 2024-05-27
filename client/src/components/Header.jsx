@@ -54,6 +54,10 @@ const Header = () => {
     Auth.logout();
   };
 
+  const handleProfileClick = () => {
+    setIsPopoverOpen(false);
+  };
+
   return (
     <Layout>
       <Flex
@@ -132,6 +136,7 @@ const Header = () => {
                         <Link
                           to='/me'
                           style={{ textDecoration: 'none', marginLeft: '8px' }}
+                          onClick={handleProfileClick}
                         >
                           <Text>
                             {Auth.getProfile().data.username}'s profile
