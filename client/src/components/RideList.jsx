@@ -28,10 +28,7 @@ import {
   faEllipsis,
 } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
-import {
-  REMOVE_COMMENT,
-  REMOVE_RIDE,
-} from '../utils/mutations';
+import { REMOVE_COMMENT, REMOVE_RIDE } from '../utils/mutations';
 import { QUERY_RIDES } from '../utils/queries';
 import Auth from '../utils/auth';
 import CommentAvatar from '../components/CommentAvatar';
@@ -54,12 +51,12 @@ const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
   });
 
   const toast = useToast();
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [openPopoverId, setOpenPopoverId] = useState(null);
   const popoverRef = useRef();
 
   useOutsideClick({
     ref: popoverRef,
-    handler: () => setIsPopoverOpen(false),
+    handler: () => setOpenPopoverId(null),
   });
 
   const handleRemoveRide = async (rideId) => {
@@ -119,10 +116,9 @@ const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
   return (
     <Box>
       {showTitle && (
-          <Heading as='h3' size='md' mb={4}>
-            {title}
-          </Heading>
-        
+        <Heading as='h3' size='md' mb={4}>
+          {title}
+        </Heading>
       )}
       {rides.map((ride) => {
         const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(
@@ -176,8 +172,8 @@ const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
                 {ride.rideAuthor === currentUser && (
                   <Popover
                     placement='bottom-end'
-                    isOpen={isPopoverOpen}
-                    onClose={() => setIsPopoverOpen(false)}
+                    isOpen={openPopoverId === ride._id}
+                    onClose={() => setOpenPopoverId(null)}
                   >
                     <PopoverTrigger>
                       <IconButton
@@ -185,7 +181,11 @@ const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
                         variant='ghost'
                         size='md'
                         left='8px'
-                        onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+                        onClick={() =>
+                          setOpenPopoverId(
+                            openPopoverId === ride._id ? null : ride._id
+                          )
+                        }
                       />
                     </PopoverTrigger>
                     <PopoverContent ref={popoverRef} width='fit-content'>
