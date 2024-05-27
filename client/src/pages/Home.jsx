@@ -5,7 +5,6 @@ import { Box, Flex, Spinner, Button } from '@chakra-ui/react';
 import RideList from '../components/RideList';
 import RideForm from '../components/RideForm';
 import Layout from '../components/Layout';
-import { Link } from 'react-router-dom';
 
 import { QUERY_RIDES } from '../utils/queries';
 
@@ -68,7 +67,6 @@ const Home = () => {
             <RideList rides={filteredRides} title='Available Rides...' />
           )}
         </Box>
-        <Button as={Link} to='/map' colorScheme='blue' mt={4}></Button>
       </Flex>
       
     </Layout>

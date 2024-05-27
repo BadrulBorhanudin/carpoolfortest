@@ -138,21 +138,3 @@ export const CREATE_CHECKOUT_SESSION = gql`
     }
   }
 `;
-
-export const GEOCODE_ADDRESS = gql`
-  mutation geocodeAddress($address: String!) {
-    geocodeAddress(address: $address) {
-      lat
-      lon
-    }
-  }
-`;
-
-export const GEOCODE_MULTIPLE_ADDRESSES = gql`
-  mutation geocodeMultipleAddresses($addresses: [String!]!) {
-    geocodeMultipleAddresses(addresses: $addresses) {
-      lat
-      lon
-    }
-  }
-`;

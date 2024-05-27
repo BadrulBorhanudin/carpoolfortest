@@ -7,22 +7,10 @@ const rideSchema = new Schema({
     required: 'You need to provide an origin!',
     trim: true,
   },
-  originLatitude: {
-    type: Number,
-  },
-  originLongitude: {
-    type: Number,
-  },
   destination: {
     type: String,
     required: 'You need to provide a destination!',
     trim: true,
-  },
-  destinationLatitude: {
-    type: Number,
-  },
-  destinationLongitude: {
-    type: Number,
   },
   date: {
     type: String,

@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import {
   Box,
@@ -31,7 +31,6 @@ import { faClock } from '@fortawesome/free-regular-svg-icons';
 import {
   REMOVE_COMMENT,
   REMOVE_RIDE,
-  GEOCODE_ADDRESS,
 } from '../utils/mutations';
 import { QUERY_RIDES } from '../utils/queries';
 import Auth from '../utils/auth';
@@ -54,62 +53,14 @@ const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
     refetchQueries: [{ query: QUERY_RIDES }],
   });
 
-  const [geocodeAddress] = useMutation(GEOCODE_ADDRESS);
-
   const toast = useToast();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const [rideCoordinates, setRideCoordinates] = useState([]);
   const popoverRef = useRef();
 
   useOutsideClick({
     ref: popoverRef,
     handler: () => setIsPopoverOpen(false),
   });
-
-  useEffect(() => {
-    const geocodeAddresses = async () => {
-      const coordinates = [];
-      for (const ride of rides) {
-        try {
-          const originResponse = await geocodeAddress({
-            variables: { address: ride.origin },
-          });
-          const destinationResponse = await geocodeAddress({
-            variables: { address: ride.destination },
-          });
-
-          const rideCoordinate = {
-            _id: ride._id,
-            originLat: parseFloat(originResponse.data.geocodeAddress.lat),
-            originLng: parseFloat(originResponse.data.geocodeAddress.lon),
-            destinationLat: parseFloat(
-              destinationResponse.data.geocodeAddress.lat
-            ),
-            destinationLng: parseFloat(
-              destinationResponse.data.geocodeAddress.lon
-            ),
-          };
-
-          coordinates.push(rideCoordinate);
-          console.log('Added coordinates:', rideCoordinate);
-
-          // Add a delay between geocoding requests
-          await new Promise((resolve) => setTimeout(resolve, 2000));
-        } catch (error) {
-          console.error(
-            `Error geocoding addresses for ride ${ride._id}:`,
-            error.message
-          );
-        }
-      }
-      setRideCoordinates(coordinates);
-      console.log('Final coordinates array:', coordinates);
-    };
-
-    if (rides.length) {
-      geocodeAddresses();
-    }
-  }, [rides, geocodeAddress]);
 
   const handleRemoveRide = async (rideId) => {
     try {

@@ -10,17 +10,13 @@ const typeDefs = `
   type Ride {
     _id: ID
     origin: String
-    originLatitude: Float
-    originLongitude: Float
     destination: String
-    destinationLatitude: Float
-    destinationLongitude: Float
     date: String
     time: String
-    isDriver: Boolean
     rideAuthor: String
+    isDriver: Boolean
     createdAt: String
-    comments: [Comment]
+    comments: [Comment]!
   }
 
   type Comment {
@@ -39,18 +35,12 @@ const typeDefs = `
     id: ID!
   }
 
-  type Geocode {
-    lat: Float
-    lon: Float
-  }
-
   type Query {
     users: [User]
     user(username: String!): User
     rides(username: String): [Ride]
     ride(rideId: ID!): Ride
     me: User
-    getRides: [Ride]
   }
 
   type Mutation {
@@ -62,8 +52,6 @@ const typeDefs = `
     removeComment(rideId: ID!, commentId: ID!): Ride
     editComment(rideId: ID!, commentId: ID!, commentText: String!): Ride
     createCheckoutSession(donationAmount: Float!): CheckoutSession
-    geocodeAddress(address: String!): Geocode
-    geocodeMultipleAddresses(addresses: [String!]!): [Geocode]
   }
 `;
 

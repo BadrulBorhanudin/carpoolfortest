@@ -2,10 +2,6 @@ require('dotenv').config();
 const { User, Ride } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const {
-  getCoordinates,
-  geocodeAddressesWithDelay,
-} = require('../utils/geocode');
 
 const resolvers = {
   Query: {
@@ -68,16 +64,9 @@ const resolvers = {
       context
     ) => {
       if (context.user) {
-        const originCoords = await getCoordinates(origin);
-        const destinationCoords = await getCoordinates(destination);
-
         const ride = await Ride.create({
           origin,
-          originLatitude: originCoords.lat,
-          originLongitude: originCoords.lon,
           destination,
-          destinationLatitude: destinationCoords.lat,
-          destinationLongitude: destinationCoords.lon,
           date,
           time,
           isDriver,
@@ -184,18 +173,6 @@ const resolvers = {
           cancel_url: `${process.env.CANCEL_URL}`,
         });
         return { id: session.id };
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
-    geocodeAddress: async (parent, { address }, context) => {
-      if (context.user) {
-        return await getCoordinates(address);
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
-    geocodeMultipleAddresses: async (parent, { addresses }, context) => {
-      if (context.user) {
-        return await geocodeAddressesWithDelay(addresses);
       }
       throw new AuthenticationError('You need to be logged in!');
     },

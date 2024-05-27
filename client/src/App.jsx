@@ -12,7 +12,6 @@ import theme from './theme';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Layout from './components/Layout';
-// import Map from './components/Map';
 
 const httpLink = createHttpLink({
   uri: '/graphql',

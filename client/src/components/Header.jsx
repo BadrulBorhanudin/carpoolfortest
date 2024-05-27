@@ -84,6 +84,7 @@ const Header = () => {
               fontWeight='700'
               color='#150035'
               ml='2'
+              mr='2'
               display={{
                 base: Auth.loggedIn() ? 'block' : 'none',
                 md: 'block',
