@@ -41,7 +41,14 @@ const truncateText = (text, maxLength) => {
   return text;
 };
 
-const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
+const RideList = ({
+  rides,
+  title,
+  showTitle = true,
+  showUsername = true,
+  showCommentAvatar = true,
+  showNoRideMessage = true,
+}) => {
   const [removeRide] = useMutation(REMOVE_RIDE, {
     refetchQueries: [{ query: QUERY_RIDES }],
   });
@@ -105,10 +112,10 @@ const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
 
   const currentUser = Auth.loggedIn() ? Auth.getProfile().data.username : null;
 
-  if (!rides.length) {
+  if (!rides.length && showNoRideMessage) {
     return (
       <Heading as='h3' size='md' mb={4}>
-        No Rides Yet
+        No Rides Available Yet
       </Heading>
     );
   }
@@ -303,7 +310,9 @@ const RideList = ({ rides, title, showTitle = true, showUsername = true }) => {
                   </a>
                 </Box>
               </Flex>
-              <CommentAvatar comments={ride.comments} rideId={ride._id} />
+              {showCommentAvatar && (
+                <CommentAvatar comments={ride.comments} rideId={ride._id} />
+              )}
             </Box>
           </Box>
         );

@@ -76,14 +76,14 @@ const CommentForm = ({ rideId }) => {
   };
 
   return (
-    <Box>
-      <Divider
+    <Box >
+      {/* <Divider
         mt='3'
         mb='3'
         pl=''
         orientation='horizontal'
         borderColor='gray.300'
-      />
+      /> */}
       {Auth.loggedIn() ? (
         <>
           <form onSubmit={handleFormSubmit}>

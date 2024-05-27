@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { Box, Heading, Spinner, Button, Flex } from '@chakra-ui/react';
+import { Box, Heading, Spinner, Button, Flex, Text } from '@chakra-ui/react';
 
 import RideList from '../components/RideList';
 import Layout from '../components/Layout';
@@ -60,7 +60,7 @@ const Profile = () => {
         border='1px solid #CBD5E0'
         borderRadius='full'
       >
-        <Heading as='h2' size='lg' bg='' color='black' p={3}>
+        <Heading as='h2' size='lg' color='black' p={3}>
           Viewing {userParam ? `${user.username}'s` : 'your'} profile.
         </Heading>
       </Box>
@@ -76,7 +76,9 @@ const Profile = () => {
         <Button
           borderRadius='full'
           onClick={() => setCurrentFilter('commentedRides')}
-          colorScheme={currentFilter === 'commentedRides' ? 'blue' : 'blackAlpha'}
+          colorScheme={
+            currentFilter === 'commentedRides' ? 'blue' : 'blackAlpha'
+          }
           ml={2}
         >
           Your comments
@@ -85,21 +87,39 @@ const Profile = () => {
 
       <Box mb={5}>
         {currentFilter === 'yourRides' && (
-          <RideList
-            rides={userRides}
-            title='Your rides...'
-            showTitle={true}
-            showUsername={true}
-            handleRemoveRide={handleRemoveRide}
-          />
+          <>
+            {userRides.length > 0 ? (
+              <RideList
+                rides={userRides}
+                title='Your rides...'
+                showTitle={true}
+                showUsername={true}
+                showNoRideMessage={false}
+                handleRemoveRide={handleRemoveRide}
+              />
+            ) : (
+              <Heading as='h3' size='md' color='black'>
+                You haven't created any rides.
+              </Heading>
+            )}
+          </>
         )}
         {currentFilter === 'commentedRides' && (
-          <RideList
-            rides={commentedRides}
-            title="Rides you've commented on..."
-            showTitle={true}
-            showUsername={true}
-          />
+          <>
+            {commentedRides.length > 0 ? (
+              <RideList
+                rides={commentedRides}
+                title="Rides you've commented on..."
+                showTitle={true}
+                showUsername={true}
+                showNoRideMessage={false}
+              />
+            ) : (
+              <Heading as='h3' size='md' color='black'>
+                You haven't made any comments.
+              </Heading>
+            )}
+          </>
         )}
       </Box>
     </Layout>
