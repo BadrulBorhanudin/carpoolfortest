@@ -1,17 +1,14 @@
 import { useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
   Box,
-  Flex,
   Heading,
   Text,
   Spinner,
-  useToast,
   useOutsideClick,
 } from '@chakra-ui/react';
-import { QUERY_SINGLE_RIDE, QUERY_RIDES } from '../utils/queries';
-import { REMOVE_COMMENT, REMOVE_RIDE } from '../utils/mutations';
+import { QUERY_SINGLE_RIDE } from '../utils/queries';
 import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
 import Layout from '../components/Layout';
@@ -20,19 +17,10 @@ import RideList from '../components/RideList';
 
 const SingleRide = () => {
   const { id: rideId } = useParams();
-  const toast = useToast();
   const currentUser = Auth.loggedIn() ? Auth.getProfile().data.username : null;
 
   const { loading, data } = useQuery(QUERY_SINGLE_RIDE, {
     variables: { rideId },
-  });
-
-  const [removeRide] = useMutation(REMOVE_RIDE, {
-    refetchQueries: [{ query: QUERY_RIDES }],
-  });
-
-  const [removeComment] = useMutation(REMOVE_COMMENT, {
-    refetchQueries: [{ query: QUERY_RIDES }],
   });
 
   const [rideDeleted, setRideDeleted] = useState(false);
@@ -49,51 +37,6 @@ const SingleRide = () => {
   if (loading) {
     return <Spinner />;
   }
-
-  const handleRemoveRide = async (rideId) => {
-    try {
-      await removeRide({ variables: { rideId } });
-      setRideDeleted(true);
-      toast({
-        title: 'Ride removed.',
-        description: 'The ride has been removed successfully.',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
-    } catch (err) {
-      console.error(err);
-      toast({
-        title: 'Error removing ride.',
-        description: err.message,
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-  };
-
-  const handleRemoveComment = async (rideId, commentId) => {
-    try {
-      await removeComment({ variables: { rideId, commentId } });
-      toast({
-        title: 'Comment removed.',
-        description: 'The comment has been removed successfully.',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
-    } catch (err) {
-      console.error(err);
-      toast({
-        title: 'Error removing comment.',
-        description: err.message,
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-  };
 
   if (rideDeleted) {
     return (
@@ -118,13 +61,13 @@ const SingleRide = () => {
   }
   return (
     <Layout>
-      <RideList
-        rides={[ride]}
-        showTitle={true}
-        showUsername={true}
-        showCommentAvatar={false}
-      />
       <Box>
+        <RideList
+          rides={[ride]}
+          showTitle={true}
+          showUsername={true}
+          showCommentAvatar={false}
+        />
         <CommentForm rideId={ride._id} />
         <CommentList comments={ride.comments} rideId={ride._id} />
       </Box>

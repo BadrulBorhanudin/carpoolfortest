@@ -74,7 +74,7 @@ const SupportMe = () => {
         borderWidth='1px'
         borderRadius='3xl'
         borderColor='gray.300'
-        bg='white'
+        bg='whitesmoke'
       >
         <Heading as='h1' size='xl' mb={6} textAlign='center'>
           Support Me

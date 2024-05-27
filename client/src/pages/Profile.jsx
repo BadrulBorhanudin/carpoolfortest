@@ -65,7 +65,7 @@ const Profile = () => {
         </Heading>
       </Box>
 
-      <Flex justify='' mt={6} mb={4}>
+      <Flex mt={6} mb={4}>
         <Button
           borderRadius='full'
           onClick={() => setCurrentFilter('yourRides')}
