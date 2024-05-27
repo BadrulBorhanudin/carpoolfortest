@@ -129,7 +129,7 @@ const RideForm = () => {
           fontSize='xl'
           mb={4}
           textAlign='center'
-          color='#150035'
+          color='gray.700'
           fontWeight='bold'
         >
           Where are you heading to?
@@ -174,9 +174,11 @@ const RideForm = () => {
               value={date}
               onChange={(e) => setDate(e.target.value)}
               rounded='full'
-              mb={2}
               width='100%'
               onClick={(e) => e.target.showPicker()}
+              sx={{
+                color: 'gray.500',
+              }}
             />
           </InputGroup>
         </FormControl>
@@ -194,6 +196,9 @@ const RideForm = () => {
               mb={2}
               width='100%'
               onClick={(e) => e.target.showPicker()}
+              sx={{
+                color: 'gray.500',
+              }}
             />
           </InputGroup>
         </FormControl>
@@ -205,13 +210,18 @@ const RideForm = () => {
         >
           <HStack mb={[2, 0]} justify='space-between' w='100%'>
             <HStack spacing={2}>
-              <FormLabel htmlFor='isDriver' mb='0'>
+              <FormLabel htmlFor='isDriver' mb='0' color='gray.600'>
                 Are you a driver?
               </FormLabel>
               <Switch
                 id='isDriver'
                 isChecked={isDriver}
                 onChange={() => setIsDriver(!isDriver)}
+                sx={{
+                  'span.chakra-switch__track': {
+                    backgroundColor: isDriver ? 'blue.500' : '#6B6C6D',
+                  },
+                }}
               />
             </HStack>
             <Button colorScheme='blue' type='submit' rounded='full'>

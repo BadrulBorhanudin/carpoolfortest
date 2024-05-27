@@ -16,11 +16,11 @@ const Navigation = ({
 
   const buttonStyle = (tabIndex) => ({
     variant: 'ghost',
-    color: selectedTab === tabIndex ? '#150035' : 'gray.500',
+    color: selectedTab === tabIndex ? '#3981CA' : '#6B6C6D',
     fontWeight: 'bold',
     fontSize: 'xl',
     _focus: { boxShadow: 'none' },
-    _hover: { textDecoration: 'none', color: '#150035' },
+    _hover: { textDecoration: 'none', color: '#7B9FC4' },
     _active: { bg: 'transparent' },
     mx: isMobile ? 0 : 2,
     mb: isMobile ? 2 : 0,
@@ -43,7 +43,7 @@ const Navigation = ({
             transform='translateX(-50%)'
             width='30px'
             height='5px'
-            bg='#150035'
+            bg='#3981CA'
             borderRadius='full'
             transition='all 0.3s ease'
           />
@@ -59,7 +59,7 @@ const Navigation = ({
             transform='translateX(-50%)'
             width='30px'
             height='5px'
-            bg='#150035'
+            bg='#3981CA'
             borderRadius='full'
             transition='all 0.3s ease'
           />
@@ -75,7 +75,7 @@ const Navigation = ({
             transform='translateX(-50%)'
             width='30px'
             height='5px'
-            bg='#150035'
+            bg='#3981CA'
             borderRadius='full'
             transition='all 0.3s ease'
           />
