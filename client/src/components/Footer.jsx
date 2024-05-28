@@ -8,6 +8,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import Logo from '../assets/logo.svg';
 
 const Footer = () => {
   return (
@@ -56,8 +57,8 @@ const Footer = () => {
           <VStack align='start' spacing={3} order={{ base: 3, md: 1 }}>
             <Flex alignItems='center'>
               <img
-                src='../src/assets/logo.svg'
-                alt='CarPoolHub Logo'
+                src={Logo}
+                alt='logo'
                 width='20px'
               />
               <Text ml={2} fontSize='2xl' color='blue.400' fontWeight='bold'>
