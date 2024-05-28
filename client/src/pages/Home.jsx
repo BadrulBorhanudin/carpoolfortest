@@ -19,6 +19,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import RideList from '../components/RideList';
 import RideForm from '../components/RideForm';
 import Layout from '../components/Layout';
+import Hero from '../components/Hero';
 
 import { QUERY_RIDES } from '../utils/queries';
 
@@ -53,6 +54,7 @@ const Home = () => {
 
   return (
     <Layout>
+      <Hero />
       <Flex
         justify='center'
         align='center'
