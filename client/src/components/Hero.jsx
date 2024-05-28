@@ -1,10 +1,11 @@
 import { Box, Heading } from '@chakra-ui/react';
+import HeroImage from '../assets/hero.png';
 
 const Hero = () => {
   return (
     <Box
       position='relative'
-      bgImage="url('../src/assets/hero.png')"
+      bgImage={`url(${HeroImage})`}
       bgSize='cover'
       bgRepeat='no-repeat'
       h='38vh'
