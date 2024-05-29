@@ -32,7 +32,12 @@ const Footer = () => {
           spacing={{ base: 10, md: 0 }}
         >
           {/* Right Section - Quick Links */}
-          <VStack align='center' spacing={3} order={{ base: 1, md: 3 }}>
+          <VStack
+            align='center'
+            spacing={3}
+            order={{ base: 1, md: 3 }}
+            alignSelf={{ base: 'center', md: 'flex-end' }}
+          >
             <Heading as='h4' size='md'>
               Quick Links
             </Heading>
@@ -54,18 +59,19 @@ const Footer = () => {
           </VStack>
 
           {/* Left Section */}
-          <VStack align='start' spacing={3} order={{ base: 3, md: 1 }}>
+          <VStack
+            // align='center'
+            spacing={3}
+            order={{ base: 3, md: 1 }}
+            alignSelf={{ base: 'center', md: 'flex-end' }}
+          >
             <Flex alignItems='center'>
-              <img
-                src={Logo}
-                alt='logo'
-                width='20px'
-              />
+              <img src={Logo} alt='logo' width='20px' />
               <Text ml={2} fontSize='2xl' color='blue.400' fontWeight='bold'>
                 CarPoolHub
               </Text>
             </Flex>
-            <Text mt='-2'>
+            <Text mt='-2' mb='-3'>
               Made with{' '}
               <span role='img' aria-label='heart' aria-hidden='false'>
                 ❤️

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { Box, Heading, Spinner, Button, Flex, Text } from '@chakra-ui/react';
+import { Box, Heading, Spinner, Button, Flex } from '@chakra-ui/react';
 
 import RideList from '../components/RideList';
 import Layout from '../components/Layout';

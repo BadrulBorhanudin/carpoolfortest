@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
-import { Link } from 'react-router-dom';
+import Signup from './Signup';
+import { useDisclosure } from '@chakra-ui/react';
 import {
   Button,
   Modal,
@@ -17,6 +18,7 @@ import {
   Flex,
   InputGroup,
   InputRightElement,
+  Text,
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -26,6 +28,12 @@ const Login = ({ isOpen, onOpen, onClose }) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error, data }] = useMutation(LOGIN_USER);
   const [showPassword, setShowPassword] = useState(false);
+
+  const {
+    isOpen: isSignupOpen,
+    onOpen: onSignupOpen,
+    onClose: onSignupClose,
+  } = useDisclosure();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -42,6 +50,7 @@ const Login = ({ isOpen, onOpen, onClose }) => {
         variables: { ...formState },
       });
       Auth.login(data.login.token);
+      onClose();
     } catch (e) {
       console.error(e);
     }
@@ -62,8 +71,8 @@ const Login = ({ isOpen, onOpen, onClose }) => {
         py={{ base: 3, md: 0 }}
       >
         <ModalOverlay />
-        <ModalContent width={{ base: '90%'}}>
-          <ModalHeader color='#150035'>Welcome Back</ModalHeader>
+        <ModalContent width={{ base: '90%' }}>
+          <ModalHeader color='gray.700'>Welcome Back</ModalHeader>
           <CloseButton
             position='absolute'
             right='8px'
@@ -126,6 +135,21 @@ const Login = ({ isOpen, onOpen, onClose }) => {
                     Login
                   </Button>
                 </Flex>
+                <Flex justify='center' mb='2'>
+                  <Text>
+                    New to CarPoolHub?{' '}
+                    <Button
+                      variant='link'
+                      colorScheme='blue'
+                      onClick={() => {
+                        onClose();
+                        onSignupOpen();
+                      }}
+                    >
+                      Sign Up
+                    </Button>
+                  </Text>
+                </Flex>
               </form>
             )}
             {error && (
@@ -137,6 +161,12 @@ const Login = ({ isOpen, onOpen, onClose }) => {
           </ModalBody>
         </ModalContent>
       </Modal>
+
+      <Signup
+        isOpen={isSignupOpen}
+        onOpen={onSignupOpen}
+        onClose={onSignupClose}
+      />
     </>
   );
 };

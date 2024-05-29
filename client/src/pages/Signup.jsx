@@ -68,7 +68,7 @@ const Signup = ({ isOpen, onOpen, onClose }) => {
       >
         <ModalOverlay />
         <ModalContent width={{ base: '90%' }}>
-          <ModalHeader color='#150035'>Create Account</ModalHeader>
+          <ModalHeader color='gray.700'>Create Account</ModalHeader>
           <CloseButton
             position='absolute'
             right='8px'

@@ -24,7 +24,6 @@ import { Link } from 'react-router-dom';
 import Layout from './Layout';
 import Auth from '../utils/auth';
 import Login from '../pages/Login';
-import Signup from '../pages/Signup';
 import Logo from '../assets/logo.svg';
 import Navigation from './Navigation';
 
@@ -35,11 +34,7 @@ const Header = () => {
     onOpen: onLoginOpen,
     onClose: onLoginClose,
   } = useDisclosure();
-  const {
-    isOpen: isSignupOpen,
-    onOpen: onSignupOpen,
-    onClose: onSignupClose,
-  } = useDisclosure();
+
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const popoverRef = useRef();
@@ -79,7 +74,6 @@ const Header = () => {
         <Link to='/' style={{ textDecoration: 'none' }}>
           <Flex
             alignItems='center'
-            ml={{ base: Auth.loggedIn() ? '0' : '-12', md: '0' }}
           >
             <img src={Logo} alt='Logo' width='25px' />
             <Heading
@@ -89,10 +83,7 @@ const Header = () => {
               color='#3189CA'
               ml='2'
               mr='2'
-              display={{
-                base: Auth.loggedIn() ? 'block' : 'none',
-                md: 'block',
-              }}
+              display='block'
             >
               CarPoolHub
             </Heading>
@@ -145,7 +136,11 @@ const Header = () => {
                       </Flex>
                     </PopoverHeader>
                     <PopoverBody align='center'>
-                      <Button backgroundColor='whitesmoke' borderRadius='full' onClick={logout}>
+                      <Button
+                        backgroundColor='whitesmoke'
+                        borderRadius='full'
+                        onClick={logout}
+                      >
                         Logout
                       </Button>
                     </PopoverBody>
@@ -170,26 +165,14 @@ const Header = () => {
                   borderRadius='full'
                   mr='px'
                   onClick={onLoginOpen}
-                  bg='blue.100'
-                  color='gray.600'
-                  _hover={{ bg: 'blue.300', color: 'gray.700' }}
-                  _active={{ bg: 'gray.300', color: 'gray.700' }}
-                >
-                  Login
-                </Button>
-                <Login isOpen={isLoginOpen} onClose={onLoginClose} />
-                <Button
-                  borderRadius='full'
-                  ml='px'
-                  onClick={onSignupOpen}
                   bg='blue.500'
                   color='whitesmoke'
                   _hover={{ bg: 'blue.600', color: 'white' }}
                   _active={{ bg: 'blue.700', color: 'white' }}
                 >
-                  Sign Up
+                  Login
                 </Button>
-                <Signup isOpen={isSignupOpen} onClose={onSignupClose} />
+                <Login isOpen={isLoginOpen} onClose={onLoginClose} />
               </>
             )}
           </ButtonGroup>
