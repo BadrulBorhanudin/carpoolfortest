@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { User, Ride } = require('../models');
-const { signToken, AuthenticationError } = require('../utils/auth');
+const { signToken } = require('../utils/auth');
+const CustomAuthenticationError = require('../utils/CustomAuthenticationError');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const resolvers = {
@@ -31,7 +32,7 @@ const resolvers = {
           populate: 'comments',
         });
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new CustomAuthenticationError('Could not authenticate user');
     },
   },
 
@@ -45,13 +46,13 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError('Incorrect credentials');
+        throw new CustomAuthenticationError('User not found');
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError('Incorrect credentials');
+        throw new CustomAuthenticationError('Incorrect password');
       }
 
       const token = signToken(user);
@@ -80,7 +81,9 @@ const resolvers = {
 
         return ride;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new CustomAuthenticationError(
+        'You need to be logged in to add a ride'
+      );
     },
     addComment: async (parent, { rideId, commentText }, context) => {
       if (context.user) {
@@ -97,7 +100,9 @@ const resolvers = {
           }
         );
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new CustomAuthenticationError(
+        'You need to be logged in to add a comment'
+      );
     },
     removeRide: async (parent, { rideId }, context) => {
       if (context.user) {
@@ -113,7 +118,9 @@ const resolvers = {
 
         return ride;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new CustomAuthenticationError(
+        'You need to be logged in to remove a ride'
+      );
     },
     removeComment: async (parent, { rideId, commentId }, context) => {
       if (context.user) {
@@ -130,7 +137,9 @@ const resolvers = {
           { new: true }
         );
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new CustomAuthenticationError(
+        'You need to be logged in to remove a comment'
+      );
     },
     editComment: async (
       parent,
@@ -145,12 +154,16 @@ const resolvers = {
         );
 
         if (!ride) {
-          throw new AuthenticationError('No ride found with this ID!');
+          throw new CustomAuthenticationError(
+            'No ride found with the provided ID'
+          );
         }
 
         return ride;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new CustomAuthenticationError(
+        'You need to be logged in to edit a comment'
+      );
     },
     createCheckoutSession: async (parent, { donationAmount }, context) => {
       if (context.user) {
@@ -170,11 +183,12 @@ const resolvers = {
           ],
           mode: 'payment',
           success_url: `${process.env.SUCCESS_URL}?session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url: `${process.env.CANCEL_URL}`,
         });
         return { id: session.id };
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new CustomAuthenticationError(
+        'You need to be logged in to create a checkout session'
+      );
     },
   },
 };
