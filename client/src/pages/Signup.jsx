@@ -22,14 +22,16 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-const Signup = ({ isOpen, onOpen, onClose }) => {
+const Signup = ({ isOpen, onClose }) => {
   const [formState, setFormState] = useState({
     username: '',
     email: '',
     password: '',
+    confirmPassword: '',
   });
   const [addUser, { error, data }] = useMutation(ADD_USER);
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -41,9 +43,18 @@ const Signup = ({ isOpen, onOpen, onClose }) => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    if (formState.password !== formState.confirmPassword) {
+      setPasswordsMatch(false);
+      return;
+    }
+    setPasswordsMatch(true);
     try {
       const { data } = await addUser({
-        variables: { ...formState },
+        variables: {
+          username: formState.username,
+          email: formState.email,
+          password: formState.password,
+        },
       });
       Auth.login(data.addUser.token);
     } catch (e) {
@@ -53,6 +64,7 @@ const Signup = ({ isOpen, onOpen, onClose }) => {
       username: '',
       email: '',
       password: '',
+      confirmPassword: '',
     });
   };
 
@@ -129,6 +141,40 @@ const Signup = ({ isOpen, onOpen, onClose }) => {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
+                <InputGroup size='md' mb={4}>
+                  <Input
+                    pr='4.5rem'
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder='Confirm password'
+                    name='confirmPassword'
+                    value={formState.confirmPassword}
+                    onChange={handleChange}
+                    rounded='full'
+                  />
+                  <InputRightElement width='4.5rem'>
+                    <Button
+                      h='1.75rem'
+                      size='sm'
+                      onClick={handlePasswordToggle}
+                      variant='ghost'
+                      _focus={{ boxShadow: 'none' }}
+                      _hover={{ backgroundColor: 'transparent' }}
+                      _active={{ backgroundColor: 'transparent' }}
+                    >
+                      {showPassword ? (
+                        <FontAwesomeIcon icon={faEyeSlash} />
+                      ) : (
+                        <FontAwesomeIcon icon={faEye} />
+                      )}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+                {!passwordsMatch && (
+                  <Alert status='error' mb={4}>
+                    <AlertIcon />
+                    Passwords do not match.
+                  </Alert>
+                )}
                 <Flex justify='center' mb='15px'>
                   <Button
                     colorScheme='blue'
