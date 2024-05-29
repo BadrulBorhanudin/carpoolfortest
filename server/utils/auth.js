@@ -1,5 +1,5 @@
-const { GraphQLError } = require('graphql');
 const jwt = require('jsonwebtoken');
+const CustomAuthenticationError = require('./CustomAuthenticationError');
 
 require('dotenv').config();
 
@@ -15,12 +15,7 @@ if (!expiration) {
 }
 
 module.exports = {
-  AuthenticationError: new GraphQLError('Could not authenticate user.', {
-    extensions: {
-      code: 'UNAUTHENTICATED',
-    },
-  }),
-
+  AuthenticationError: CustomAuthenticationError,
   authMiddleware: function ({ req }) {
     let token = req.body.token || req.query.token || req.headers.authorization;
 

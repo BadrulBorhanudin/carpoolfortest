@@ -94,9 +94,12 @@ const RideForm = () => {
       });
     } catch (err) {
       console.error(err);
+      const errorMessage = err.message.includes('Invalid token specified')
+        ? 'You need to be logged in to add a ride.'
+        : err.message;
       toast({
         title: 'Error adding ride.',
-        description: err.message,
+        description: errorMessage,
         status: 'error',
         duration: 5000,
         isClosable: true,
