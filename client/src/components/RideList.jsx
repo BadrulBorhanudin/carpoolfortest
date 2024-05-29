@@ -1,10 +1,9 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import {
   Box,
   Button,
   Flex,
-  Heading,
   Text,
   useToast,
   Divider,
@@ -17,10 +16,12 @@ import {
   PopoverHeader,
   PopoverBody,
   useOutsideClick,
+  VStack,
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCircleDot,
+  faCircle,
   faMapMarkerAlt,
   faCalendarAlt,
   faCar,
@@ -55,11 +56,24 @@ const RideList = ({
   const toast = useToast();
   const [openPopoverId, setOpenPopoverId] = useState(null);
   const popoverRef = useRef();
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   useOutsideClick({
     ref: popoverRef,
     handler: () => setOpenPopoverId(null),
   });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handleRemoveRide = async (rideId) => {
     try {
@@ -85,21 +99,8 @@ const RideList = ({
 
   const currentUser = Auth.loggedIn() ? Auth.getProfile().data.username : null;
 
-  // if (!rides.length && !showNoRideMessage) {
-  //   return (
-  //     <Heading as='h3' size='md' mb={4}>
-  //       No Rides Available Yet
-  //     </Heading>
-  //   );
-  // }
-  
   return (
     <Box>
-      {/* {!showTitle && (
-        <Heading as='h3' size='md' mb={4}>
-          Available Ride(s) ...
-        </Heading>
-      )} */}
       {rides.map((ride) => {
         const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(
           ride.origin
@@ -185,13 +186,9 @@ const RideList = ({
               </Flex>
             </Flex>
             <Box p={4} mt='-4'>
-              <Divider
-                mb='2'
-                orientation='horizontal'
-                borderColor='gray.300'
-              />
+              <Divider mb='2' orientation='horizontal' borderColor='gray.300' />
               <Flex alignItems='center'>
-                <Box position='relative' mr={3}>
+                <Box position='relative' mr={3} ml={-0.3}>
                   <FontAwesomeIcon icon={faCircleDot} color='#2C7A7B' />
                 </Box>
                 <Box>
@@ -199,24 +196,42 @@ const RideList = ({
                     Origin
                   </Text>
                   <Text fontWeight='bold' fontSize='md'>
-                    {truncateText(ride.origin, 30)}
+                    {truncateText(
+                      ride.origin,
+                      screenWidth < 768 ? 30 : screenWidth < 1024 ? 60 : 80
+                    )}
                   </Text>
                 </Box>
               </Flex>
-              <Flex alignItems='center' mt={2}>
-                <Box position='relative' mr={3} left='1px'>
+              <VStack spacing={2} align='start' ml={1} mt={-2} mb={-2}>
+                <FontAwesomeIcon
+                  icon={faCircle}
+                  color='#BDBDBD'
+                  style={{ fontSize: '8px' }}
+                />
+                <FontAwesomeIcon
+                  icon={faCircle}
+                  color='#BDBDBD'
+                  style={{ fontSize: '8px' }}
+                />
+              </VStack>
+              <Flex alignItems='center' ml={0.5}>
+                <Box position='relative' mr={3.5}>
                   <FontAwesomeIcon icon={faMapMarkerAlt} color='#B22222' />
                 </Box>
-                <Box pl='1'>
+                <Box>
                   <Text color='gray.500' fontSize='sm'>
                     Destination
                   </Text>
                   <Text fontWeight='bold' fontSize='md'>
-                    {truncateText(ride.destination, 30)}
+                    {truncateText(
+                      ride.destination,
+                      screenWidth < 768 ? 30 : screenWidth < 1024 ? 60 : 80
+                    )}
                   </Text>
                 </Box>
               </Flex>
-              <Flex alignItems='center' mt={2}>
+              <Flex alignItems='center' mt={3}>
                 <Box position='relative' mr={3}>
                   <FontAwesomeIcon icon={faClock} color='#808080' />
                 </Box>
