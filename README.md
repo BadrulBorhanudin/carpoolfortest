@@ -1,5 +1,4 @@
-## Title
-CarPoolHub
+## CarPoolHub
 
 ## Description
 This project uses everything I’ve learned throughout this course to create a MERN stack single-page application that works with real-world data to solve a real-world challenge, with a focus on data and user demand.
