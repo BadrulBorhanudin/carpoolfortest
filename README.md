@@ -24,6 +24,7 @@ CarPoolHub simplifies ride-sharing, allowing you to effortlessly find or offer r
 - [Contributing](#contributing)
 - [Tests](#tests)
 - [Questions](#questions)
+- [Acknowledgements](#acknowledgements)
 - [Links](#links)
 
 ## Getting Started
@@ -91,6 +92,17 @@ There are no tests associated with this project.
 
 ## Questions
 If you have any questions, you can reach out to me via email at badrulborhanudin@gmail.com. You can also find more information about me and my other projects on my GitHub profile: [BadrulBorhanudin](https://github.com/BadrulBorhanudin)
+
+## Acknowledgements
+
+## Acknowledgments
+
+I would like to thank the following resources and communities for their invaluable support and inspiration in making this project possible:
+
+- This project is purely built from 21-MERN/01-Activities/26-Stu_Resolver-Context.
+- UI inspirations were drawn from [Reddit](https://www.reddit.com/), [Dribbble](https://dribbble.com/), [Pinterest](https://www.pinterest.com/) and [Facebook](https://www.facebook.com/).
+- The members of the [Developer Group on Discord](https://discord.com/channels/1093904748521996298/1093913093068828672) for their advice, feedback, and support.
+- Various online tools and resources that facilitated the development process.
 
 ## Links
 * [The URL of the functional, deployed application.](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
