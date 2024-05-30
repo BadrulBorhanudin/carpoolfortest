@@ -95,8 +95,6 @@ If you have any questions, you can reach out to me via email at badrulborhanudin
 
 ## Acknowledgements
 
-## Acknowledgments
-
 I would like to thank the following resources and communities for their invaluable support and inspiration in making this project possible:
 
 - This project is purely built from 21-MERN/01-Activities/26-Stu_Resolver-Context.
