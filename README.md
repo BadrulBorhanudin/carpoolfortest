@@ -103,6 +103,7 @@ I would like to thank the following resources and communities for their invaluab
 - UI inspirations were drawn from [Reddit](https://www.reddit.com/), [Dribbble](https://dribbble.com/), [Pinterest](https://www.pinterest.com/) and [Facebook](https://www.facebook.com/).
 - The members of the [Developer Group on Discord](https://discord.com/channels/1093904748521996298/1093913093068828672) for their advice, feedback, and support.
 - Various online tools and resources that facilitated the development process.
+- My instructor, Prabhjot Singh, for his guidance and support.
 
 ## Links
 * [The URL of the functional, deployed application.](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
