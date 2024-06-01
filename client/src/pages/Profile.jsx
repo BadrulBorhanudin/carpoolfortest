@@ -12,14 +12,17 @@ import { REMOVE_RIDE } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const Profile = () => {
+  // Extract the username from URL parameters
   const { username: userParam } = useParams();
   const [currentFilter, setCurrentFilter] = useState('yourRides');
 
+  // Fetch user data based on whether a username is provided
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
   const { data: rideData, loading: rideLoading } = useQuery(QUERY_RIDES);
 
+  // Set up mutation for removing a ride
   const [removeRide] = useMutation(REMOVE_RIDE, {
     refetchQueries: [
       { query: QUERY_RIDES },
@@ -33,10 +36,12 @@ const Profile = () => {
   const user = data?.me || data?.user || {};
   const currentUser = Auth.loggedIn() ? Auth.getProfile().data.username : null;
 
+  // Show spinner while data is loading
   if (loading || rideLoading) {
     return <Spinner />;
   }
 
+  // Handle removing a ride
   const handleRemoveRide = async (rideId) => {
     try {
       await removeRide({ variables: { rideId } });
@@ -45,8 +50,10 @@ const Profile = () => {
     }
   };
 
+  // Filter rides created by the user
   const userRides =
     rideData?.rides?.filter((ride) => ride.rideAuthor === user.username) || [];
+  // Filter rides commented on by the user
   const commentedRides =
     rideData?.rides?.filter((ride) =>
       ride.comments.some((comment) => comment.commentAuthor === currentUser)
@@ -86,6 +93,7 @@ const Profile = () => {
       </Flex>
 
       <Box mb={5}>
+        {/* Render rides created by the user */}
         {currentFilter === 'yourRides' && (
           <>
             {userRides.length > 0 ? (
@@ -106,6 +114,7 @@ const Profile = () => {
             )}
           </>
         )}
+        {/* Render rides commented on by the user */}
         {currentFilter === 'commentedRides' && (
           <>
             {commentedRides.length > 0 ? (

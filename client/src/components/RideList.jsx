@@ -35,6 +35,7 @@ import Auth from '../utils/auth';
 import CommentAvatar from '../components/CommentAvatar';
 import GoogleMapsIcon from '../assets/google-maps-svgrepo-com.svg';
 
+// Function to truncate text to a specified maximum length
 const truncateText = (text, maxLength) => {
   if (text.length > maxLength) {
     return text.slice(0, maxLength) + '...';
@@ -49,6 +50,7 @@ const RideList = ({
   showCommentAvatar = true,
   showNoRideMessage = true,
 }) => {
+  // Define the mutation for removing a ride
   const [removeRide] = useMutation(REMOVE_RIDE, {
     refetchQueries: [{ query: QUERY_RIDES }],
   });
@@ -58,11 +60,13 @@ const RideList = ({
   const popoverRef = useRef();
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
+  // Close popover when clicking outside of it
   useOutsideClick({
     ref: popoverRef,
     handler: () => setOpenPopoverId(null),
   });
 
+  // Update screen width on window resize
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
@@ -75,6 +79,7 @@ const RideList = ({
     };
   }, []);
 
+  // Handle ride removal and show toast notifications
   const handleRemoveRide = async (rideId) => {
     try {
       await removeRide({ variables: { rideId } });
@@ -102,6 +107,7 @@ const RideList = ({
   return (
     <Box>
       {rides.map((ride) => {
+        // Generate Google Maps URL for the ride
         const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(
           ride.origin
         )}&destination=${encodeURIComponent(ride.destination)}`;

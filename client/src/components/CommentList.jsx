@@ -24,33 +24,39 @@ import { REMOVE_COMMENT, EDIT_COMMENT } from '../utils/mutations';
 import { QUERY_RIDES } from '../utils/queries';
 import Auth from '../utils/auth';
 
+// CommentList component to display and manage comments for a ride
 const CommentList = ({ comments = [], rideId }) => {
+  // State for edit mode and text for editing comments
   const [editMode, setEditMode] = useState(null);
   const [editText, setEditText] = useState('');
-  const toast = useToast();
-  const [isPopoverOpen, setIsPopoverOpen] = useState(null);
-  const popoverRef = useRef();
+  const toast = useToast(); // Toast for notifications
+  const [isPopoverOpen, setIsPopoverOpen] = useState(null); // State for popover open status
+  const popoverRef = useRef(); // Ref for popover content
 
+  // Close the popover when clicking outside of it
   useOutsideClick({
     ref: popoverRef,
     handler: () => setIsPopoverOpen(null),
   });
 
+  // GraphQL mutation to remove a comment
   const [removeComment] = useMutation(REMOVE_COMMENT, {
     refetchQueries: [{ query: QUERY_RIDES }],
   });
 
+  // GraphQL mutation to edit a comment
   const [editComment] = useMutation(EDIT_COMMENT, {
     refetchQueries: [{ query: QUERY_RIDES }],
   });
 
+  // Handler to edit a comment
   const handleEditComment = async (commentId) => {
     try {
       await editComment({
         variables: { rideId, commentId, commentText: editText },
       });
-      setEditMode(null);
-      setEditText('');
+      setEditMode(null); // Exit edit mode
+      setEditText(''); // Clear edit text
       toast({
         title: 'Comment updated successfully.',
         status: 'success',
@@ -62,6 +68,7 @@ const CommentList = ({ comments = [], rideId }) => {
     }
   };
 
+  // Handler to remove a comment
   const handleRemoveComment = async (commentId) => {
     try {
       await removeComment({ variables: { rideId, commentId } });
@@ -70,8 +77,10 @@ const CommentList = ({ comments = [], rideId }) => {
     }
   };
 
+  // Get the current logged-in user's username
   const currentUser = Auth.loggedIn() ? Auth.getProfile().data.username : null;
 
+  // Editable controls for editing and saving comments
   const EditableControls = ({ comment }) => {
     const isEditing = editMode === comment._id;
 
@@ -111,6 +120,7 @@ const CommentList = ({ comments = [], rideId }) => {
     );
   };
 
+  // Render message if there are no comments
   if (!comments.length) {
     return (
       <Box>
@@ -124,8 +134,8 @@ const CommentList = ({ comments = [], rideId }) => {
   return (
     <Box mt={4}>
       {comments
-        .slice()
-        .reverse()
+        .slice() // Copy comments array
+        .reverse() // Reverse order to show newest comments first
         .map((comment) => (
           <Box
             key={comment._id}

@@ -33,6 +33,7 @@ const Signup = ({ isOpen, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
 
+  // Handle input changes and update the form state
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormState({
@@ -41,6 +42,7 @@ const Signup = ({ isOpen, onClose }) => {
     });
   };
 
+  // Handle form submission
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     if (formState.password !== formState.confirmPassword) {

@@ -17,23 +17,29 @@ import { loadStripe } from '@stripe/stripe-js';
 import { useState } from 'react';
 import { CREATE_CHECKOUT_SESSION } from '../utils/mutations';
 
+// Load Stripe outside of a component’s render to avoid recreating the Stripe object on every render.
 const stripePromise = loadStripe(
   'pk_test_51PJvcdBVaH1iGHeJY2P6pMwJukFJAshUZ8exvD58Yxh7IA4an6IOO8po46ekOfm3sJ66lasAiA1z6NbxGGuZZElJ00pd55a9Xr'
 );
 
 const SupportMe = () => {
+  // State for managing donation amount input
   const [donationAmount, setDonationAmount] = useState('');
   const toast = useToast();
+
+  // useMutation hook to create a checkout session
   const [createCheckoutSession, { loading, error }] = useMutation(
     CREATE_CHECKOUT_SESSION
   );
 
+  // Handle input change, remove leading zeros
   const handleInputChange = (event) => {
     const value = event.target.value;
     const numericValue = value.replace(/^0+/, '');
     setDonationAmount(numericValue);
   };
 
+  // Handle form submission to create a Stripe checkout session
   const handleClick = async (event) => {
     event.preventDefault();
     try {
