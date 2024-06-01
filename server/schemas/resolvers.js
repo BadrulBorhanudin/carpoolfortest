@@ -6,25 +6,30 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const resolvers = {
   Query: {
+    // Retrieve all users and their rides with comments
     users: async () => {
       return User.find().populate({
         path: 'rides',
         populate: 'comments',
       });
     },
+    // Retrieve a single user by username with their rides and comments
     user: async (parent, { username }) => {
       return User.findOne({ username }).populate({
         path: 'rides',
         populate: 'comments',
       });
     },
+    // Retrieve all rides, optionally filtered by username, sorted by creation date
     rides: async (parent, { username }) => {
       const params = username ? { username } : {};
       return Ride.find(params).sort({ createdAt: -1 }).populate('comments');
     },
+    // Retrieve a single ride by its ID with comments
     ride: async (parent, { rideId }) => {
       return Ride.findOne({ _id: rideId }).populate('comments');
     },
+    // Retrieve the logged-in user's data with their rides and comments
     me: async (parent, args, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id }).populate({
@@ -37,11 +42,13 @@ const resolvers = {
   },
 
   Mutation: {
+    // Register a new user and return an authentication token
     addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
       const token = signToken(user);
       return { token, user };
     },
+    // Authenticate a user and return an authentication token
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
@@ -59,6 +66,7 @@ const resolvers = {
 
       return { token, user };
     },
+    // Add a new ride for the logged-in user
     addRide: async (
       parent,
       { origin, destination, date, time, isDriver },
@@ -85,6 +93,7 @@ const resolvers = {
         'You need to be logged in to add a ride'
       );
     },
+    // Add a comment to a ride
     addComment: async (parent, { rideId, commentText }, context) => {
       if (context.user) {
         return Ride.findOneAndUpdate(
@@ -104,6 +113,7 @@ const resolvers = {
         'You need to be logged in to add a comment'
       );
     },
+    // Remove a ride created by the logged-in user
     removeRide: async (parent, { rideId }, context) => {
       if (context.user) {
         const ride = await Ride.findOneAndDelete({
@@ -122,6 +132,7 @@ const resolvers = {
         'You need to be logged in to remove a ride'
       );
     },
+    // Remove a comment from a ride created by the logged-in user
     removeComment: async (parent, { rideId, commentId }, context) => {
       if (context.user) {
         return Ride.findOneAndUpdate(
@@ -141,6 +152,7 @@ const resolvers = {
         'You need to be logged in to remove a comment'
       );
     },
+    // Edit a comment on a ride created by the logged-in user
     editComment: async (
       parent,
       { rideId, commentId, commentText },
@@ -165,6 +177,7 @@ const resolvers = {
         'You need to be logged in to edit a comment'
       );
     },
+    // Create a Stripe checkout session for donations
     createCheckoutSession: async (parent, { donationAmount }, context) => {
       if (context.user) {
         const session = await stripe.checkout.sessions.create({

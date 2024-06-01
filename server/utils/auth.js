@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const CustomAuthenticationError = require('./CustomAuthenticationError');
-
 require('dotenv').config();
 
 const secret = process.env.JWT_SECRET;
@@ -16,6 +15,8 @@ if (!expiration) {
 
 module.exports = {
   AuthenticationError: CustomAuthenticationError,
+
+  // Middleware to authenticate user by verifying JWT
   authMiddleware: function ({ req }) {
     let token = req.body.token || req.query.token || req.headers.authorization;
 
@@ -37,6 +38,7 @@ module.exports = {
     return req;
   },
 
+  // Function to sign a token with user data
   signToken: function ({ email, username, _id }) {
     const payload = { email, username, _id };
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });

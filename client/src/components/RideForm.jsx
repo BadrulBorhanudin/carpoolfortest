@@ -28,6 +28,7 @@ import Signup from '../pages/Signup';
 import AutocompleteInput from '../components/AutocompleteInput';
 
 const RideForm = () => {
+  // Manage the state for login and signup modals
   const {
     isOpen: isLoginOpen,
     onOpen: onLoginOpen,
@@ -39,18 +40,21 @@ const RideForm = () => {
     onClose: onSignupClose,
   } = useDisclosure();
 
+  // Manage form state
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [isDriver, setIsDriver] = useState(false);
 
+  // Apollo mutation hook for adding a ride
   const [addRide, { error }] = useMutation(ADD_RIDE, {
     refetchQueries: [{ query: QUERY_RIDES }, { query: QUERY_ME }],
   });
 
   const toast = useToast();
 
+  // Handle form submission
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -79,6 +83,7 @@ const RideForm = () => {
         },
       });
 
+      // Reset form state
       setOrigin('');
       setDestination('');
       setDate('');
@@ -107,6 +112,9 @@ const RideForm = () => {
     }
   };
 
+  // Get the current date in ISO string format, then split the string at the 'T' character to separate the date and time portions.
+  // The first element of the resulting array (index 0) is the date in the format 'YYYY-MM-DD'.
+  // This ensures the date input field cannot select a date earlier than today.
   const minDate = new Date().toISOString().split('T')[0];
 
   return (

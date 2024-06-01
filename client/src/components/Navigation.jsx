@@ -7,6 +7,7 @@ const Navigation = ({
   isMobile,
   setIsMenuOpen,
 }) => {
+  // Handle click events for navigation buttons
   const handleClick = (tabIndex) => {
     setSelectedTab(tabIndex);
     if (isMobile) {
@@ -14,6 +15,7 @@ const Navigation = ({
     }
   };
 
+  // Define button styles based on the selected tab and whether the view is mobile
   const buttonStyle = (tabIndex) => ({
     variant: 'ghost',
     color: selectedTab === tabIndex ? '#3981CA' : '#6B6C6D',
@@ -33,8 +35,10 @@ const Navigation = ({
       justifyContent='center'
       flex='1'
     >
+      {/* Navigation button for Home */}
       <Button as={Link} to='/' {...buttonStyle(0)}>
         Home
+        {/* Highlight indicator for the selected tab */}
         {selectedTab === 0 && !isMobile && (
           <Box
             position='absolute'
@@ -49,8 +53,10 @@ const Navigation = ({
           />
         )}
       </Button>
+      {/* Navigation button for About */}
       <Button as={Link} to='/about' {...buttonStyle(1)}>
         About
+        {/* Highlight indicator for the selected tab */}
         {selectedTab === 1 && !isMobile && (
           <Box
             position='absolute'
@@ -65,8 +71,10 @@ const Navigation = ({
           />
         )}
       </Button>
+      {/* Navigation button for Support */}
       <Button as={Link} to='/support' {...buttonStyle(2)}>
         Support
+        {/* Highlight indicator for the selected tab */}
         {selectedTab === 2 && !isMobile && (
           <Box
             position='absolute'

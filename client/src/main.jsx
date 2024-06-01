@@ -14,6 +14,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme';
 import 'react-datepicker/dist/react-datepicker.css';
 
+// Create the router with the routes configuration
 const router = createBrowserRouter([
   {
     path: '/',
@@ -60,12 +61,14 @@ const router = createBrowserRouter([
   },
 ]);
 
+// Render the React application
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ChakraProvider theme={theme}>
     <RouterProvider router={router} />
   </ChakraProvider>
 );
 
+// Register the service worker for offline functionality
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker

@@ -17,22 +17,31 @@ import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 
 const CommentForm = ({ rideId }) => {
+  // Chakra UI hook for managing login modal state
   const {
     isOpen: isLoginOpen,
     onOpen: onLoginOpen,
     onClose: onLoginClose,
   } = useDisclosure();
+
+  // Chakra UI hook for managing signup modal state
   const {
     isOpen: isSignupOpen,
     onOpen: onSignupOpen,
     onClose: onSignupClose,
   } = useDisclosure();
 
+  // State hooks for comment text and character count
   const [commentText, setCommentText] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
+
+  // Apollo Client hook for adding a comment
   const [addComment, { error }] = useMutation(ADD_COMMENT);
+
+  // Chakra UI hook for displaying toast notifications
   const toast = useToast();
 
+  // Handle form submission
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -45,6 +54,7 @@ const CommentForm = ({ rideId }) => {
         },
       });
 
+      // Reset comment text and show success toast
       setCommentText('');
       toast({
         title: 'Comment added.',
@@ -65,6 +75,7 @@ const CommentForm = ({ rideId }) => {
     }
   };
 
+  // Handle text area change
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -75,12 +86,7 @@ const CommentForm = ({ rideId }) => {
   };
 
   return (
-    <Box
-      p={4}
-      borderWidth='1px'
-      borderColor='gray.300'
-      borderRadius='3xl'
-    >
+    <Box p={4} borderWidth='1px' borderColor='gray.300' borderRadius='3xl'>
       {Auth.loggedIn() ? (
         <>
           <form onSubmit={handleFormSubmit}>
@@ -137,6 +143,7 @@ const CommentForm = ({ rideId }) => {
           .
         </Text>
       )}
+      {/* Login and Signup modals */}
       <Login isOpen={isLoginOpen} onClose={onLoginClose} />
       <Signup isOpen={isSignupOpen} onClose={onSignupClose} />
     </Box>

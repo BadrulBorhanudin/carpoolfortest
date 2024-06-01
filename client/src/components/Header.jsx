@@ -34,27 +34,30 @@ const Header = () => {
     onOpen: onLoginOpen,
     onClose: onLoginClose,
   } = useDisclosure();
-
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const popoverRef = useRef();
 
+  // Close popover when clicking outside
   useOutsideClick({
     ref: popoverRef,
     handler: () => setIsPopoverOpen(false),
   });
 
+  // Handle logout action
   const logout = (event) => {
     event.preventDefault();
     Auth.logout();
   };
 
+  // Handle profile click action
   const handleProfileClick = () => {
     setIsPopoverOpen(false);
   };
 
   return (
     <Layout>
+      {/* Header navigation bar */}
       <Flex
         as='nav'
         p='2'
@@ -63,6 +66,7 @@ const Header = () => {
         height='61px'
         position='relative'
       >
+        {/* Hamburger menu button for mobile view */}
         <IconButton
           icon={<FontAwesomeIcon icon={faBarsStaggered} size='1x' />}
           display={{ base: 'flex', md: 'none' }}
@@ -71,10 +75,9 @@ const Header = () => {
           aria-label='Open Menu'
         />
 
+        {/* Logo and site name */}
         <Link to='/' style={{ textDecoration: 'none' }}>
-          <Flex
-            alignItems='center'
-          >
+          <Flex alignItems='center'>
             <img src={Logo} alt='Logo' width='25px' />
             <Heading
               as='h1'
@@ -90,6 +93,7 @@ const Header = () => {
           </Flex>
         </Link>
 
+        {/* Navigation links for desktop view */}
         <Box display={{ base: 'none', md: 'flex' }} flex='1'>
           <Navigation
             selectedTab={selectedTab}
@@ -98,10 +102,12 @@ const Header = () => {
           />
         </Box>
 
+        {/* User action buttons */}
         <Flex>
           <ButtonGroup size='md'>
             {Auth.loggedIn() ? (
               <Flex align='center'>
+                {/* User avatar with popover */}
                 <Popover
                   isOpen={isPopoverOpen}
                   onClose={() => setIsPopoverOpen(false)}
@@ -160,6 +166,7 @@ const Header = () => {
               </Flex>
             ) : (
               <>
+                {/* Login button */}
                 <Button
                   variant='outline'
                   borderRadius='full'
@@ -179,6 +186,7 @@ const Header = () => {
         </Flex>
       </Flex>
 
+      {/* Collapsible mobile navigation menu */}
       <Collapse in={isMenuOpen} animateOpacity>
         <Navigation
           selectedTab={selectedTab}

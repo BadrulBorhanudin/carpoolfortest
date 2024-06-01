@@ -29,15 +29,18 @@ const SingleRide = () => {
 
   const ride = data?.ride || {};
 
+  // Handle outside click for popover
   useOutsideClick({
     ref: popoverRef,
     handler: () => setIsPopoverOpen(false),
   });
 
+  // Loading state
   if (loading) {
     return <Spinner />;
   }
 
+  // Ride deleted state
   if (rideDeleted) {
     return (
       <Layout>
@@ -59,6 +62,8 @@ const SingleRide = () => {
       </Layout>
     );
   }
+  
+  // Main render
   return (
     <Layout>
       <Box>

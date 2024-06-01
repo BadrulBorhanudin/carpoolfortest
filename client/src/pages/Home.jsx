@@ -24,11 +24,15 @@ import Hero from '../components/Hero';
 import { QUERY_RIDES } from '../utils/queries';
 
 const Home = () => {
+  // Fetch rides data using useQuery hook
   const { loading, data } = useQuery(QUERY_RIDES);
   const rides = data?.rides || [];
+
+  // State to manage filter and selected date
   const [filter, setFilter] = useState('all');
   const [selectedDate, setSelectedDate] = useState(null);
 
+  // Filter rides based on filter and selected date
   const filteredRides = rides
     .filter((ride) => {
       if (filter === 'all') return true;
@@ -40,11 +44,13 @@ const Home = () => {
       if (!selectedDate) return true;
       return new Date(ride.date).toDateString() === selectedDate.toDateString();
     });
-
+  
+  // Handle filter change
   const handleFilter = (value) => {
     setFilter(value);
   };
 
+  // Handle date change
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -62,6 +68,7 @@ const Home = () => {
         width='100%'
         mt={4}
       >
+        {/* Ride Form Component */}
         <Box width='100%' mb={4}>
           <RideForm />
         </Box>
@@ -73,6 +80,7 @@ const Home = () => {
           mt={8}
           mb={1}
         >
+          {/* Heading and Filter Component */}
           <Heading as='h3' size='md'>
             {filteredRides.length > 0
               ? 'Available Ride(s) ...'

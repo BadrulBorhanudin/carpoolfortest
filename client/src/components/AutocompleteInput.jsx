@@ -11,10 +11,12 @@ import {
 import axios from 'axios';
 
 const AutocompleteInput = ({ placeholder, value, onChange }) => {
+  // State to manage suggestions, loading status, and visibility of suggestions
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
+  // Effect to fetch suggestions from the API when the input value changes
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (value.length > 2) {
@@ -34,16 +36,19 @@ const AutocompleteInput = ({ placeholder, value, onChange }) => {
       }
     };
 
+    // Debounce fetching suggestions to avoid too many API calls
     const debounceTimer = setTimeout(fetchSuggestions, 300);
     return () => clearTimeout(debounceTimer);
   }, [value]);
 
+  // Handle click on a suggestion to set the input value and hide suggestions
   const handleSuggestionClick = (suggestion) => {
     onChange(suggestion);
     setSuggestions([]);
     setShowSuggestions(false);
   };
 
+  // Handle blur event to hide suggestions after a short delay
   const handleBlur = () => {
     setTimeout(() => {
       setShowSuggestions(false);
@@ -53,6 +58,7 @@ const AutocompleteInput = ({ placeholder, value, onChange }) => {
   return (
     <Box position='relative' width='100%'>
       <InputGroup>
+        {/* Show a spinner while loading suggestions */}
         <InputLeftElement pointerEvents='none'>
           {loading && <Spinner size='sm' />}
         </InputLeftElement>
@@ -71,6 +77,7 @@ const AutocompleteInput = ({ placeholder, value, onChange }) => {
           pl={10}
         />
       </InputGroup>
+      {/* Show the suggestions list if there are suggestions and it's visible */}
       {showSuggestions && suggestions.length > 0 && (
         <List
           zIndex='20'

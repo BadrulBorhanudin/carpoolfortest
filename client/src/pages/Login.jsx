@@ -19,22 +19,27 @@ import {
   InputGroup,
   InputRightElement,
   Text,
+  Link,
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Auth from '../utils/auth';
 
+
 const Login = ({ isOpen, onOpen, onClose }) => {
+  // State to manage form input and visibility of password
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error, data }] = useMutation(LOGIN_USER);
   const [showPassword, setShowPassword] = useState(false);
 
+  // useDisclosure hook to manage Signup modal state
   const {
     isOpen: isSignupOpen,
     onOpen: onSignupOpen,
     onClose: onSignupClose,
   } = useDisclosure();
 
+  // Handle input changes in the form
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormState({
@@ -43,6 +48,7 @@ const Login = ({ isOpen, onOpen, onClose }) => {
     });
   };
 
+  // Handle form submission for login
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -54,12 +60,14 @@ const Login = ({ isOpen, onOpen, onClose }) => {
     } catch (e) {
       console.error(e);
     }
+    // Reset form state after submission
     setFormState({
       email: '',
       password: '',
     });
   };
 
+  // Toggle password visibility
   const handlePasswordToggle = () => setShowPassword(!showPassword);
 
   return (
@@ -152,6 +160,7 @@ const Login = ({ isOpen, onOpen, onClose }) => {
                 </Flex>
               </form>
             )}
+            {/* Display error message if login fails */}
             {error && (
               <Alert status='error' mt={4}>
                 <AlertIcon />
@@ -162,6 +171,7 @@ const Login = ({ isOpen, onOpen, onClose }) => {
         </ModalContent>
       </Modal>
 
+      {/* Include Signup component for user registration */}
       <Signup
         isOpen={isSignupOpen}
         onOpen={onSignupOpen}
