@@ -88,26 +88,33 @@ npm run develop
 
 1. If you're new to CarPoolHub, Sign Up first.
    <img src="client/src/assets/images/screenshot-01.png" alt="screenshot-01" width="600">
+   </br>
 
 2. If you're going to be a passenger, check if there's posted rides that might coincide with the route you'll be taking by filtering the date and posts by driver.
    <img src="client/src/assets/images/screenshot-02.png" alt="screenshot-02" width="600">
+   </br>
 
 3. If you can't find any, then start creating one and you'll see your posted ride as per below screenshot
    <img src="client/src/assets/images/screenshot-03.png" alt="screenshot-03" width="600">
+   </br>
 
 4. Go to your profile to see the rides you posted and comments you made on other posts. You will use this page to manage all your posts.
    <img src="client/src/assets/images/screenshot-04.png" alt="screenshot-04" width="600">
+   </br>
 
 5. If there is a route that matches yours, you can plan with the driver.
    <img src="client/src/assets/images/screenshot-05.png" alt="screenshot-05" width="600">
+   </br>
 
 6. You can always go back to your profile to check if there's other comments on the post you commented.
    <img src="client/src/assets/images/screenshot-06.png" alt="screenshot-06" width="600">
+   </br>
 
 Installations:
 
 1. How to install the app on you pc:
-   <img src="client/src/assets/images/demo-installation-desktop.gif" alt ="demo-installation-desktop" height="650">
+   <img src="client/src/assets/images/demo-installation-desktop.gif" alt ="demo-installation-desktop" height="600">
+   </br>
 
 2. How to install the app on iOS (similar for Android devices):
    <img src="client/src/assets/images/demo-installation-mobile.gif" alt="demo-installation-mobile" height="650">
