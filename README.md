@@ -113,7 +113,7 @@ npm run develop
 Installations:
 
 1. How to install the app on you pc:
-   <img src="client/src/assets/images/demo-installation-desktop.gif" alt ="demo-installation-desktop" width="550" height="550">
+   <img src="client/src/assets/images/demo-installation-desktop.gif" alt ="demo-installation-desktop" height="550">
    <br/>
 
 2. How to install the app on iOS (similar for Android devices):
