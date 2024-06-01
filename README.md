@@ -86,7 +86,7 @@ npm run develop
 
 ## Usage
 
-1. If you're new to CarPoolHub, Sign Up first.
+1. If you're new to CarPoolHub, Sign Up first.<br/>
    <img src="client/src/assets/images/screenshot-01.png" alt="screenshot-01" width="550">
    <br/>
 
