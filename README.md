@@ -130,7 +130,7 @@ Installations:
 ## License
 
 [![License: ISC]][ISC license-url]
-This application is covered under the [ISC license.][ISC license-url]
+<br/>This application is covered under the [ISC license.][ISC license-url]
 
 ## Contributing
 
