@@ -118,14 +118,19 @@ npm run develop
 
 Installations:
 
-1. How to install the app on your pc:
+1. How to install the app on your Windows PC:
    <br/>
    <img src="client/src/assets/images/demo-installation-desktop.gif" alt ="demo-installation-desktop" height="550">
    <br/>
 
-2. How to install the app on iOS (similar for Android devices):
+2. How to install the app on iOS:
    <br/>
-   <img src="client/src/assets/images/demo-installation-mobile.gif" alt="demo-installation-mobile" height="650">
+   <img src="client/src/assets/images/demo-installation-ios.gif" alt="demo-installation-ios" height="650">
+   <br/>
+
+3. How to install the app on Android:
+   <br/>
+   <img src="client/src/assets/images/demo-installation-android.gif" alt="demo-installation-android" height="650">
 
 ## License
 
