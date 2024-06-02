@@ -118,7 +118,7 @@ npm run develop
 
 Installations:
 
-1. How to install the app on you pc:
+1. How to install the app on your pc:
    <br/>
    <img src="client/src/assets/images/demo-installation-desktop.gif" alt ="demo-installation-desktop" height="550">
    <br/>
