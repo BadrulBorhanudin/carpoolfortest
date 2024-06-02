@@ -1,5 +1,10 @@
 import { Box, Heading } from '@chakra-ui/react';
 import HeroImage from '../assets/hero.png';
+import { motion } from 'framer-motion';
+
+
+const MotionHeading = motion(Heading);
+const MotionText = motion(Box);
 
 const Hero = () => {
   return (
@@ -29,20 +34,42 @@ const Hero = () => {
 
       {/* Content */}
       <Box position='relative' zIndex='2' p={4}>
-        <Heading
+        <MotionHeading
           as='h1'
           size={{ base: 'lg', md: 'xl' }}
           mb={{ base: 1, md: 2 }}
           textAlign='left'
           color='whitesmoke'
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
         >
-          Connect with your <span style={{ color: '#42a4ff' }}>community,</span>
+          Connect with your{' '}
+          <MotionText
+            as='span'
+            style={{ color: '#42a4ff' }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 1 }}
+          >
+            community,
+          </MotionText>
           <br />
-          <span style={{ color: '#42a4ff' }}>one</span> ride at a time.
-        </Heading>
+          <MotionText
+            as='span'
+            style={{ color: '#42a4ff' }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2, duration: 1 }}
+          >
+            one
+          </MotionText>{' '}
+          ride at a time.
+        </MotionHeading>
       </Box>
     </Box>
   );
 };
 
 export default Hero;
+
